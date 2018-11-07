@@ -1,9 +1,9 @@
 #include "SceneNewGame.h"
 #include "Defines.h"
 #include "SceneMenu.h"
+#include "ui/CocosGUI.h"
 
 USING_NS_CC;
-
 Scene* SceneNewGame::createScene()
 {
 	return SceneNewGame::create();
@@ -22,64 +22,200 @@ bool SceneNewGame::init()
 	sprite->setPosition(visibleSize / 2);
 	this->addChild(sprite, 0);
 
-	//---------------------------
-	// Button
-	//---------------------------
-
+	////---------------------------------
+	//// Add button back
+	////---------------------------------
 	auto closeItem1 = MenuItemImage::create("CloseNormal.png", "CloseSelected.png",
 		[](Ref *event) {
 		Director::getInstance()->replaceScene(TransitionFlipX::create(0.5, _MENU::createScene()));
 	});
 	closeItem1->setPosition(visibleSize.width - closeItem1->getContentSize().width / 2, visibleSize.height - closeItem1->getContentSize().height / 2);
-	
-	auto sheep1 = MenuItemImage::create("sheep.png", "click_sheep.png", [](Ref *event) {});
-	auto sheep2 = MenuItemImage::create("sheep.png", "click_sheep.png", [](Ref *event) {});
-	auto sheep3 = MenuItemImage::create("sheep.png", "click_sheep.png", [](Ref *event) {});
+
+	auto menuImage = Menu::create(closeItem1, nullptr);
+	menuImage->setPosition(Vec2::ZERO);
+	addChild(menuImage);
+
+
+
+	auto sheep1 = Sprite::create("go0.png");
+	auto sheep2 = Sprite::create("go0.png");
+	auto sheep3 = Sprite::create("go0.png");
 	sheep1->setPosition(closeItem1->getContentSize().width * 2, visibleSize.height - closeItem1->getContentSize().height / 2);
 	sheep2->setPosition(sheep1->getPosition() + (Vec2(50, 0)));
 	sheep3->setPosition(sheep2->getPosition() + (Vec2(50, 0)));
 
-	auto sheep4 = MenuItemImage::create("sheep.png", "click_sheep.png", [](Ref *event) {});
-	auto sheep5 = MenuItemImage::create("sheep.png", "click_sheep.png", [](Ref *event) {});
-	auto sheep6 = MenuItemImage::create("sheep.png", "click_sheep.png", [](Ref *event) {});
+	auto sheep4 = Sprite::create("go0.png");
+	auto sheep5 = Sprite::create("go0.png");
+	auto sheep6 = Sprite::create("go0.png");
 	sheep4->setPosition(closeItem1->getPosition() - (Vec2(50, 0)));
 	sheep5->setPosition(sheep4->getPosition() - (Vec2(50, 0)));
 	sheep6->setPosition(sheep5->getPosition() - (Vec2(50, 0)));
 
-	auto menuImage = Menu::create(closeItem1, sheep1, sheep2, sheep3, sheep4, sheep5, sheep6, nullptr);
-	menuImage->setPosition(Vec2::ZERO);
-	addChild(menuImage);
-	//---------------------------------
-	// Sheep run
-	//---------------------------------
-	auto _sheep1 = Sprite::create("sheep.png");
-	auto _sheep2 = Sprite::create("sheep.png");
-	auto _sheep3 = Sprite::create("sheep.png");
-	auto _sheep4 = Sprite::create("sheep.png");
-	auto _sheep5 = Sprite::create("sheep.png");
-	_sheep1->setPosition(mLane1);
-	_sheep2->setPosition(mLane2);
-	_sheep3->setPosition(mLane3);
-	_sheep4->setPosition(mLane4);
-	_sheep5->setPosition(mLane5);
-	this->addChild(_sheep1, 0);
-	this->addChild(_sheep2, 0);
-	this->addChild(_sheep3, 0);
-	this->addChild(_sheep4, 0);
-	this->addChild(_sheep5, 0);
+	this->addChild(sheep1, 0);
+	this->addChild(sheep2, 0);
+	this->addChild(sheep3, 0);
+	this->addChild(sheep4, 0);
+	this->addChild(sheep5, 0);
+	this->addChild(sheep6, 0);
 
+	
 
-	// Action
-	auto moveBy1 = MoveBy::create(12, Vec2(600, 0));
-	auto moveBy2 = MoveBy::create(10, Vec2(600, 0));
-	auto moveBy3 = MoveBy::create(8, Vec2(600, 0));
-	auto moveBy4 = MoveBy::create(6, Vec2(600, 0));
-	auto moveBy5 = MoveBy::create(4, Vec2(600, 0));
-	_sheep1->runAction(moveBy1);
-	_sheep2->runAction(moveBy2);
-	_sheep3->runAction(moveBy3);
-	_sheep4->runAction(moveBy4);
-	_sheep5->runAction(moveBy5);
+	auto btn = ui::Button::create("go0.png", "go1.png", "go0.png");
+	btn->setPosition(mLane1 + Vec2(300, 0));
+	btn->addTouchEventListener([&, sheep1, sheep2, sheep3](Ref* sender, ui::Widget::TouchEventType type) {
+		switch (type)
+		{
+		case ui::Widget::TouchEventType::BEGAN:
+			break;
+		case ui::Widget::TouchEventType::ENDED:
+		{
+
+			auto action = MoveBy::create(1, Vec2(50, 0));
+			auto action1 = TargetedAction::create(sheep1, action);
+			auto action2 = TargetedAction::create(sheep2, action->clone());
+			auto action3 = TargetedAction::create(sheep3, action->clone());
+
+			this->runAction(Spawn::create(action1, action2, action3, nullptr));
+			break;
+		}
+			
+
+		default:
+			break;
+		}
+	});
+	this->addChild(btn);
+
+	
+	////---------------------------------
+	//// Sheep run
+	////---------------------------------
+	// addAction();
+
+	////---------------------------------
+	//// Button
+	////---------------------------------
+	createButton();
+
 
 	return true;
 }
+void SceneNewGame::createButton() 
+{
+	auto _button1 = ui::Button::create("go0.png", "go1.png", "go0.png");
+	auto _button2 = ui::Button::create("go0.png", "go1.png", "go0.png");
+	auto _button3 = ui::Button::create("go0.png", "go1.png", "go0.png");
+	auto _button4 = ui::Button::create("go0.png", "go1.png", "go0.png");
+	auto _button5 = ui::Button::create("go0.png", "go1.png", "go0.png");
+
+	_button1->setPosition(mLane1 + Vec2(50, 0));
+	_button2->setPosition(mLane2 + Vec2(50, 0));
+	_button3->setPosition(mLane3 + Vec2(50, 0));
+	_button4->setPosition(mLane4 + Vec2(50, 0));
+	_button5->setPosition(mLane5 + Vec2(50, 0));
+
+	_button1->addTouchEventListener([&](Ref* sender, ui::Widget::TouchEventType type) {
+		switch (type)
+		{
+		case ui::Widget::TouchEventType::BEGAN:
+			break;
+		case ui::Widget::TouchEventType::ENDED:
+			addAction(1);
+			break;
+
+		default:
+			break;
+		}
+	});
+	_button2->addTouchEventListener([&](Ref* sender, ui::Widget::TouchEventType type) {
+		switch (type)
+		{
+		case ui::Widget::TouchEventType::BEGAN:
+			break;
+		case ui::Widget::TouchEventType::ENDED:
+			addAction(2);
+			break;
+
+		default:
+			break;
+		}
+	});
+	_button3->addTouchEventListener([&](Ref* sender, ui::Widget::TouchEventType type) {
+		switch (type)
+		{
+		case ui::Widget::TouchEventType::BEGAN:
+			break;
+		case ui::Widget::TouchEventType::ENDED:
+			addAction(3);
+			break;
+
+		default:
+			break;
+		}
+	});
+	_button4->addTouchEventListener([&](Ref* sender, ui::Widget::TouchEventType type) {
+		switch (type)
+		{
+		case ui::Widget::TouchEventType::BEGAN:
+			break;
+		case ui::Widget::TouchEventType::ENDED:
+			addAction(4);
+			break;
+
+		default:
+			break;
+		}
+	});
+	_button5->addTouchEventListener([&](Ref* sender, ui::Widget::TouchEventType type) {
+		switch (type)
+		{
+		case ui::Widget::TouchEventType::BEGAN:
+			break;
+		case ui::Widget::TouchEventType::ENDED:
+			addAction(5);
+			break;
+
+		default:
+			break;
+		}
+	});
+
+	this->addChild(_button1, 0);
+	this->addChild(_button2, 0);
+	this->addChild(_button3, 0);
+	this->addChild(_button4, 0);
+	this->addChild(_button5, 0);
+}
+cocos2d::Vec2 SceneNewGame::selectLane(int i)
+{
+	int choice = i;
+	switch (choice)
+	{
+	case 1:
+		return mLane1;
+		break;
+	case 2:
+		return mLane2;
+		break;
+	case 3:
+		return mLane3;
+		break;
+	case 4:
+		return mLane4;
+		break;
+	case 5:
+		return mLane5;
+		break;
+	default:
+		break;
+	}
+}
+void SceneNewGame::addAction(int i) 
+{
+	auto _sheep = Sprite::create("sheep.png");
+	auto moveBy = MoveBy::create(12, Vec2(600, 0));
+	_sheep->setPosition(selectLane(i));
+	this->addChild(_sheep, 0);
+	_sheep->runAction(moveBy);
+}
+

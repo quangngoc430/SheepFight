@@ -17,3 +17,8 @@
 #define mLane3 Vec2(0, 205)
 #define mLane4 Vec2(0, 275)
 #define mLane5 Vec2(0, 345)
+#define mStart 50
+#define mEnd 750
+#define mMiddle 400
+
+//Button
