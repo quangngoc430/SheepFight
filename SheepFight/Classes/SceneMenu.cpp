@@ -3,8 +3,15 @@
 #include "SceneNewGame.h"
 #include "SceneAbout.h"
 #include "SceneOptions.h"
+#include "Rock.h"
+#include "Sheep.h"
+#include "Space.h"
 
 USING_NS_CC;
+
+Sheep *sheep;
+Space *space;
+Rock *r;
 
 Scene* SceneMenu::createScene()
 {
@@ -47,5 +54,26 @@ bool SceneMenu::init()
 	auto menuString = Menu::create(newGame, options, about, quit, nullptr);
 	menuString->setPosition(Vec2::ZERO);
 	addChild(menuString);
+
+	//sheep = new Sheep(this);
+	space = new Space(this);
+	r = new Rock(this);
+	//sheep->Init();
+	space->Init();
+	r->Init();
+	//sheep->setAlive(false);
+	space->setAlive(true);
+	r->setAlive(true);
+
+	scheduleUpdate();
+
+
 	return true;
+}
+
+void SceneMenu::update(float detail)
+{
+	//sheep->Update();
+	r->Update();
+	space->Update();
 }

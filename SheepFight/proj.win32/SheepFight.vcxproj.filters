@@ -10,6 +10,15 @@
     <Filter Include="src">
       <UniqueIdentifier>{bb6c862e-70e9-49d9-81b7-3829a6f50471}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\Scenes">
+      <UniqueIdentifier>{2309632e-22f3-4c6d-bbe7-01177be40c51}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Models">
+      <UniqueIdentifier>{981b3bc6-7abe-4b0e-898b-cb8d4d13030a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Sprites">
+      <UniqueIdentifier>{6449cd55-fa38-4064-a069-368c023fa32a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -22,16 +31,31 @@
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\SceneAbout.cpp">
-      <Filter>src</Filter>
+      <Filter>src\Scenes</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\SceneMenu.cpp">
-      <Filter>src</Filter>
+      <Filter>src\Scenes</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\SceneNewGame.cpp">
-      <Filter>src</Filter>
+      <Filter>src\Scenes</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\SceneOptions.cpp">
-      <Filter>src</Filter>
+      <Filter>src\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Model.cpp">
+      <Filter>src\Models</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Sheep.cpp">
+      <Filter>src\Sprites</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Rock.cpp">
+      <Filter>src\Sprites</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Bullet.cpp">
+      <Filter>src\Sprites</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Space.cpp">
+      <Filter>src\Sprites</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -44,20 +68,35 @@
     <ClInclude Include="..\Classes\HelloWorldScene.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\SceneAbout.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\SceneMenu.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\SceneNewGame.h">
+    <ClInclude Include="..\Classes\Defines.h">
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\SceneOptions.h">
-      <Filter>src</Filter>
+      <Filter>src\Scenes</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\Defines.h">
-      <Filter>src</Filter>
+    <ClInclude Include="..\Classes\SceneAbout.h">
+      <Filter>src\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\SceneMenu.h">
+      <Filter>src\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\SceneNewGame.h">
+      <Filter>src\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Model.h">
+      <Filter>src\Models</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Sheep.h">
+      <Filter>src\Sprites</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Rock.h">
+      <Filter>src\Sprites</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Bullet.h">
+      <Filter>src\Sprites</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Space.h">
+      <Filter>src\Sprites</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

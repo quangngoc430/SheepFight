@@ -21,4 +21,12 @@
 #define mEnd 750
 #define mMiddle 400
 
-//Button
+// Image
+#define IMG_SHEEP "sheep.png"
+#define IMG_ROCK "rock.png"
+#define IMG_SPACE "spaceship.png"
+#define ROCK_FALL_STEP_MIN 5
+#define ROCK_FALL_STEP_MAX 10
+
+#define MAX_SHEEP 5
+#define SPACE_SHIP_SHOOT_STEP 5

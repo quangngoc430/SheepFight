@@ -10,4 +10,7 @@ public:
 	cocos2d::Vec2 selectLane(int i);
 	void addAction(int i);
 	void createButton();
+
+	virtual void update(float detail);
+
 }; 

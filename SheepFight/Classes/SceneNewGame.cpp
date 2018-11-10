@@ -2,6 +2,10 @@
 #include "Defines.h"
 #include "SceneMenu.h"
 #include "ui/CocosGUI.h"
+#include "Sheep.h"
+#include "Space.h"
+
+Sheep *space1;
 
 USING_NS_CC;
 Scene* SceneNewGame::createScene()
@@ -35,18 +39,22 @@ bool SceneNewGame::init()
 	menuImage->setPosition(Vec2::ZERO);
 	addChild(menuImage);
 
+	////---------------------------------
+	//// Add Sheep random
+	////---------------------------------
+	
 
 
-	auto sheep1 = Sprite::create("go0.png");
-	auto sheep2 = Sprite::create("go0.png");
-	auto sheep3 = Sprite::create("go0.png");
+	auto sheep1 = Sprite::create(IMG_SHEEP);
+	auto sheep2 = Sprite::create(IMG_SHEEP);
+	auto sheep3 = Sprite::create(IMG_SHEEP);
 	sheep1->setPosition(closeItem1->getContentSize().width * 2, visibleSize.height - closeItem1->getContentSize().height / 2);
 	sheep2->setPosition(sheep1->getPosition() + (Vec2(50, 0)));
 	sheep3->setPosition(sheep2->getPosition() + (Vec2(50, 0)));
 
-	auto sheep4 = Sprite::create("go0.png");
-	auto sheep5 = Sprite::create("go0.png");
-	auto sheep6 = Sprite::create("go0.png");
+	auto sheep4 = Sprite::create(IMG_SHEEP);
+	auto sheep5 = Sprite::create(IMG_SHEEP);
+	auto sheep6 = Sprite::create(IMG_SHEEP);
 	sheep4->setPosition(closeItem1->getPosition() - (Vec2(50, 0)));
 	sheep5->setPosition(sheep4->getPosition() - (Vec2(50, 0)));
 	sheep6->setPosition(sheep5->getPosition() - (Vec2(50, 0)));
@@ -96,7 +104,7 @@ bool SceneNewGame::init()
 	//// Button
 	////---------------------------------
 	createButton();
-
+	scheduleUpdate();
 
 	return true;
 }
@@ -146,8 +154,10 @@ void SceneNewGame::createButton()
 		case ui::Widget::TouchEventType::BEGAN:
 			break;
 		case ui::Widget::TouchEventType::ENDED:
-			addAction(3);
+		{
+			addAction(2);
 			break;
+		}
 
 		default:
 			break;
@@ -210,12 +220,19 @@ cocos2d::Vec2 SceneNewGame::selectLane(int i)
 		break;
 	}
 }
+Vector<Sprite*> location;
 void SceneNewGame::addAction(int i) 
 {
 	auto _sheep = Sprite::create("sheep.png");
 	auto moveBy = MoveBy::create(12, Vec2(600, 0));
 	_sheep->setPosition(selectLane(i));
+	location.pushBack(_sheep);
 	this->addChild(_sheep, 0);
 	_sheep->runAction(moveBy);
+
+}
+
+void SceneNewGame::update(float detail)
+{
 }
 
