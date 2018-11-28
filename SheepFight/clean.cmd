@@ -10,6 +10,9 @@ rmdir /S /Q proj.win32\Debug.win32
 ECHO Delete file proj.win32\SheepFight.VC.db
 del proj.win32\SheepFight.VC.db
 
+ECHO Delete file proj.win32\SheepFight.VC.VC.opendb
+del proj.win32\SheepFight.VC.VC.opendb
+
 ECHO Delete folder bin
 rmdir /S /Q bin
 

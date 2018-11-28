@@ -10,24 +10,36 @@ Model::~Model()
 {
 }
 
+void Model::setSprite(cocos2d::Sprite* mSprite)
+{
+	this->mSprite = mSprite;
+}
+
+cocos2d::Sprite* Model::getSprite()
+{
+	return this->mSprite;
+}
+
 void Model::setPosition(cocos2d::Vec2 pos)
 {
-	if (mSprite != nullptr)
+	if (this->mSprite != nullptr)
 	{
-		mSprite->setPosition(pos);
+		this->mSprite->setPosition(pos);
 	}
 }
+
 cocos2d::Vec2 Model::getPosition()
 {
-	return mSprite->getPosition();
+	return this->mSprite->getPosition();
 }
 
 void Model::setAlive(bool isAlive)
 {
-	mIsAlive = isAlive;
-	mSprite->setVisible(mIsAlive);
+	this->mIsAlive = isAlive;
+	this->mSprite->setVisible(mIsAlive);
 }
+
 bool Model::isAlive()
 {
-	return mIsAlive;
+	return this->mIsAlive;
 }

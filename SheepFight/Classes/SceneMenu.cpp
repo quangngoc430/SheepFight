@@ -55,25 +55,5 @@ bool SceneMenu::init()
 	menuString->setPosition(Vec2::ZERO);
 	addChild(menuString);
 
-	//sheep = new Sheep(this);
-	space = new Space(this);
-	r = new Rock(this);
-	//sheep->Init();
-	space->Init();
-	r->Init();
-	//sheep->setAlive(false);
-	space->setAlive(true);
-	r->setAlive(true);
-
-	scheduleUpdate();
-
-
 	return true;
-}
-
-void SceneMenu::update(float detail)
-{
-	//sheep->Update();
-	r->Update();
-	space->Update();
 }

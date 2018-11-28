@@ -48,14 +48,14 @@
     <ClCompile Include="..\Classes\Sheep.cpp">
       <Filter>src\Sprites</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\Rock.cpp">
-      <Filter>src\Sprites</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\Bullet.cpp">
-      <Filter>src\Sprites</Filter>
-    </ClCompile>
     <ClCompile Include="..\Classes\Space.cpp">
       <Filter>src\Sprites</Filter>
+    </ClCompile>
+    <ClCompile Include="Queue.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="btnCreateSheep.cpp">
+      <Filter>src</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -89,14 +89,14 @@
     <ClInclude Include="..\Classes\Sheep.h">
       <Filter>src\Sprites</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\Rock.h">
-      <Filter>src\Sprites</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\Bullet.h">
-      <Filter>src\Sprites</Filter>
-    </ClInclude>
     <ClInclude Include="..\Classes\Space.h">
       <Filter>src\Sprites</Filter>
+    </ClInclude>
+    <ClInclude Include="Queue.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="btnCreateSheep.h">
+      <Filter>src</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

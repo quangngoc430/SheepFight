@@ -30,3 +30,13 @@
 
 #define MAX_SHEEP 5
 #define SPACE_SHIP_SHOOT_STEP 5
+
+#define SHEEP_DIRECTION 1
+#define ENEMY_DIRECTION -1
+
+#define HEIGHT_SHEEP 48
+#define WIDTH_SHEEP 48
+
+#define BIG_SIZE 3
+#define MEDIUM_SIZE 2
+#define SMALL_SIZE 1

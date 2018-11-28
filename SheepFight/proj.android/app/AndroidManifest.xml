@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="vnuk.edu.vn.sheepfight"
+    package="com.gameloft.helloword"
     android:installLocation="auto">
 
     <uses-permission android:name="android.permission.INTERNET"/>
