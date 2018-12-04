@@ -5,5 +5,6 @@ SheepFight/proj.win32/Debug.win32/
 SheepFight/proj.win32/SheepFight.VC.db
 SheepFight/proj.win32/ipch/
 SheepFight/proj.win32/.vs/
-bin/
 SheepFight/proj.win32/Release.win32/
+SheepFight/cocos2d/
+bin/
