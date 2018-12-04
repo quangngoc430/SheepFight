@@ -4,6 +4,7 @@
 class Sheep : public Model
 {
 private:
+	int id;
 	int weight;
 	cocos2d::Vec2 velocity;
 	int lane;
@@ -16,6 +17,8 @@ public:
 	Sheep(cocos2d::Scene* scene);
 	~Sheep();
 
+	void setId(int id);
+	int getId();
 	void setWeight(int weight);
 	int getWeight();
 	void setVelocity(cocos2d::Vec2 velocity);

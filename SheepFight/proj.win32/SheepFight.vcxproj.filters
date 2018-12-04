@@ -48,9 +48,6 @@
     <ClCompile Include="..\Classes\Sheep.cpp">
       <Filter>src\Sprites</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\Space.cpp">
-      <Filter>src\Sprites</Filter>
-    </ClCompile>
     <ClCompile Include="Queue.cpp">
       <Filter>src</Filter>
     </ClCompile>
@@ -87,9 +84,6 @@
       <Filter>src\Models</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\Sheep.h">
-      <Filter>src\Sprites</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\Space.h">
       <Filter>src\Sprites</Filter>
     </ClInclude>
     <ClInclude Include="Queue.h">

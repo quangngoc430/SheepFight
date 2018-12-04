@@ -16,6 +16,16 @@ Sheep::~Sheep()
 	
 }
 
+void Sheep::setId(int id)
+{
+	this->id = id;
+}
+
+int Sheep::getId() 
+{
+	return this->id;
+}
+
 void Sheep::setWeight(int weight)
 {
 	this->weight = weight;
@@ -126,14 +136,16 @@ void Sheep::Init()
 
 void Sheep::Update()
 {
-	if (this->isAlive())
+	// code cho enemy và sheep dựa trên cái direction
+	// có 2 define là SHEEP_DIRECTION và ENEMY_DIRECTION
+	/*if (this->isAlive())
 	{
 		this->setPosition(this->getPosition() + this->direction * this->getVelocity());
 		if (this->getPosition().x > this->mSprite->getContentSize().width + SCREEN_W)
 		{
 			this->setAlive(false);
 		}
-	}
+	}*/
 }
 
 Sheep * Sheep::clone()

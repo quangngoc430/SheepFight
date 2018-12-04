@@ -156,7 +156,6 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClCompile Include="..\Classes\SceneNewGame.cpp" />
     <ClCompile Include="..\Classes\SceneOptions.cpp" />
     <ClCompile Include="..\Classes\Sheep.cpp" />
-    <ClCompile Include="..\Classes\Space.cpp" />
     <ClCompile Include="btnCreateSheep.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Queue.cpp" />
@@ -171,7 +170,6 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClInclude Include="..\Classes\SceneNewGame.h" />
     <ClInclude Include="..\Classes\SceneOptions.h" />
     <ClInclude Include="..\Classes\Sheep.h" />
-    <ClInclude Include="..\Classes\Space.h" />
     <ClInclude Include="btnCreateSheep.h" />
     <ClInclude Include="main.h" />
     <ClInclude Include="Queue.h" />

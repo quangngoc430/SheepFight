@@ -11,10 +11,10 @@ Sheep *space1;
 
 USING_NS_CC;
 
-std::vector<Sheep*> sheeps;
-std::vector<Sheep*> enemies;
-Queue *queueSheep;
-Queue *queueEnemy;
+std::vector<Queue*> vectorQueueSheep;
+std::vector<Queue*> vectorQueueEnemy;
+int countElement;
+
 
 Scene* SceneNewGame::createScene()
 {
@@ -28,8 +28,13 @@ bool SceneNewGame::init()
 		return false;
 	}
 
-	queueSheep = new Queue();
-	queueEnemy = new Queue();
+	countElement = 0;
+
+	for (int index = 0; index < MAX_LANES; index++)
+	{
+		vectorQueueSheep.push_back(new Queue());
+		vectorQueueEnemy.push_back(new Queue());
+	}
 
 	auto visibleSize = Director::getInstance()->getVisibleSize();
 	
@@ -63,19 +68,38 @@ bool SceneNewGame::init()
 
 void SceneNewGame::createButton() 
 {
-	auto _button1 = ui::Button::create("go0.png", "go1.png", "go0.png");
-	auto _button2 = ui::Button::create("go0.png", "go1.png", "go0.png");
+	auto buttonCreateSheepLane0 = ui::Button::create("go0.png", "go1.png", "go0.png");
+	auto buttonCreateSheepLane1 = ui::Button::create("go0.png", "go1.png", "go0.png");
+	auto buttonCreateSheepLane2 = ui::Button::create("go0.png", "go1.png", "go0.png");
+	auto buttonCreateSheepLane3 = ui::Button::create("go0.png", "go1.png", "go0.png");
+	auto buttonCreateSheepLane4 = ui::Button::create("go0.png", "go1.png", "go0.png");
+	auto buttonCreateEnemyLane0 = ui::Button::create("go0.png", "go1.png", "go0.png");
+	auto buttonCreateEnemyLane1 = ui::Button::create("go0.png", "go1.png", "go0.png");
+	auto buttonCreateEnemyLane2 = ui::Button::create("go0.png", "go1.png", "go0.png");
+	auto buttonCreateEnemyLane3 = ui::Button::create("go0.png", "go1.png", "go0.png");
+	auto buttonCreateEnemyLane4 = ui::Button::create("go0.png", "go1.png", "go0.png");
 
-	_button1->setPosition(mLane1 + Vec2(50, 0));
-	_button2->setPosition(mLane1 + Vec2(600, 0));
+	buttonCreateSheepLane0->setPosition(BTN_SHEEP_LANE_0);
+	buttonCreateSheepLane1->setPosition(BTN_SHEEP_LANE_1);
+	buttonCreateSheepLane2->setPosition(BTN_SHEEP_LANE_2);
+	buttonCreateSheepLane3->setPosition(BTN_SHEEP_LANE_3);
+	buttonCreateSheepLane4->setPosition(BTN_SHEEP_LANE_4);
+	buttonCreateEnemyLane0->setPosition(BTN_ENEMY_LANE_0);
+	buttonCreateEnemyLane1->setPosition(BTN_ENEMY_LANE_1);
+	buttonCreateEnemyLane2->setPosition(BTN_ENEMY_LANE_2);
+	buttonCreateEnemyLane3->setPosition(BTN_ENEMY_LANE_3);
+	buttonCreateEnemyLane4->setPosition(BTN_ENEMY_LANE_4);
 	
-	_button1->addTouchEventListener([&](Ref* sender, ui::Widget::TouchEventType type) {
+	buttonCreateSheepLane0->addTouchEventListener([&](Ref* sender, ui::Widget::TouchEventType type) {
 		switch (type)
 		{
 		case ui::Widget::TouchEventType::BEGAN:
 			break;
 		case ui::Widget::TouchEventType::ENDED:
-			addActionLeftSheep(1);
+			if (checkCanCreateSheep(0, SHEEP_DIRECTION))
+			{
+				addActionSheep(0, BIG_SIZE, SHEEP_DIRECTION);
+			}
 			break;
 
 		default:
@@ -83,13 +107,16 @@ void SceneNewGame::createButton()
 		}
 	});
 
-	_button2->addTouchEventListener([&](Ref* sender, ui::Widget::TouchEventType type) {
+	buttonCreateSheepLane1->addTouchEventListener([&](Ref* sender, ui::Widget::TouchEventType type) {
 		switch (type)
 		{
 		case ui::Widget::TouchEventType::BEGAN:
 			break;
 		case ui::Widget::TouchEventType::ENDED:
-			addActionRightSheep(1);
+			if (checkCanCreateSheep(1, SHEEP_DIRECTION))
+			{
+				addActionSheep(1, BIG_SIZE, SHEEP_DIRECTION);
+			}
 			break;
 
 		default:
@@ -97,61 +124,205 @@ void SceneNewGame::createButton()
 		}
 	});
 
-	this->addChild(_button1, 0);
-	this->addChild(_button2, 0);
+	buttonCreateSheepLane2->addTouchEventListener([&](Ref* sender, ui::Widget::TouchEventType type) {
+		switch (type)
+		{
+		case ui::Widget::TouchEventType::BEGAN:
+			break;
+		case ui::Widget::TouchEventType::ENDED:
+			if (checkCanCreateSheep(2, SHEEP_DIRECTION))
+			{
+				addActionSheep(2, BIG_SIZE, SHEEP_DIRECTION);
+			}
+			break;
+
+		default:
+			break;
+		}
+	});
+
+	buttonCreateSheepLane3->addTouchEventListener([&](Ref* sender, ui::Widget::TouchEventType type) {
+		switch (type)
+		{
+		case ui::Widget::TouchEventType::BEGAN:
+			break;
+		case ui::Widget::TouchEventType::ENDED:
+			if (checkCanCreateSheep(3, SHEEP_DIRECTION))
+			{
+				addActionSheep(3, BIG_SIZE, SHEEP_DIRECTION);
+			}
+			break;
+
+		default:
+			break;
+		}
+	});
+
+	buttonCreateSheepLane4->addTouchEventListener([&](Ref* sender, ui::Widget::TouchEventType type) {
+		switch (type)
+		{
+		case ui::Widget::TouchEventType::BEGAN:
+			break;
+		case ui::Widget::TouchEventType::ENDED:
+			if (checkCanCreateSheep(4, SHEEP_DIRECTION))
+			{
+				addActionSheep(4, BIG_SIZE, SHEEP_DIRECTION);
+			}
+			break;
+
+		default:
+			break;
+		}
+	});
+
+	buttonCreateEnemyLane0->addTouchEventListener([&](Ref* sender, ui::Widget::TouchEventType type) {
+		switch (type)
+		{
+		case ui::Widget::TouchEventType::BEGAN:
+			break;
+		case ui::Widget::TouchEventType::ENDED:
+			if (checkCanCreateSheep(0, ENEMY_DIRECTION))
+			{
+				addActionSheep(0, BIG_SIZE, ENEMY_DIRECTION);
+			}
+			break;
+
+		default:
+			break;
+		}
+	});
+
+	buttonCreateEnemyLane1->addTouchEventListener([&](Ref* sender, ui::Widget::TouchEventType type) {
+		switch (type)
+		{
+		case ui::Widget::TouchEventType::BEGAN:
+			break;
+		case ui::Widget::TouchEventType::ENDED:
+			if (checkCanCreateSheep(1, ENEMY_DIRECTION))
+			{
+				addActionSheep(1, BIG_SIZE, ENEMY_DIRECTION);
+			}
+			break;
+
+		default:
+			break;
+		}
+	});
+
+	buttonCreateEnemyLane2->addTouchEventListener([&](Ref* sender, ui::Widget::TouchEventType type) {
+		switch (type)
+		{
+		case ui::Widget::TouchEventType::BEGAN:
+			break;
+		case ui::Widget::TouchEventType::ENDED:
+			if (checkCanCreateSheep(2, ENEMY_DIRECTION))
+			{
+				addActionSheep(2, BIG_SIZE, ENEMY_DIRECTION);
+			}
+			break;
+
+		default:
+			break;
+		}
+	});
+
+	buttonCreateEnemyLane3->addTouchEventListener([&](Ref* sender, ui::Widget::TouchEventType type) {
+		switch (type)
+		{
+		case ui::Widget::TouchEventType::BEGAN:
+			break;
+		case ui::Widget::TouchEventType::ENDED:
+			if (checkCanCreateSheep(3, ENEMY_DIRECTION))
+			{
+				addActionSheep(3, BIG_SIZE, ENEMY_DIRECTION);
+			}
+			break;
+
+		default:
+			break;
+		}
+	});
+
+	buttonCreateEnemyLane4->addTouchEventListener([&](Ref* sender, ui::Widget::TouchEventType type) {
+		switch (type)
+		{
+		case ui::Widget::TouchEventType::BEGAN:
+			break;
+		case ui::Widget::TouchEventType::ENDED:
+			if (checkCanCreateSheep(4, ENEMY_DIRECTION))
+			{
+				addActionSheep(4, BIG_SIZE, ENEMY_DIRECTION);
+			}
+			break;
+
+		default:
+			break;
+		}
+	});
+
+	this->addChild(buttonCreateSheepLane0, 0);
+	this->addChild(buttonCreateSheepLane1, 0);
+	this->addChild(buttonCreateSheepLane2, 0);
+	this->addChild(buttonCreateSheepLane3, 0);
+	this->addChild(buttonCreateSheepLane4, 0);
+
+	this->addChild(buttonCreateEnemyLane0, 0);
+	this->addChild(buttonCreateEnemyLane1, 0);
+	this->addChild(buttonCreateEnemyLane2, 0);
+	this->addChild(buttonCreateEnemyLane3, 0);
+	this->addChild(buttonCreateEnemyLane4, 0);
 }
 
-cocos2d::Vec2 SceneNewGame::selectLane(int i)
+cocos2d::Vec2 SceneNewGame::selectLane(int lane, int direction)
 {
-	int choice = i;
-	switch (choice)
+	switch (lane)
 	{
-	case 1:
-		return mLane1;
+	case LANE_0:
+		return (direction == SHEEP_DIRECTION) ? SHEEP_LANE_0 : ENEMY_LANE_0;
 		break;
-	case 2:
-		return mLane2;
+	case LANE_1:
+		return (direction == SHEEP_DIRECTION) ? SHEEP_LANE_1 : ENEMY_LANE_1;
 		break;
-	case 3:
-		return mLane3;
+	case LANE_2:
+		return (direction == SHEEP_DIRECTION) ? SHEEP_LANE_2 : ENEMY_LANE_2;
 		break;
-	case 4:
-		return mLane4;
+	case LANE_3:
+		return (direction == SHEEP_DIRECTION) ? SHEEP_LANE_3 : ENEMY_LANE_3;
 		break;
-	case 5:
-		return mLane5;
+	case LANE_4:
+		return (direction == SHEEP_DIRECTION) ? SHEEP_LANE_4 : ENEMY_LANE_4;
 		break;
 	default:
 		break;
 	}
 }
 
-void SceneNewGame::addActionLeftSheep(int i) 
+void SceneNewGame::addActionSheep(int lane, int weight, int direction)
 {
 	Sheep *sheep = new Sheep(this);
-	sheep->setPosition(cocos2d::Vec2(0, 150));
+	sheep->setId(countElement);
+	countElement++;
+	sheep->setPosition(selectLane(lane, direction));
 	sheep->setVelocity(cocos2d::Vec2(2, 0));
 	sheep->setAlive(true);
-	sheep->setWeight(3);
-	sheep->setDirection(SHEEP_DIRECTION);
-	sheeps.push_back(sheep);
-	queueSheep->push(sheep);
-}
-
-void SceneNewGame::addActionRightSheep(int i)
-{
-	Sheep *enemy = new Sheep(this);
-	enemy->setPosition(cocos2d::Vec2(600, 150));
-	enemy->setVelocity(cocos2d::Vec2(2, 0));
-	enemy->setAlive(true);
-	enemy->setWeight(3);
-	enemy->setDirection(ENEMY_DIRECTION);
-	enemies.push_back(enemy);
-	queueEnemy->push(enemy);
+	sheep->setWeight(weight);
+	sheep->setDirection(direction);
+	(direction == SHEEP_DIRECTION) ? vectorQueueSheep.at(lane)->push(sheep) : vectorQueueEnemy.at(lane)->push(sheep);
 }
 
 void SceneNewGame::update(float detail)
 {
+	for (int lane = 0; lane < MAX_LANES; lane++)
+	{
+		updateForEachLane(lane);
+	}
+}
+
+void SceneNewGame::updateForEachLane(int lane)
+{
+	Queue *queueSheep = vectorQueueSheep.at(lane);
+	Queue *queueEnemy = vectorQueueEnemy.at(lane);
+
 	// kiểm tra 2 con cừu đầu của sheep và enemy có chạm nhau ko
 	bool haveColision = false;
 
@@ -194,8 +365,8 @@ void SceneNewGame::update(float detail)
 	{
 		if (weightOfSheeps == weightOfEnemies)
 		{
-			move(queueSheep);
-			move(queueEnemy);
+			moveWhenBalance(queueSheep);
+			moveWhenBalance(queueEnemy);
 		}
 		else if (weightOfSheeps > weightOfEnemies)
 		{
@@ -217,16 +388,20 @@ void SceneNewGame::update(float detail)
 		{
 			((Sheep*)queueEnemy->get(index))->moveForward();
 		}
+	}	
+
+	for (int index = 0; index < queueSheep->getSize(); index++)
+	{
+		((Sheep*)queueSheep->get(index))->Update();
+	}
+
+	for (int index = 0; index < queueEnemy->getSize(); index++)
+	{
+		((Sheep*)queueEnemy->get(index))->Update();
 	}
 }
 
-void SceneNewGame::updateForEachLane(int lane)
-{
-
-	
-}
-
-void SceneNewGame::move(Queue *queue)
+void SceneNewGame::moveWhenBalance(Queue *queue)
 {
 	Sheep* currentSheep;
 	Sheep* previousSheep;
@@ -344,5 +519,33 @@ void SceneNewGame::moveWhenNoBalance(Queue *queueWin, Queue *queueLost)
 		{
 			currentSheep->moveForward();
 		}
+	}	
+}
+
+bool SceneNewGame::checkCanCreateSheep(int lane, int direction)
+{
+	Sheep * sheep;
+
+	if (direction == SHEEP_DIRECTION)
+	{
+		if (vectorQueueSheep.at(lane)->getSize() > 0)
+		{
+			sheep = (Sheep*)vectorQueueSheep.at(lane)->get(vectorQueueSheep.at(lane)->getSize() - 1);
+
+			if (sheep->getPosition().x <= WIDTH_SHEEP)
+				return false;
+		}
 	}
+	else if (direction == ENEMY_DIRECTION)
+	{
+		if (vectorQueueEnemy.at(lane)->getSize() > 0)
+		{
+			sheep = (Sheep*)vectorQueueEnemy.at(lane)->get(vectorQueueEnemy.at(lane)->getSize() - 1);
+
+			if (sheep->getPosition().x + WIDTH_SHEEP >= 600)
+				return false;
+		}
+	}
+
+	return true;
 }

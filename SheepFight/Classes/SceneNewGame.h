@@ -8,14 +8,13 @@ public:
 	static cocos2d::Scene* createScene();
 	virtual bool init();
 	CREATE_FUNC(SceneNewGame);
-	cocos2d::Vec2 selectLane(int i);
-	void addActionLeftSheep(int i);
-	void addActionRightSheep(int i);
+	cocos2d::Vec2 selectLane(int lane, int direction);
+	void addActionSheep(int lane, int weight, int direction);
 	void createButton();
-	void move(Queue *queue);
+	void moveWhenBalance(Queue *queue);
 	void moveWhenNoBalance(Queue *queueWin, Queue *queueLost);
+	bool checkCanCreateSheep(int lane, int direction);
 
 	virtual void update(float detail);
 	void updateForEachLane(int lane);
-
 }; 
