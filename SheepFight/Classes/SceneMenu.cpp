@@ -3,7 +3,6 @@
 #include "SceneNewGame.h"
 #include "SceneAbout.h"
 #include "SceneOptions.h"
-#include "Rock.h"
 #include "Sheep.h"
 #include "Space.h"
 
@@ -11,7 +10,6 @@ USING_NS_CC;
 
 Sheep *sheep;
 Space *space;
-Rock *r;
 
 Scene* SceneMenu::createScene()
 {
