@@ -11,6 +11,7 @@ private:
 	Sheep *head;
 	Sheep *tail;
 	int direction;
+	int type;
 	cocos2d::Scene* scene;
 
 public:
@@ -35,7 +36,10 @@ public:
 	bool simulateColisionSheepMoveForward(Sheep*);
 	void setDirection(int direction);
 	int getDirection();
-	Sheep * clone();
+	void setType(int type);
+	int getType();
+	int getHeight();
+	int getWidth();
 
 	void Init();
 	void Update();
