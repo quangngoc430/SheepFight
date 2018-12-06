@@ -3,4 +3,4 @@ cd bin\release\win32\
 SheepFight.exe
 cd ..\..\..\
 
-@ECHO NO THANKS
+@ECHO THANKS YOU
