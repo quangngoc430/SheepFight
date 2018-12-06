@@ -74,14 +74,14 @@
     <ClInclude Include="..\Classes\Model.h">
       <Filter>src\Models</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\Sheep.h">
-      <Filter>src\Sprites</Filter>
-    </ClInclude>
     <ClInclude Include="..\Classes\Queue.h">
       <Filter>src\Models</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\Defines.h">
       <Filter>src\Defines</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Sheep.h">
+      <Filter>src\Sprites</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

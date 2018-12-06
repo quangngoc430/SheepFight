@@ -19,8 +19,7 @@ LOCAL_SRC_FILES := $(LOCAL_PATH)/hellocpp/main.cpp \
                    $(LOCAL_PATH)/../../../Classes/SceneMenu.cpp \
                    $(LOCAL_PATH)/../../../Classes/SceneNewGame.cpp \
                    $(LOCAL_PATH)/../../../Classes/SceneOptions.cpp \
-                   $(LOCAL_PATH)/../../../Classes/Sheep.cpp \
-                   $(LOCAL_PATH)/../../../Classes/Space.cpp
+                   $(LOCAL_PATH)/../../../Classes/Sheep.cpp
 
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/../../../Classes
 

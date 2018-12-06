@@ -4,12 +4,10 @@
 #include "SceneAbout.h"
 #include "SceneOptions.h"
 #include "Sheep.h"
-#include "Space.h"
 
 USING_NS_CC;
 
 Sheep *sheep;
-Space *space;
 
 Scene* SceneMenu::createScene()
 {

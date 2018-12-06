@@ -3,7 +3,6 @@
 #include "SceneMenu.h"
 #include "ui/CocosGUI.h"
 #include "Sheep.h"
-#include "Space.h"
 #include <vector>
 
 Sheep *space1;
