@@ -14,6 +14,8 @@ public:
 	void moveWhenBalance(Queue *queue);
 	void moveWhenNoBalance(Queue *queueWin, Queue *queueLost);
 	bool checkCanCreateSheep(int lane, int direction);
+	void setTypeSheep(int typeSheep[]);
+	void textOnScreen();
 
 	virtual void update(float detail);
 	void updateForEachLane(int lane);

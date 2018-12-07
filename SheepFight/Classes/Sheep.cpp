@@ -3,13 +3,58 @@
 
 USING_NS_CC;
 
-Sheep::Sheep(cocos2d::Scene* scene)
+Sheep::Sheep(cocos2d::Scene* scene, int weight, int direction)
 {
-	this->mSprite = Sprite::create(IMG_SHEEP);
-	scene->addChild(mSprite);
 	this->head = nullptr;
 	this->tail = nullptr;
 	this->scene = scene;
+
+	// animation
+	Vector<SpriteFrame*> frames;
+	if (direction == SHEEP_DIRECTION)
+	{
+		if (weight == SMALL_SIZE)
+		{
+			frames.pushBack(SpriteFrame::create(IMG_SHEEP_TYPE_1, Rect(0, 0, 70, 56)));
+			frames.pushBack(SpriteFrame::create(IMG_SHEEP_TYPE_1_ANI, Rect(0, 0, 70, 56)));
+		}
+		else if (weight == MEDIUM_SIZE)
+		{
+			frames.pushBack(SpriteFrame::create(IMG_SHEEP_TYPE_2, Rect(0, 0, 70, 56)));
+			frames.pushBack(SpriteFrame::create(IMG_SHEEP_TYPE_2_ANI, Rect(0, 0, 70, 56)));
+		}
+		else
+		{
+			frames.pushBack(SpriteFrame::create(IMG_SHEEP_TYPE_3, Rect(0, 0, 80, 64)));
+			frames.pushBack(SpriteFrame::create(IMG_SHEEP_TYPE_3_ANI, Rect(0, 0, 80, 64)));
+		}
+	}
+	else
+	{
+		if (weight == SMALL_SIZE)
+		{
+			frames.pushBack(SpriteFrame::create(IMG_ENEMY_TYPE_1, Rect(0, 0, 70, 56)));
+			frames.pushBack(SpriteFrame::create(IMG_ENEMY_TYPE_1_ANI, Rect(0, 0, 70, 56)));
+		}
+		else if (weight == MEDIUM_SIZE)
+		{
+			frames.pushBack(SpriteFrame::create(IMG_ENEMY_TYPE_2, Rect(0, 0, 70, 56)));
+			frames.pushBack(SpriteFrame::create(IMG_ENEMY_TYPE_2_ANI, Rect(0, 0, 70, 56)));
+		}
+		else
+		{
+			frames.pushBack(SpriteFrame::create(IMG_ENEMY_TYPE_3, Rect(0, 0, 80, 64)));
+			frames.pushBack(SpriteFrame::create(IMG_ENEMY_TYPE_3_ANI, Rect(0, 0, 80, 64)));
+		}
+	}
+	
+	
+	auto animation = Animation::createWithSpriteFrames(frames, 0.1f);
+	auto animate = Animate::create(animation);
+
+	this->mSprite = Sprite::create();
+	this->mSprite->runAction(RepeatForever::create(animate));
+	scene->addChild(mSprite);
 }
 Sheep::~Sheep()
 {
@@ -150,7 +195,7 @@ void Sheep::Update()
 
 Sheep * Sheep::clone()
 {
-	Sheep *newSheep = new Sheep(this->scene);
+	Sheep *newSheep = new Sheep(this->scene, this->getWeight(), this->getDirection());
 	newSheep->setSprite(this->getSprite());
 	newSheep->setPosition(this->getPosition());
 	newSheep->setVelocity(this->getVelocity());

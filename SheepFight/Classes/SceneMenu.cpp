@@ -24,7 +24,7 @@ bool SceneMenu::init()
 	}
 	auto visibleSize = Director::getInstance()->getVisibleSize();
 	
-	auto sprite = Sprite::create("galaxy4.jpg");
+	auto sprite = Sprite::create(IMG_MENU);
 	
 	sprite->setPosition(visibleSize / 2);
 	this->addChild(sprite, 0);

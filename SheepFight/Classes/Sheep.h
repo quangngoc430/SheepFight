@@ -14,7 +14,7 @@ private:
 	cocos2d::Scene* scene;
 
 public:
-	Sheep(cocos2d::Scene* scene);
+	Sheep(cocos2d::Scene* scene, int weight, int direction);
 	~Sheep();
 
 	void setId(int id);

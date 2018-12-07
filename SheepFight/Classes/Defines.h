@@ -11,7 +11,26 @@
 #define _ABOUT SceneAbout
 #define _OPTIONS SceneOptions
 
-#define IMG_SHEEP "sheep.png"
+// Global Image
+#define IMG_GO "Go-button.png"
+#define IMG_PLAY_BACKGROUND "Play-ground.png"
+#define IMG_MENU "Menu.png"
+
+// Image Sheep
+#define IMG_SHEEP_TYPE_1 "whitesheep_1.1.png"
+#define IMG_SHEEP_TYPE_1_ANI "whitesheep_1.2.png"
+#define IMG_SHEEP_TYPE_2 "whitesheep_2.1.png"
+#define IMG_SHEEP_TYPE_2_ANI "whitesheep_2.2.png"
+#define IMG_SHEEP_TYPE_3 "whitesheep_3.1.png"
+#define IMG_SHEEP_TYPE_3_ANI "whitesheep_3.2.png"
+
+// Image Enemy
+#define IMG_ENEMY_TYPE_1 "blacksheep_1.1.png"
+#define IMG_ENEMY_TYPE_1_ANI "blacksheep_1.2.png"
+#define IMG_ENEMY_TYPE_2 "blacksheep_2.1.png"
+#define IMG_ENEMY_TYPE_2_ANI "blacksheep_2.2.png"
+#define IMG_ENEMY_TYPE_3 "blacksheep_3.1.png"
+#define IMG_ENEMY_TYPE_3_ANI "blacksheep_3.2.png"
 
 // Map
 #define LANE_0 0
@@ -60,3 +79,8 @@
 #define BIG_SIZE 3
 #define MEDIUM_SIZE 2
 #define SMALL_SIZE 1
+
+#define SCORE_SHEEP Vec2(330, 435)
+#define SCORE_ENEMY Vec2(470, 435)
+
+
