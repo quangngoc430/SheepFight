@@ -1,6 +1,6 @@
 #pragma once
 #include "cocos2d.h"
-#include "proj.win32\Queue.h"
+#include "Queue.h"
 
 class SceneNewGame : public cocos2d::Scene
 {

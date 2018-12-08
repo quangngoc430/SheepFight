@@ -1,4 +1,4 @@
-#include <Sheep.h>
+﻿#include <Sheep.h>
 #include <Defines.h>
 
 USING_NS_CC;
@@ -8,7 +8,8 @@ Sheep::Sheep(cocos2d::Scene* scene, int weight, int direction)
 	this->head = nullptr;
 	this->tail = nullptr;
 	this->scene = scene;
-
+<<<<<<< HEAD
+	this->type = -1;
 	// animation
 	Vector<SpriteFrame*> frames;
 	if (direction == SHEEP_DIRECTION)
@@ -55,6 +56,8 @@ Sheep::Sheep(cocos2d::Scene* scene, int weight, int direction)
 	this->mSprite = Sprite::create();
 	this->mSprite->runAction(RepeatForever::create(animate));
 	scene->addChild(mSprite);
+=======
+>>>>>>> master
 }
 Sheep::~Sheep()
 {
@@ -74,6 +77,19 @@ int Sheep::getId()
 void Sheep::setWeight(int weight)
 {
 	this->weight = weight;
+
+	switch (this->weight)
+	{
+	case BIG_SIZE:
+		this->type = BIG_SHEEP_TYPE;
+		break;
+	case MEDIUM_SIZE:
+		this->type = MEDIUM_SHEEP_TYPE;
+		break;
+	case SMALL_SIZE:
+		this->type = SMALL_SIZE;
+		break;
+	}
 }
 
 int Sheep::getWeight()
@@ -152,7 +168,6 @@ void Sheep::moveForward()
 bool Sheep::simulateColisionSheepMoveForward(Sheep* otherSheep)
 {
 	this->moveForward();
-
 	bool result = false; 
 	Rect a = this->getSprite()->getBoundingBox();
 	Rect b = otherSheep->getSprite()->getBoundingBox();
@@ -175,6 +190,56 @@ int Sheep::getDirection()
 	return this->direction;
 }
 
+void Sheep::setType(int type)
+{
+	this->type = type;
+}
+
+int Sheep::getType()
+{
+	return this->type;
+}
+
+int Sheep::getHeight()
+{
+	int height = -1;
+
+	switch (this->type)
+	{
+	case BIG_SHEEP_TYPE:
+		height = BIG_SIZE_HEIGHT;
+		break;
+	case MEDIUM_SHEEP_TYPE:
+		height = MEDIUM_SIZE_HEIGHT;
+		break;
+	case SMALL_SHEEP_TYPE:
+		height = SMALL_SIZE_HEIGHT;
+		break;
+	}
+
+	return height;
+}
+
+int Sheep::getWidth()
+{
+	int width = -1;
+
+	switch (this->type)
+	{
+	case BIG_SHEEP_TYPE:
+		width = BIG_SIZE_WIDTH;
+		break;
+	case MEDIUM_SHEEP_TYPE:
+		width = MEDIUM_SIZE_WIDTH;
+		break;
+	case SMALL_SHEEP_TYPE:
+		width = SMALL_SIZE_WIDTH;
+		break;
+	}
+
+	return width;
+}
+
 void Sheep::Init()
 {
 }
@@ -191,6 +256,7 @@ void Sheep::Update()
 			this->setAlive(false);
 		}
 	}*/
+<<<<<<< HEAD
 }
 
 Sheep * Sheep::clone()
@@ -206,3 +272,5 @@ Sheep * Sheep::clone()
 	
 	return newSheep;
 }
+=======
+>>>>>>> master

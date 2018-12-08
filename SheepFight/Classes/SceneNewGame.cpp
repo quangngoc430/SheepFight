@@ -3,9 +3,7 @@
 #include "SceneMenu.h"
 #include "ui/CocosGUI.h"
 #include "Sheep.h"
-#include "Space.h"
 #include <vector>
-#include "proj.win32\Queue.h"
 
 Sheep *space1;
 
@@ -474,7 +472,7 @@ void SceneNewGame::moveWhenBalance(Queue *queue)
 			{
 				currentSheep->setHead(previousSheep);
 				previousSheep->setTail(currentSheep);
-				currentSheep->setPosition(Vec2(previousSheep->getPosition().x - previousSheep->getDirection() * WIDTH_SHEEP, currentSheep->getPosition().y));
+				currentSheep->setPosition(Vec2(previousSheep->getPosition().x - previousSheep->getDirection() * previousSheep->getWidth(), currentSheep->getPosition().y));
 				break;
 			}
 			else
@@ -516,7 +514,7 @@ void SceneNewGame::moveWhenNoBalance(Queue *queueWin, Queue *queueLost)
 			{
 				currentSheep->setTail(nextSheep);
 				nextSheep->setHead(currentSheep);
-				currentSheep->setPosition(Vec2(nextSheep->getPosition().x + currentSheep->getDirection() * WIDTH_SHEEP, currentSheep->getPosition().y));
+				currentSheep->setPosition(Vec2(nextSheep->getPosition().x + currentSheep->getDirection() * currentSheep->getWidth(), currentSheep->getPosition().y));
 			}
 			else
 			{
@@ -540,7 +538,7 @@ void SceneNewGame::moveWhenNoBalance(Queue *queueWin, Queue *queueLost)
 			{
 				currentSheep->setHead(previousSheep);
 				previousSheep->setTail(currentSheep);
-				currentSheep->setPosition(Vec2(previousSheep->getPosition().x - currentSheep->getDirection() * WIDTH_SHEEP, currentSheep->getPosition().y));
+				currentSheep->setPosition(Vec2(previousSheep->getPosition().x - currentSheep->getDirection() * currentSheep->getWidth(), currentSheep->getPosition().y));
 			}
 			else
 			{
@@ -570,7 +568,7 @@ void SceneNewGame::moveWhenNoBalance(Queue *queueWin, Queue *queueLost)
 		{
 			if (currentSheep->getHead() == nullptr && index != 0)
 				currentSheep->setHead(nextSheep);
-			currentSheep->setPosition(Vec2(nextSheep->getPosition().x - currentSheep->getDirection() * WIDTH_SHEEP, currentSheep->getPosition().y));
+			currentSheep->setPosition(Vec2(nextSheep->getPosition().x - currentSheep->getDirection() * currentSheep->getWidth(), currentSheep->getPosition().y));
 		}
 		else
 		{
@@ -588,8 +586,9 @@ bool SceneNewGame::checkCanCreateSheep(int lane, int direction)
 		if (vectorQueueSheep.at(lane)->getSize() > 0)
 		{
 			sheep = (Sheep*)vectorQueueSheep.at(lane)->get(vectorQueueSheep.at(lane)->getSize() - 1);
-
-			if (sheep->getPosition().x <= WIDTH_SHEEP)
+			
+			// replace true value (sheep->getWidth) in the next release after finish function generate random sheep 
+			if (sheep->getPosition().x <= sheep->getWidth())
 				return false;
 		}
 	}
@@ -599,7 +598,8 @@ bool SceneNewGame::checkCanCreateSheep(int lane, int direction)
 		{
 			sheep = (Sheep*)vectorQueueEnemy.at(lane)->get(vectorQueueEnemy.at(lane)->getSize() - 1);
 
-			if (sheep->getPosition().x + WIDTH_SHEEP >= 600)
+			// replace true value (sheep->getWidth) in the next release after finish function generate random sheep
+			if (sheep->getPosition().x + sheep->getWidth() >= 600)
 				return false;
 		}
 	}
