@@ -8,7 +8,6 @@ Sheep::Sheep(cocos2d::Scene* scene, int weight, int direction)
 	this->head = nullptr;
 	this->tail = nullptr;
 	this->scene = scene;
-<<<<<<< HEAD
 	this->type = -1;
 	// animation
 	Vector<SpriteFrame*> frames;
@@ -56,8 +55,6 @@ Sheep::Sheep(cocos2d::Scene* scene, int weight, int direction)
 	this->mSprite = Sprite::create();
 	this->mSprite->runAction(RepeatForever::create(animate));
 	scene->addChild(mSprite);
-=======
->>>>>>> master
 }
 Sheep::~Sheep()
 {
@@ -256,21 +253,5 @@ void Sheep::Update()
 			this->setAlive(false);
 		}
 	}*/
-<<<<<<< HEAD
 }
 
-Sheep * Sheep::clone()
-{
-	Sheep *newSheep = new Sheep(this->scene, this->getWeight(), this->getDirection());
-	newSheep->setSprite(this->getSprite());
-	newSheep->setPosition(this->getPosition());
-	newSheep->setVelocity(this->getVelocity());
-	newSheep->setLane(this->getLane());
-	newSheep->setHead(this->head);
-	newSheep->setTail(this->tail);
-	newSheep->setDirection(this->direction);
-	
-	return newSheep;
-}
-=======
->>>>>>> master
