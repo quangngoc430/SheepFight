@@ -13,6 +13,7 @@ private:
 	int direction;
 	int type;
 	cocos2d::Scene* scene;
+	bool alive;
 
 public:
 	Sheep(cocos2d::Scene* scene, int weight, int direction);
@@ -40,6 +41,8 @@ public:
 	int getType();
 	int getHeight();
 	int getWidth();
+	bool isAlive();
+	void setAlive(bool alive);
 
 	void Init();
 	void Update();

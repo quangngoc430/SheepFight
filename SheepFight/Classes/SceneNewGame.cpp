@@ -19,7 +19,6 @@ Label *scoreSheep;
 Label *scoreEnemy;
 Label *label;
 
-
 Scene* SceneNewGame::createScene()
 {
 	return SceneNewGame::create();
@@ -99,29 +98,20 @@ void SceneNewGame::textOnScreen()
 	scoreEnemy->setPosition(SCORE_ENEMY);
 	addChild(scoreEnemy);
 }
+
 void SceneNewGame::createButton() 
 {
-	auto buttonCreateSheepLane0 = ui::Button::create(IMG_GO, "go1.png", "go0.png");
-	auto buttonCreateSheepLane1 = ui::Button::create(IMG_GO, "go1.png", "go0.png");
-	auto buttonCreateSheepLane2 = ui::Button::create(IMG_GO, "go1.png", "go0.png");
-	auto buttonCreateSheepLane3 = ui::Button::create(IMG_GO, "go1.png", "go0.png");
-	auto buttonCreateSheepLane4 = ui::Button::create(IMG_GO, "go1.png", "go0.png");
-	auto buttonCreateEnemyLane0 = ui::Button::create(IMG_GO, "go1.png", "go0.png");
-	auto buttonCreateEnemyLane1 = ui::Button::create(IMG_GO, "go1.png", "go0.png");
-	auto buttonCreateEnemyLane2 = ui::Button::create(IMG_GO, "go1.png", "go0.png");
-	auto buttonCreateEnemyLane3 = ui::Button::create(IMG_GO, "go1.png", "go0.png");
-	auto buttonCreateEnemyLane4 = ui::Button::create(IMG_GO, "go1.png", "go0.png");
+	auto buttonCreateSheepLane0 = ui::Button::create(IMG_GO, "GoSelected.png", "GoSelected.png");
+	auto buttonCreateSheepLane1 = ui::Button::create(IMG_GO, "GoSelected.png", "GoSelected.png");
+	auto buttonCreateSheepLane2 = ui::Button::create(IMG_GO, "GoSelected.png", "GoSelected.png");
+	auto buttonCreateSheepLane3 = ui::Button::create(IMG_GO, "GoSelected.png", "GoSelected.png");
+	auto buttonCreateSheepLane4 = ui::Button::create(IMG_GO, "GoSelected.png", "GoSelected.png");
 
 	buttonCreateSheepLane0->setPosition(BTN_SHEEP_LANE_0);
 	buttonCreateSheepLane1->setPosition(BTN_SHEEP_LANE_1);
 	buttonCreateSheepLane2->setPosition(BTN_SHEEP_LANE_2);
 	buttonCreateSheepLane3->setPosition(BTN_SHEEP_LANE_3);
 	buttonCreateSheepLane4->setPosition(BTN_SHEEP_LANE_4);
-	buttonCreateEnemyLane0->setPosition(BTN_ENEMY_LANE_0);
-	buttonCreateEnemyLane1->setPosition(BTN_ENEMY_LANE_1);
-	buttonCreateEnemyLane2->setPosition(BTN_ENEMY_LANE_2);
-	buttonCreateEnemyLane3->setPosition(BTN_ENEMY_LANE_3);
-	buttonCreateEnemyLane4->setPosition(BTN_ENEMY_LANE_4);
 	
 	buttonCreateSheepLane0->addTouchEventListener([&](Ref* sender, ui::Widget::TouchEventType type) {
 		switch (type)
@@ -213,107 +203,11 @@ void SceneNewGame::createButton()
 		}
 	});
 
-	buttonCreateEnemyLane0->addTouchEventListener([&](Ref* sender, ui::Widget::TouchEventType type) {
-		switch (type)
-		{
-		case ui::Widget::TouchEventType::BEGAN:
-			break;
-		case ui::Widget::TouchEventType::ENDED:
-			if (checkCanCreateSheep(0, ENEMY_DIRECTION))
-			{
-				setTypeSheep(typeEnemy);
-				addActionSheep(0, typeEnemy[0], ENEMY_DIRECTION);
-			}
-			break;
-
-		default:
-			break;
-		}
-	});
-
-	buttonCreateEnemyLane1->addTouchEventListener([&](Ref* sender, ui::Widget::TouchEventType type) {
-		switch (type)
-		{
-		case ui::Widget::TouchEventType::BEGAN:
-			break;
-		case ui::Widget::TouchEventType::ENDED:
-			if (checkCanCreateSheep(1, ENEMY_DIRECTION))
-			{
-				setTypeSheep(typeEnemy);
-				addActionSheep(1, typeEnemy[0], ENEMY_DIRECTION);
-			}
-			break;
-
-		default:
-			break;
-		}
-	});
-
-	buttonCreateEnemyLane2->addTouchEventListener([&](Ref* sender, ui::Widget::TouchEventType type) {
-		switch (type)
-		{
-		case ui::Widget::TouchEventType::BEGAN:
-			break;
-		case ui::Widget::TouchEventType::ENDED:
-			if (checkCanCreateSheep(2, ENEMY_DIRECTION))
-			{
-				setTypeSheep(typeEnemy);
-				addActionSheep(2, typeEnemy[0], ENEMY_DIRECTION);
-			}
-			break;
-
-		default:
-			break;
-		}
-	});
-
-	buttonCreateEnemyLane3->addTouchEventListener([&](Ref* sender, ui::Widget::TouchEventType type) {
-		switch (type)
-		{
-		case ui::Widget::TouchEventType::BEGAN:
-			break;
-		case ui::Widget::TouchEventType::ENDED:
-			if (checkCanCreateSheep(3, ENEMY_DIRECTION))
-			{
-				setTypeSheep(typeEnemy);
-				addActionSheep(3, typeEnemy[0], ENEMY_DIRECTION);
-			}
-			break;
-
-		default:
-			break;
-		}
-	});
-
-	buttonCreateEnemyLane4->addTouchEventListener([&](Ref* sender, ui::Widget::TouchEventType type) {
-		switch (type)
-		{
-		case ui::Widget::TouchEventType::BEGAN:
-			break;
-		case ui::Widget::TouchEventType::ENDED:
-			if (checkCanCreateSheep(4, ENEMY_DIRECTION))
-			{
-				setTypeSheep(typeEnemy);
-				addActionSheep(4, typeEnemy[0], ENEMY_DIRECTION);
-			}
-			break;
-
-		default:
-			break;
-		}
-	});
-
 	this->addChild(buttonCreateSheepLane0, 0);
 	this->addChild(buttonCreateSheepLane1, 0);
 	this->addChild(buttonCreateSheepLane2, 0);
 	this->addChild(buttonCreateSheepLane3, 0);
 	this->addChild(buttonCreateSheepLane4, 0);
-
-	this->addChild(buttonCreateEnemyLane0, 0);
-	this->addChild(buttonCreateEnemyLane1, 0);
-	this->addChild(buttonCreateEnemyLane2, 0);
-	this->addChild(buttonCreateEnemyLane3, 0);
-	this->addChild(buttonCreateEnemyLane4, 0);
 }
 
 cocos2d::Vec2 SceneNewGame::selectLane(int lane, int direction)
@@ -359,7 +253,7 @@ void SceneNewGame::update(float detail)
 	countFPS++;
 	if (countFPS % 120 == 0)
 	{
-		addActionSheep(random(0, 4), BIG_SIZE, ENEMY_DIRECTION);
+		addActionSheep(random(LANE_0, LANE_4), random(SMALL_SIZE, BIG_SIZE) , ENEMY_DIRECTION);
 	}
 
 	for (int lane = 0; lane < MAX_LANES; lane++)
@@ -369,8 +263,6 @@ void SceneNewGame::update(float detail)
 
 	//scoreSheep->setString("Score: 12");
 	//scoreEnemy->setString("Score: 12");
-
-
 }
 
 void SceneNewGame::updateForEachLane(int lane)
