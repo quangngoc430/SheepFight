@@ -1,5 +1,6 @@
 #pragma once
 #include <Model.h>
+#include "SceneNewGame.h"
 
 class Sheep : public Model
 {

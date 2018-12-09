@@ -1,11 +1,9 @@
 ﻿#include "SceneNewGame.h"
 #include "Defines.h"
 #include "SceneMenu.h"
-#include "ui/CocosGUI.h"
 #include "Sheep.h"
 #include <vector>
 
-Sheep *space1;
 
 USING_NS_CC;
 
@@ -15,8 +13,11 @@ int countElement;
 int countFPS;
 int typeSheep[2] = { 0, 0 };
 int typeEnemy[2] = { 0, 0 };
-Label *scoreSheep;
-Label *scoreEnemy;
+Sheep *space1;
+int SceneNewGame::scoreSheep = DEFAULT_SCORE;
+int SceneNewGame::scoreEnemy = DEFAULT_SCORE;
+Label* scoreSheepLabel;
+Label* scoreEnemyLabel;
 Label *label;
 
 Scene* SceneNewGame::createScene()
@@ -86,17 +87,17 @@ void SceneNewGame::setTypeSheep(int typeSheep[])
 
 void SceneNewGame::textOnScreen()
 {
-	scoreSheep = Label::createWithTTF("0", "fonts/Marker Felt.ttf ", 30);
-	scoreSheep->setColor(Color3B::RED);
-	scoreSheep->setAlignment(cocos2d::TextHAlignment::CENTER);
-	scoreSheep->setPosition(SCORE_SHEEP);
-	addChild(scoreSheep);
+	scoreSheepLabel = Label::createWithTTF("0", "fonts/Marker Felt.ttf ", 30);
+	scoreSheepLabel->setColor(Color3B::RED);
+	scoreSheepLabel->setAlignment(cocos2d::TextHAlignment::CENTER);
+	scoreSheepLabel->setPosition(SCORE_SHEEP);
+	addChild(scoreSheepLabel);
 
-	scoreEnemy = Label::createWithTTF("0", "fonts/Marker Felt.ttf ", 30);
-	scoreEnemy->setColor(Color3B::WHITE);
-	scoreEnemy->setAlignment(cocos2d::TextHAlignment::CENTER);
-	scoreEnemy->setPosition(SCORE_ENEMY);
-	addChild(scoreEnemy);
+	scoreEnemyLabel = Label::createWithTTF("0", "fonts/Marker Felt.ttf ", 30);
+	scoreEnemyLabel->setColor(Color3B::WHITE);
+	scoreEnemyLabel->setAlignment(cocos2d::TextHAlignment::CENTER);
+	scoreEnemyLabel->setPosition(SCORE_ENEMY);
+	addChild(scoreEnemyLabel);
 }
 
 void SceneNewGame::createButton() 
@@ -261,8 +262,7 @@ void SceneNewGame::update(float detail)
 		updateForEachLane(lane);
 	}
 
-	//scoreSheep->setString("Score: 12");
-	//scoreEnemy->setString("Score: 12");
+	updateScoreOnScreen();
 }
 
 void SceneNewGame::updateForEachLane(int lane)
@@ -337,14 +337,68 @@ void SceneNewGame::updateForEachLane(int lane)
 		}
 	}	
 
+
 	for (int index = 0; index < queueSheep->getSize(); index++)
 	{
-		((Sheep*)queueSheep->get(index))->Update();
+		currentSheep = ((Sheep*)queueSheep->get(index));
+		currentSheep->Update();
+
+		if (!currentSheep->isAlive()) 
+		{
+			if (currentSheep->getHead() == nullptr)
+			{
+				if (currentSheep->getTail() != nullptr)
+				{
+					currentSheep->getTail()->setHead(nullptr);
+				}
+			}
+			else
+			{
+				if (currentSheep->getTail() == nullptr)
+				{
+					currentSheep->getHead()->setTail(nullptr);
+				}
+				else
+				{
+					currentSheep->getHead()->setTail(currentSheep->getTail());
+				}
+			}
+			queueSheep->remove(index);
+			delete currentSheep;
+		}
+		
 	}
 
 	for (int index = 0; index < queueEnemy->getSize(); index++)
 	{
-		((Sheep*)queueEnemy->get(index))->Update();
+		currentSheep = ((Sheep*)queueEnemy->get(index));
+		currentSheep->Update();
+
+		if (!currentSheep->isAlive())
+		{
+			if (currentSheep->getHead() == nullptr)
+			{
+				if (currentSheep->getTail() != nullptr)
+				{
+					currentSheep->getTail()->setHead(nullptr);
+				}
+			}
+			else
+			{
+				if (currentSheep->getTail() == nullptr)
+				{
+					currentSheep->getHead()->setTail(nullptr);
+				}
+				else
+				{
+					currentSheep->getHead()->setTail(currentSheep->getTail());
+				}
+			}
+			queueEnemy->remove(index);
+			delete currentSheep;
+		}
+
+		
 	}
 }
 
@@ -497,4 +551,10 @@ bool SceneNewGame::checkCanCreateSheep(int lane, int direction)
 	}
 
 	return true;
+}
+
+void SceneNewGame::updateScoreOnScreen()
+{
+	scoreEnemyLabel->setString(std::to_string(SceneNewGame::scoreEnemy));
+	scoreSheepLabel->setString(std::to_string(SceneNewGame::scoreSheep));
 }

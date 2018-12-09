@@ -60,7 +60,7 @@ Sheep::Sheep(cocos2d::Scene* scene, int weight, int direction)
 }
 Sheep::~Sheep()
 {
-	
+	this->getSprite()->removeFromParent();
 }
 
 void Sheep::setId(int id)
@@ -269,17 +269,24 @@ void Sheep::Update()
 		break;
 	}
 
-	if (this->direction == SHEEP_DIRECTION)
+	if (this->getPosition().x + width < M_START)
 	{
-		if (this->getPosition().x + width < M_START)
+		this->alive = false;
+		
+		if (this->direction == ENEMY_DIRECTION)
 		{
-			this->alive = false;
+			SceneNewGame::scoreEnemy += this->weight;
 		}
 	}
-	else if (this->direction == ENEMY_DIRECTION) {
-		if (this->getPosition().x > M_END)
+
+	
+	if (this->getPosition().x > M_END)
+	{
+		this->alive = false;
+
+		if (this->direction == SHEEP_DIRECTION)
 		{
-			this->alive = false;
+			SceneNewGame::scoreSheep += this->weight;
 		}
 	}
 }

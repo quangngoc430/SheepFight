@@ -64,8 +64,10 @@
 #define ENEMY_LANE_4 Vec2(750, 355)
 
 #define M_START 50
-#define M_END 750
+#define M_END 760
 #define mMiddle 400
+
+#define DEFAULT_SCORE 0;
 
 #define MAX_SHEEP 5
 #define MAX_LANES 5

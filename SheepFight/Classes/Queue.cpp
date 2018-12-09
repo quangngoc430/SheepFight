@@ -38,6 +38,13 @@ Model* Queue::get(int index)
 	return this->objects.at(index);
 }
 
+Model* Queue::remove(int index)
+{
+	Model * result = this->objects.at(index);
+	this->objects.erase(this->objects.begin() + index);
+	return result;
+}
+
 int Queue::getSize()
 {
 	return this->objects.size();
