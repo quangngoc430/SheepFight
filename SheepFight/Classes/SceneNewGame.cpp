@@ -120,10 +120,10 @@ void SceneNewGame::createButton()
 		case ui::Widget::TouchEventType::BEGAN:
 			break;
 		case ui::Widget::TouchEventType::ENDED:
-			if (checkCanCreateSheep(0, SHEEP_DIRECTION))
+			if (checkCanCreateSheep(LANE_0, SHEEP_DIRECTION))
 			{
 				setTypeSheep(typeSheep);
-				addActionSheep(0, typeSheep[0], SHEEP_DIRECTION);
+				addActionSheep(LANE_0, random(SMALL_SHEEP_TYPE, BIG_SHEEP_TYPE), SHEEP_DIRECTION);
 			}
 			break;
 
@@ -138,10 +138,10 @@ void SceneNewGame::createButton()
 		case ui::Widget::TouchEventType::BEGAN:
 			break;
 		case ui::Widget::TouchEventType::ENDED:
-			if (checkCanCreateSheep(1, SHEEP_DIRECTION))
+			if (checkCanCreateSheep(LANE_1, SHEEP_DIRECTION))
 			{
 				setTypeSheep(typeSheep);
-				addActionSheep(1, typeSheep[0], SHEEP_DIRECTION);
+				addActionSheep(LANE_1, random(SMALL_SHEEP_TYPE, BIG_SHEEP_TYPE), SHEEP_DIRECTION);
 			}
 			break;
 
@@ -156,10 +156,10 @@ void SceneNewGame::createButton()
 		case ui::Widget::TouchEventType::BEGAN:
 			break;
 		case ui::Widget::TouchEventType::ENDED:
-			if (checkCanCreateSheep(2, SHEEP_DIRECTION))
+			if (checkCanCreateSheep(LANE_2, SHEEP_DIRECTION))
 			{
 				setTypeSheep(typeSheep);
-				addActionSheep(2, typeSheep[0], SHEEP_DIRECTION);
+				addActionSheep(LANE_2, random(SMALL_SHEEP_TYPE, BIG_SHEEP_TYPE), SHEEP_DIRECTION);
 			}
 			break;
 
@@ -174,10 +174,10 @@ void SceneNewGame::createButton()
 		case ui::Widget::TouchEventType::BEGAN:
 			break;
 		case ui::Widget::TouchEventType::ENDED:
-			if (checkCanCreateSheep(3, SHEEP_DIRECTION))
+			if (checkCanCreateSheep(LANE_3, SHEEP_DIRECTION))
 			{
 				setTypeSheep(typeSheep);
-				addActionSheep(3, typeSheep[0], SHEEP_DIRECTION);
+				addActionSheep(LANE_3, random(SMALL_SHEEP_TYPE, BIG_SHEEP_TYPE), SHEEP_DIRECTION);
 			}
 			break;
 
@@ -192,10 +192,10 @@ void SceneNewGame::createButton()
 		case ui::Widget::TouchEventType::BEGAN:
 			break;
 		case ui::Widget::TouchEventType::ENDED:
-			if (checkCanCreateSheep(4, SHEEP_DIRECTION))
+			if (checkCanCreateSheep(LANE_4, SHEEP_DIRECTION))
 			{
 				setTypeSheep(typeSheep);
-				addActionSheep(4, typeSheep[0], SHEEP_DIRECTION);
+				addActionSheep(LANE_4, random(SMALL_SHEEP_TYPE, BIG_SHEEP_TYPE), SHEEP_DIRECTION);
 			}
 			break;
 
@@ -243,9 +243,14 @@ void SceneNewGame::addActionSheep(int lane, int weight, int direction)
 	sheep->setPosition(selectLane(lane, direction));
 	sheep->setVelocity(cocos2d::Vec2(2, 0));
 	sheep->setAlive(true);
-	sheep->setWeight(weight);
-	sheep->setDirection(direction);
-	(direction == SHEEP_DIRECTION) ? vectorQueueSheep.at(lane)->push(sheep) : vectorQueueEnemy.at(lane)->push(sheep);
+	if (direction == SHEEP_DIRECTION)
+	{
+		vectorQueueSheep.at(lane)->push(sheep);
+	}
+	else
+	{
+		vectorQueueEnemy.at(lane)->push(sheep);
+	}
 }
 
 void SceneNewGame::update(float detail)
@@ -254,8 +259,10 @@ void SceneNewGame::update(float detail)
 	countFPS++;
 	if (countFPS % 120 == 0)
 	{
-		addActionSheep(random(LANE_0, LANE_4), random(SMALL_SIZE, BIG_SIZE) , ENEMY_DIRECTION);
+		addActionSheep(random(LANE_0, LANE_4), random(SMALL_SHEEP_TYPE, BIG_SHEEP_TYPE) , ENEMY_DIRECTION);
 	}
+
+	log("---------------------------------");
 
 	for (int lane = 0; lane < MAX_LANES; lane++)
 	{
@@ -303,6 +310,8 @@ void SceneNewGame::updateForEachLane(int lane)
 				break;
 		}
 	}
+
+	log("%d - %d", weightOfSheeps, weightOfEnemies);
 
 	Sheep* currentSheep;
 	Sheep* previousSheep;

@@ -8,50 +8,62 @@ Sheep::Sheep(cocos2d::Scene* scene, int weight, int direction)
 	this->head = nullptr;
 	this->tail = nullptr;
 	this->scene = scene;
-	this->type = -1;
 	this->alive = true;
 	this->setWeight(weight);
+	this->direction = direction;
 	// animation
 	Vector<SpriteFrame*> frames;
 	if (direction == SHEEP_DIRECTION)
 	{
 		if (weight == SMALL_SIZE)
 		{
-			frames.pushBack(SpriteFrame::create(IMG_SMALL_SHEEP, Rect(0, 0, SMALL_SIZE_WIDTH, SMALL_SIZE_HEIGHT)));
-			frames.pushBack(SpriteFrame::create(IMG_SMALL_SHEEP_ANI, Rect(0, 0, SMALL_SIZE_WIDTH, SMALL_SIZE_HEIGHT)));
+			frames.pushBack(SpriteFrame::create(IMG_SMALL_SHEEP_1, Rect(0, 0, SMALL_SIZE_WIDTH, SMALL_SIZE_HEIGHT)));
+			/*frames.pushBack(SpriteFrame::create(IMG_SMALL_SHEEP_2, Rect(0, 0, SMALL_SIZE_WIDTH, SMALL_SIZE_HEIGHT)));
+			frames.pushBack(SpriteFrame::create(IMG_SMALL_SHEEP_3, Rect(0, 0, SMALL_SIZE_WIDTH, SMALL_SIZE_HEIGHT)));
+			frames.pushBack(SpriteFrame::create(IMG_SMALL_SHEEP_4, Rect(0, 0, SMALL_SIZE_WIDTH, SMALL_SIZE_HEIGHT)));*/
 		}
 		else if (weight == MEDIUM_SIZE)
 		{
-			frames.pushBack(SpriteFrame::create(IMG_MEDIUM_SHEEP, Rect(0, 0, MEDIUM_SIZE_WIDTH, MEDIUM_SIZE_HEIGHT)));
-			frames.pushBack(SpriteFrame::create(IMG_MEDIUM_SHEEP_ANI, Rect(0, 0, MEDIUM_SIZE_WIDTH, MEDIUM_SIZE_HEIGHT)));
+			frames.pushBack(SpriteFrame::create(IMG_MEDIUM_SHEEP_1, Rect(0, 0, MEDIUM_SIZE_WIDTH, MEDIUM_SIZE_HEIGHT)));
+			/*frames.pushBack(SpriteFrame::create(IMG_MEDIUM_SHEEP_2, Rect(0, 0, MEDIUM_SIZE_WIDTH, MEDIUM_SIZE_HEIGHT)));
+			frames.pushBack(SpriteFrame::create(IMG_MEDIUM_SHEEP_3, Rect(0, 0, MEDIUM_SIZE_WIDTH, MEDIUM_SIZE_HEIGHT)));
+			frames.pushBack(SpriteFrame::create(IMG_MEDIUM_SHEEP_4, Rect(0, 0, MEDIUM_SIZE_WIDTH, MEDIUM_SIZE_HEIGHT)));*/
 		}
 		else
 		{
-			frames.pushBack(SpriteFrame::create(IMG_BIG_SHEEP, Rect(0, 0, BIG_SIZE_WIDTH, BIG_SIZE_HEIGHT)));
-			frames.pushBack(SpriteFrame::create(IMG_BIG_SHEEP_ANI, Rect(0, 0, BIG_SIZE_WIDTH, BIG_SIZE_HEIGHT)));
+			frames.pushBack(SpriteFrame::create(IMG_BIG_SHEEP_1, Rect(0, 0, BIG_SIZE_WIDTH, BIG_SIZE_HEIGHT)));
+			/*frames.pushBack(SpriteFrame::create(IMG_BIG_SHEEP_2, Rect(0, 0, BIG_SIZE_WIDTH, BIG_SIZE_HEIGHT)));
+			frames.pushBack(SpriteFrame::create(IMG_BIG_SHEEP_3, Rect(0, 0, BIG_SIZE_WIDTH, BIG_SIZE_HEIGHT)));
+			frames.pushBack(SpriteFrame::create(IMG_BIG_SHEEP_4, Rect(0, 0, BIG_SIZE_WIDTH, BIG_SIZE_HEIGHT)));*/
 		}
 	}
 	else
 	{
 		if (weight == SMALL_SIZE)
 		{
-			frames.pushBack(SpriteFrame::create(IMG_SMALL_ENEMY, Rect(0, 0, SMALL_SIZE_WIDTH, SMALL_SIZE_HEIGHT)));
-			frames.pushBack(SpriteFrame::create(IMG_SMALL_ENEMY_ANI, Rect(0, 0, SMALL_SIZE_WIDTH, SMALL_SIZE_HEIGHT)));
+			frames.pushBack(SpriteFrame::create(IMG_SMALL_ENEMY_1, Rect(0, 0, SMALL_SIZE_WIDTH, SMALL_SIZE_HEIGHT)));
+			/*frames.pushBack(SpriteFrame::create(IMG_SMALL_ENEMY_2, Rect(0, 0, SMALL_SIZE_WIDTH, SMALL_SIZE_HEIGHT)));
+			frames.pushBack(SpriteFrame::create(IMG_SMALL_ENEMY_3, Rect(0, 0, SMALL_SIZE_WIDTH, SMALL_SIZE_HEIGHT)));
+			frames.pushBack(SpriteFrame::create(IMG_SMALL_ENEMY_4, Rect(0, 0, SMALL_SIZE_WIDTH, SMALL_SIZE_HEIGHT)));*/
 		}
 		else if (weight == MEDIUM_SIZE)
 		{
-			frames.pushBack(SpriteFrame::create(IMG_MEDIUM_ENEMY, Rect(0, 0, MEDIUM_SIZE_WIDTH, MEDIUM_SIZE_HEIGHT)));
-			frames.pushBack(SpriteFrame::create(IMG_MEDIUM_ENEMY_ANI, Rect(0, 0, MEDIUM_SIZE_WIDTH, MEDIUM_SIZE_HEIGHT)));
+			frames.pushBack(SpriteFrame::create(IMG_MEDIUM_ENEMY_1, Rect(0, 0, MEDIUM_SIZE_WIDTH, MEDIUM_SIZE_HEIGHT)));
+			/*frames.pushBack(SpriteFrame::create(IMG_MEDIUM_ENEMY_2, Rect(0, 0, MEDIUM_SIZE_WIDTH, MEDIUM_SIZE_HEIGHT)));
+			frames.pushBack(SpriteFrame::create(IMG_MEDIUM_ENEMY_3, Rect(0, 0, MEDIUM_SIZE_WIDTH, MEDIUM_SIZE_HEIGHT)));
+			frames.pushBack(SpriteFrame::create(IMG_MEDIUM_ENEMY_4, Rect(0, 0, MEDIUM_SIZE_WIDTH, MEDIUM_SIZE_HEIGHT)));*/
 		}
 		else
 		{
-			frames.pushBack(SpriteFrame::create(IMG_BIG_ENEMY, Rect(0, 0, BIG_SIZE_WIDTH, BIG_SIZE_HEIGHT)));
-			frames.pushBack(SpriteFrame::create(IMG_BIG_ENEMY_ANI, Rect(0, 0, BIG_SIZE_WIDTH, BIG_SIZE_HEIGHT)));
+			frames.pushBack(SpriteFrame::create(IMG_BIG_ENEMY_1, Rect(0, 0, BIG_SIZE_WIDTH, BIG_SIZE_HEIGHT)));
+			/*frames.pushBack(SpriteFrame::create(IMG_BIG_ENEMY_2, Rect(0, 0, BIG_SIZE_WIDTH, BIG_SIZE_HEIGHT)));
+			frames.pushBack(SpriteFrame::create(IMG_BIG_ENEMY_3, Rect(0, 0, BIG_SIZE_WIDTH, BIG_SIZE_HEIGHT)));
+			frames.pushBack(SpriteFrame::create(IMG_BIG_ENEMY_4, Rect(0, 0, BIG_SIZE_WIDTH, BIG_SIZE_HEIGHT)));*/
 		}
 	}
 	
 	
-	auto animation = Animation::createWithSpriteFrames(frames, 0.3f);
+	auto animation = Animation::createWithSpriteFrames(frames, 0.1f);
 	auto animate = Animate::create(animation);
 
 	this->mSprite = Sprite::create();
