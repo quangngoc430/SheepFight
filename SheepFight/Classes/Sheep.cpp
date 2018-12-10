@@ -5,69 +5,109 @@ USING_NS_CC;
 
 Sheep::Sheep(cocos2d::Scene* scene, int weight, int direction)
 {
+	//this->head = nullptr;
+	//this->tail = nullptr;
+	//this->scene = scene;
+	//this->alive = true;
+	//this->setWeight(weight);
+	//this->direction = direction;
+	//// animation
+	//Vector<SpriteFrame*> frames;
+	//if (direction == SHEEP_DIRECTION)
+	//{
+	//	if (weight == SMALL_SIZE)
+	//	{
+	//		frames.pushBack(SpriteFrame::create(IMG_SMALL_SHEEP_1, Rect(0, 0, SMALL_SIZE_WIDTH, SMALL_SIZE_HEIGHT)));
+	//		/*frames.pushBack(SpriteFrame::create(IMG_SMALL_SHEEP_2, Rect(0, 0, SMALL_SIZE_WIDTH, SMALL_SIZE_HEIGHT)));
+	//		frames.pushBack(SpriteFrame::create(IMG_SMALL_SHEEP_3, Rect(0, 0, SMALL_SIZE_WIDTH, SMALL_SIZE_HEIGHT)));
+	//		frames.pushBack(SpriteFrame::create(IMG_SMALL_SHEEP_4, Rect(0, 0, SMALL_SIZE_WIDTH, SMALL_SIZE_HEIGHT)));*/
+	//	}
+	//	else if (weight == MEDIUM_SIZE)
+	//	{
+	//		frames.pushBack(SpriteFrame::create(IMG_MEDIUM_SHEEP_1, Rect(0, 0, MEDIUM_SIZE_WIDTH, MEDIUM_SIZE_HEIGHT)));
+	//		/*frames.pushBack(SpriteFrame::create(IMG_MEDIUM_SHEEP_2, Rect(0, 0, MEDIUM_SIZE_WIDTH, MEDIUM_SIZE_HEIGHT)));
+	//		frames.pushBack(SpriteFrame::create(IMG_MEDIUM_SHEEP_3, Rect(0, 0, MEDIUM_SIZE_WIDTH, MEDIUM_SIZE_HEIGHT)));
+	//		frames.pushBack(SpriteFrame::create(IMG_MEDIUM_SHEEP_4, Rect(0, 0, MEDIUM_SIZE_WIDTH, MEDIUM_SIZE_HEIGHT)));*/
+	//	}
+	//	else
+	//	{
+	//		frames.pushBack(SpriteFrame::create(IMG_BIG_SHEEP_1, Rect(0, 0, BIG_SIZE_WIDTH, BIG_SIZE_HEIGHT)));
+	//		/*frames.pushBack(SpriteFrame::create(IMG_BIG_SHEEP_2, Rect(0, 0, BIG_SIZE_WIDTH, BIG_SIZE_HEIGHT)));
+	//		frames.pushBack(SpriteFrame::create(IMG_BIG_SHEEP_3, Rect(0, 0, BIG_SIZE_WIDTH, BIG_SIZE_HEIGHT)));
+	//		frames.pushBack(SpriteFrame::create(IMG_BIG_SHEEP_4, Rect(0, 0, BIG_SIZE_WIDTH, BIG_SIZE_HEIGHT)));*/
+	//	}
+	//}
+	//else
+	//{
+	//	if (weight == SMALL_SIZE)
+	//	{
+	//		frames.pushBack(SpriteFrame::create(IMG_SMALL_ENEMY_1, Rect(0, 0, SMALL_SIZE_WIDTH, SMALL_SIZE_HEIGHT)));
+	//		/*frames.pushBack(SpriteFrame::create(IMG_SMALL_ENEMY_2, Rect(0, 0, SMALL_SIZE_WIDTH, SMALL_SIZE_HEIGHT)));
+	//		frames.pushBack(SpriteFrame::create(IMG_SMALL_ENEMY_3, Rect(0, 0, SMALL_SIZE_WIDTH, SMALL_SIZE_HEIGHT)));
+	//		frames.pushBack(SpriteFrame::create(IMG_SMALL_ENEMY_4, Rect(0, 0, SMALL_SIZE_WIDTH, SMALL_SIZE_HEIGHT)));*/
+	//	}
+	//	else if (weight == MEDIUM_SIZE)
+	//	{
+	//		frames.pushBack(SpriteFrame::create(IMG_MEDIUM_ENEMY_1, Rect(0, 0, MEDIUM_SIZE_WIDTH, MEDIUM_SIZE_HEIGHT)));
+	//		/*frames.pushBack(SpriteFrame::create(IMG_MEDIUM_ENEMY_2, Rect(0, 0, MEDIUM_SIZE_WIDTH, MEDIUM_SIZE_HEIGHT)));
+	//		frames.pushBack(SpriteFrame::create(IMG_MEDIUM_ENEMY_3, Rect(0, 0, MEDIUM_SIZE_WIDTH, MEDIUM_SIZE_HEIGHT)));
+	//		frames.pushBack(SpriteFrame::create(IMG_MEDIUM_ENEMY_4, Rect(0, 0, MEDIUM_SIZE_WIDTH, MEDIUM_SIZE_HEIGHT)));*/
+	//	}
+	//	else
+	//	{
+	//		frames.pushBack(SpriteFrame::create(IMG_BIG_ENEMY_1, Rect(0, 0, BIG_SIZE_WIDTH, BIG_SIZE_HEIGHT)));
+	//		/*frames.pushBack(SpriteFrame::create(IMG_BIG_ENEMY_2, Rect(0, 0, BIG_SIZE_WIDTH, BIG_SIZE_HEIGHT)));
+	//		frames.pushBack(SpriteFrame::create(IMG_BIG_ENEMY_3, Rect(0, 0, BIG_SIZE_WIDTH, BIG_SIZE_HEIGHT)));
+	//		frames.pushBack(SpriteFrame::create(IMG_BIG_ENEMY_4, Rect(0, 0, BIG_SIZE_WIDTH, BIG_SIZE_HEIGHT)));*/
+	//	}
+	//}
+	//
+	//
+	//auto animation = Animation::createWithSpriteFrames(frames, 0.1f);
+	//auto animate = Animate::create(animation);
+
+	//this->mSprite = Sprite::create();
+	//this->mSprite->runAction(RepeatForever::create(animate));
+	//scene->addChild(mSprite);
+
 	this->head = nullptr;
 	this->tail = nullptr;
-	this->scene = scene;
 	this->alive = true;
+	this->scene = scene;
 	this->setWeight(weight);
 	this->direction = direction;
-	// animation
-	Vector<SpriteFrame*> frames;
-	if (direction == SHEEP_DIRECTION)
+
+	if (this->direction == SHEEP_DIRECTION)
 	{
-		if (weight == SMALL_SIZE)
+		switch (this->type)
 		{
-			frames.pushBack(SpriteFrame::create(IMG_SMALL_SHEEP_1, Rect(0, 0, SMALL_SIZE_WIDTH, SMALL_SIZE_HEIGHT)));
-			/*frames.pushBack(SpriteFrame::create(IMG_SMALL_SHEEP_2, Rect(0, 0, SMALL_SIZE_WIDTH, SMALL_SIZE_HEIGHT)));
-			frames.pushBack(SpriteFrame::create(IMG_SMALL_SHEEP_3, Rect(0, 0, SMALL_SIZE_WIDTH, SMALL_SIZE_HEIGHT)));
-			frames.pushBack(SpriteFrame::create(IMG_SMALL_SHEEP_4, Rect(0, 0, SMALL_SIZE_WIDTH, SMALL_SIZE_HEIGHT)));*/
-		}
-		else if (weight == MEDIUM_SIZE)
-		{
-			frames.pushBack(SpriteFrame::create(IMG_MEDIUM_SHEEP_1, Rect(0, 0, MEDIUM_SIZE_WIDTH, MEDIUM_SIZE_HEIGHT)));
-			/*frames.pushBack(SpriteFrame::create(IMG_MEDIUM_SHEEP_2, Rect(0, 0, MEDIUM_SIZE_WIDTH, MEDIUM_SIZE_HEIGHT)));
-			frames.pushBack(SpriteFrame::create(IMG_MEDIUM_SHEEP_3, Rect(0, 0, MEDIUM_SIZE_WIDTH, MEDIUM_SIZE_HEIGHT)));
-			frames.pushBack(SpriteFrame::create(IMG_MEDIUM_SHEEP_4, Rect(0, 0, MEDIUM_SIZE_WIDTH, MEDIUM_SIZE_HEIGHT)));*/
-		}
-		else
-		{
-			frames.pushBack(SpriteFrame::create(IMG_BIG_SHEEP_1, Rect(0, 0, BIG_SIZE_WIDTH, BIG_SIZE_HEIGHT)));
-			/*frames.pushBack(SpriteFrame::create(IMG_BIG_SHEEP_2, Rect(0, 0, BIG_SIZE_WIDTH, BIG_SIZE_HEIGHT)));
-			frames.pushBack(SpriteFrame::create(IMG_BIG_SHEEP_3, Rect(0, 0, BIG_SIZE_WIDTH, BIG_SIZE_HEIGHT)));
-			frames.pushBack(SpriteFrame::create(IMG_BIG_SHEEP_4, Rect(0, 0, BIG_SIZE_WIDTH, BIG_SIZE_HEIGHT)));*/
+		case SMALL_SHEEP_TYPE:
+			this->mSprite = Sprite::create(IMG_SMALL_SHEEP_1);
+			break;
+		case MEDIUM_SHEEP_TYPE:
+			this->mSprite = Sprite::create(IMG_MEDIUM_SHEEP_1);
+			break;
+		case BIG_SHEEP_TYPE:
+			this->mSprite = Sprite::create(IMG_BIG_SHEEP_1);
+			break;
 		}
 	}
 	else
 	{
-		if (weight == SMALL_SIZE)
+		switch (this->type)
 		{
-			frames.pushBack(SpriteFrame::create(IMG_SMALL_ENEMY_1, Rect(0, 0, SMALL_SIZE_WIDTH, SMALL_SIZE_HEIGHT)));
-			/*frames.pushBack(SpriteFrame::create(IMG_SMALL_ENEMY_2, Rect(0, 0, SMALL_SIZE_WIDTH, SMALL_SIZE_HEIGHT)));
-			frames.pushBack(SpriteFrame::create(IMG_SMALL_ENEMY_3, Rect(0, 0, SMALL_SIZE_WIDTH, SMALL_SIZE_HEIGHT)));
-			frames.pushBack(SpriteFrame::create(IMG_SMALL_ENEMY_4, Rect(0, 0, SMALL_SIZE_WIDTH, SMALL_SIZE_HEIGHT)));*/
-		}
-		else if (weight == MEDIUM_SIZE)
-		{
-			frames.pushBack(SpriteFrame::create(IMG_MEDIUM_ENEMY_1, Rect(0, 0, MEDIUM_SIZE_WIDTH, MEDIUM_SIZE_HEIGHT)));
-			/*frames.pushBack(SpriteFrame::create(IMG_MEDIUM_ENEMY_2, Rect(0, 0, MEDIUM_SIZE_WIDTH, MEDIUM_SIZE_HEIGHT)));
-			frames.pushBack(SpriteFrame::create(IMG_MEDIUM_ENEMY_3, Rect(0, 0, MEDIUM_SIZE_WIDTH, MEDIUM_SIZE_HEIGHT)));
-			frames.pushBack(SpriteFrame::create(IMG_MEDIUM_ENEMY_4, Rect(0, 0, MEDIUM_SIZE_WIDTH, MEDIUM_SIZE_HEIGHT)));*/
-		}
-		else
-		{
-			frames.pushBack(SpriteFrame::create(IMG_BIG_ENEMY_1, Rect(0, 0, BIG_SIZE_WIDTH, BIG_SIZE_HEIGHT)));
-			/*frames.pushBack(SpriteFrame::create(IMG_BIG_ENEMY_2, Rect(0, 0, BIG_SIZE_WIDTH, BIG_SIZE_HEIGHT)));
-			frames.pushBack(SpriteFrame::create(IMG_BIG_ENEMY_3, Rect(0, 0, BIG_SIZE_WIDTH, BIG_SIZE_HEIGHT)));
-			frames.pushBack(SpriteFrame::create(IMG_BIG_ENEMY_4, Rect(0, 0, BIG_SIZE_WIDTH, BIG_SIZE_HEIGHT)));*/
+		case SMALL_SHEEP_TYPE:
+			this->mSprite = Sprite::create(IMG_SMALL_ENEMY_1);
+			break;
+		case MEDIUM_SHEEP_TYPE:
+			this->mSprite = Sprite::create(IMG_MEDIUM_ENEMY_1);
+			break;
+		case BIG_SHEEP_TYPE:
+			this->mSprite = Sprite::create(IMG_BIG_ENEMY_1);
+			break;
 		}
 	}
-	
-	
-	auto animation = Animation::createWithSpriteFrames(frames, 0.1f);
-	auto animate = Animate::create(animation);
 
-	this->mSprite = Sprite::create();
-	this->mSprite->runAction(RepeatForever::create(animate));
 	scene->addChild(mSprite);
 }
 Sheep::~Sheep()
@@ -98,7 +138,7 @@ void Sheep::setWeight(int weight)
 		this->type = MEDIUM_SHEEP_TYPE;
 		break;
 	case SMALL_SIZE:
-		this->type = SMALL_SIZE;
+		this->type = SMALL_SHEEP_TYPE;
 		break;
 	}
 }
@@ -150,8 +190,8 @@ Sheep * Sheep::getTail()
 
 void Sheep::moveBack()
 {
-	this->setPosition(Vec2(this->getPosition().x - this->direction * this->getVelocity().x,
-					  this->getPosition().y - this->direction * this->getVelocity().y));
+	this->mSprite->setPosition(Vec2(this->mSprite->getPosition().x - this->direction * this->getVelocity().x,
+									this->mSprite->getPosition().y));
 }
 
 bool Sheep::simulateColisionSheepMoveBack(Sheep* otherSheep)
@@ -172,15 +212,15 @@ bool Sheep::simulateColisionSheepMoveBack(Sheep* otherSheep)
 
 void Sheep::moveForward()
 {
-	this->setPosition(Vec2(this->getPosition().x + this->direction * this->getVelocity().x,
-					  this->getPosition().y + this->direction * this->getVelocity().y));
+	this->mSprite->setPosition(Vec2(this->mSprite->getPosition().x + this->direction * this->getVelocity().x,
+									this->mSprite->getPosition().y));
 }
 
 bool Sheep::simulateColisionSheepMoveForward(Sheep* otherSheep)
 {
 	this->moveForward();
 	bool result = false; 
-	Rect a = this->getSprite()->getBoundingBox();
+	Rect a = this->mSprite->getBoundingBox();
 	Rect b = otherSheep->getSprite()->getBoundingBox();
 	if (a.intersectsRect(b))
 	{

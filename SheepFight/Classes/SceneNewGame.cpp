@@ -238,8 +238,7 @@ cocos2d::Vec2 SceneNewGame::selectLane(int lane, int direction)
 void SceneNewGame::addActionSheep(int lane, int weight, int direction)
 {
 	Sheep *sheep = new Sheep(this, weight, direction);
-	sheep->setId(countElement);
-	countElement++;
+	sheep->setId(countElement++);
 	sheep->setPosition(selectLane(lane, direction));
 	sheep->setVelocity(cocos2d::Vec2(2, 0));
 	sheep->setAlive(true);
@@ -427,7 +426,14 @@ void SceneNewGame::moveWhenBalance(Queue *queue)
 			{
 				currentSheep->setHead(previousSheep);
 				previousSheep->setTail(currentSheep);
-				currentSheep->setPosition(Vec2(previousSheep->getPosition().x - previousSheep->getDirection() * previousSheep->getWidth(), currentSheep->getPosition().y));
+				if (currentSheep->getDirection() == SHEEP_DIRECTION)
+				{
+					currentSheep->getSprite()->setPosition(Vec2(previousSheep->getPosition().x - currentSheep->getWidth(), previousSheep->getPosition().y));
+				}
+				else
+				{
+					currentSheep->getSprite()->setPosition(Vec2(previousSheep->getPosition().x + previousSheep->getWidth(), previousSheep->getPosition().y));
+				}
 				break;
 			}
 			else
@@ -469,23 +475,30 @@ void SceneNewGame::moveWhenNoBalance(Queue *queueWin, Queue *queueLost)
 			{
 				currentSheep->setTail(nextSheep);
 				nextSheep->setHead(currentSheep);
-				currentSheep->setPosition(Vec2(nextSheep->getPosition().x + currentSheep->getDirection() * currentSheep->getWidth(), currentSheep->getPosition().y));
+				if (currentSheep->getDirection() == SHEEP_DIRECTION)
+				{
+					currentSheep->getSprite()->setPosition(Vec2(nextSheep->getPosition().x + nextSheep->getWidth(), nextSheep->getPosition().y));
+				}
+				else
+				{
+					currentSheep->getSprite()->setPosition(Vec2(nextSheep->getPosition().x - currentSheep->getWidth(), nextSheep->getPosition().y));
+				}
 			}
 			else
 			{
 				currentSheep->moveBack();
 			}
-		} 
+		}
 		else
 		{
 			currentSheep->moveBack();
 		}
 	}
-	
+
 	for (int index = indexTemp + 1; index < queueLost->getSize(); index++)
 	{
 		currentSheep = (Sheep*)queueLost->get(index);
-		
+
 		if (queueLost->isExist(index - 1))
 		{
 			previousSheep = (Sheep*)queueLost->get(index - 1);
@@ -493,7 +506,14 @@ void SceneNewGame::moveWhenNoBalance(Queue *queueWin, Queue *queueLost)
 			{
 				currentSheep->setHead(previousSheep);
 				previousSheep->setTail(currentSheep);
-				currentSheep->setPosition(Vec2(previousSheep->getPosition().x - currentSheep->getDirection() * currentSheep->getWidth(), currentSheep->getPosition().y));
+				if (currentSheep->getDirection() == SHEEP_DIRECTION)
+				{
+					currentSheep->getSprite()->setPosition(Vec2(previousSheep->getPosition().x - currentSheep->getWidth(), previousSheep->getPosition().y));
+				}
+				else
+				{
+					currentSheep->getSprite()->setPosition(Vec2(previousSheep->getPosition().x + previousSheep->getWidth(), previousSheep->getPosition().y));
+				}
 			}
 			else
 			{
@@ -523,13 +543,20 @@ void SceneNewGame::moveWhenNoBalance(Queue *queueWin, Queue *queueLost)
 		{
 			if (currentSheep->getHead() == nullptr && index != 0)
 				currentSheep->setHead(nextSheep);
-			currentSheep->setPosition(Vec2(nextSheep->getPosition().x - currentSheep->getDirection() * currentSheep->getWidth(), currentSheep->getPosition().y));
+			if (currentSheep->getDirection() == SHEEP_DIRECTION)
+			{
+				currentSheep->getSprite()->setPosition(Vec2(nextSheep->getPosition().x - currentSheep->getWidth(), nextSheep->getPosition().y));
+			}
+			else
+			{
+				currentSheep->getSprite()->setPosition(Vec2(nextSheep->getPosition().x + nextSheep->getWidth(), nextSheep->getPosition().y));
+			}
 		}
 		else
 		{
 			currentSheep->moveForward();
 		}
-	}	
+	}
 }
 
 bool SceneNewGame::checkCanCreateSheep(int lane, int direction)
