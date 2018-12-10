@@ -20,6 +20,8 @@ Label* scoreSheepLabel;
 Label* scoreEnemyLabel;
 Label *label;
 
+bool isPausedGame = false;
+
 Scene* SceneNewGame::createScene()
 {
 	return SceneNewGame::create();
@@ -102,25 +104,41 @@ void SceneNewGame::textOnScreen()
 
 void SceneNewGame::createButton() 
 {
+	auto buttonCreatePauseGame = ui::Button::create("Pause.png", "Pause.png", "Pause.png");
 	auto buttonCreateSheepLane0 = ui::Button::create(IMG_GO, "GoSelected.png", "GoSelected.png");
 	auto buttonCreateSheepLane1 = ui::Button::create(IMG_GO, "GoSelected.png", "GoSelected.png");
 	auto buttonCreateSheepLane2 = ui::Button::create(IMG_GO, "GoSelected.png", "GoSelected.png");
 	auto buttonCreateSheepLane3 = ui::Button::create(IMG_GO, "GoSelected.png", "GoSelected.png");
 	auto buttonCreateSheepLane4 = ui::Button::create(IMG_GO, "GoSelected.png", "GoSelected.png");
 
+	buttonCreatePauseGame->setPosition(Vec2(400, 438));
 	buttonCreateSheepLane0->setPosition(BTN_SHEEP_LANE_0);
 	buttonCreateSheepLane1->setPosition(BTN_SHEEP_LANE_1);
 	buttonCreateSheepLane2->setPosition(BTN_SHEEP_LANE_2);
 	buttonCreateSheepLane3->setPosition(BTN_SHEEP_LANE_3);
 	buttonCreateSheepLane4->setPosition(BTN_SHEEP_LANE_4);
 	
+	buttonCreatePauseGame->addTouchEventListener([&](Ref* sender, ui::Widget::TouchEventType type) {
+		switch (type)
+		{
+		case ui::Widget::TouchEventType::BEGAN:
+			break;
+		case ui::Widget::TouchEventType::ENDED:
+			isPausedGame = !isPausedGame;
+			break;
+
+		default:
+			break;
+		}
+	});
+
 	buttonCreateSheepLane0->addTouchEventListener([&](Ref* sender, ui::Widget::TouchEventType type) {
 		switch (type)
 		{
 		case ui::Widget::TouchEventType::BEGAN:
 			break;
 		case ui::Widget::TouchEventType::ENDED:
-			if (checkCanCreateSheep(LANE_0, SHEEP_DIRECTION))
+			if (checkCanCreateSheep(LANE_0, SHEEP_DIRECTION) && !isPausedGame)
 			{
 				setTypeSheep(typeSheep);
 				addActionSheep(LANE_0, random(SMALL_SHEEP_TYPE, BIG_SHEEP_TYPE), SHEEP_DIRECTION);
@@ -138,7 +156,7 @@ void SceneNewGame::createButton()
 		case ui::Widget::TouchEventType::BEGAN:
 			break;
 		case ui::Widget::TouchEventType::ENDED:
-			if (checkCanCreateSheep(LANE_1, SHEEP_DIRECTION))
+			if (checkCanCreateSheep(LANE_1, SHEEP_DIRECTION) && !isPausedGame)
 			{
 				setTypeSheep(typeSheep);
 				addActionSheep(LANE_1, random(SMALL_SHEEP_TYPE, BIG_SHEEP_TYPE), SHEEP_DIRECTION);
@@ -156,7 +174,7 @@ void SceneNewGame::createButton()
 		case ui::Widget::TouchEventType::BEGAN:
 			break;
 		case ui::Widget::TouchEventType::ENDED:
-			if (checkCanCreateSheep(LANE_2, SHEEP_DIRECTION))
+			if (checkCanCreateSheep(LANE_2, SHEEP_DIRECTION) && !isPausedGame)
 			{
 				setTypeSheep(typeSheep);
 				addActionSheep(LANE_2, random(SMALL_SHEEP_TYPE, BIG_SHEEP_TYPE), SHEEP_DIRECTION);
@@ -174,7 +192,7 @@ void SceneNewGame::createButton()
 		case ui::Widget::TouchEventType::BEGAN:
 			break;
 		case ui::Widget::TouchEventType::ENDED:
-			if (checkCanCreateSheep(LANE_3, SHEEP_DIRECTION))
+			if (checkCanCreateSheep(LANE_3, SHEEP_DIRECTION) && !isPausedGame)
 			{
 				setTypeSheep(typeSheep);
 				addActionSheep(LANE_3, random(SMALL_SHEEP_TYPE, BIG_SHEEP_TYPE), SHEEP_DIRECTION);
@@ -192,7 +210,7 @@ void SceneNewGame::createButton()
 		case ui::Widget::TouchEventType::BEGAN:
 			break;
 		case ui::Widget::TouchEventType::ENDED:
-			if (checkCanCreateSheep(LANE_4, SHEEP_DIRECTION))
+			if (checkCanCreateSheep(LANE_4, SHEEP_DIRECTION) && !isPausedGame)
 			{
 				setTypeSheep(typeSheep);
 				addActionSheep(LANE_4, random(SMALL_SHEEP_TYPE, BIG_SHEEP_TYPE), SHEEP_DIRECTION);
@@ -204,6 +222,7 @@ void SceneNewGame::createButton()
 		}
 	});
 
+	this->addChild(buttonCreatePauseGame, 0);
 	this->addChild(buttonCreateSheepLane0, 0);
 	this->addChild(buttonCreateSheepLane1, 0);
 	this->addChild(buttonCreateSheepLane2, 0);
@@ -254,19 +273,22 @@ void SceneNewGame::addActionSheep(int lane, int type, int direction)
 
 void SceneNewGame::update(float detail)
 {
-	// random enemy
-	countFPS++;
-	if (countFPS % 120 == 0)
+	if (!isPausedGame)
 	{
-		addActionSheep(random(LANE_0, LANE_4), random(SMALL_SHEEP_TYPE, BIG_SHEEP_TYPE) , ENEMY_DIRECTION);
-	}
-	
-	for (int lane = 0; lane < MAX_LANES; lane++)
-	{
-		updateForEachLane(lane);
-	}
+		// random enemy
+		countFPS++;
+		if (countFPS % 120 == 0)
+		{
+			addActionSheep(random(LANE_0, LANE_4), random(SMALL_SHEEP_TYPE, BIG_SHEEP_TYPE), ENEMY_DIRECTION);
+		}
 
-	updateScoreOnScreen();
+		for (int lane = 0; lane < MAX_LANES; lane++)
+		{
+			updateForEachLane(lane);
+		}
+
+		updateScoreOnScreen();
+	}	
 }
 
 void SceneNewGame::updateForEachLane(int lane)
@@ -560,24 +582,42 @@ bool SceneNewGame::checkCanCreateSheep(int lane, int direction)
 	Sheep * sheep;
 
 	if (direction == SHEEP_DIRECTION)
-	{
-		if (vectorQueueSheep.at(lane)->getSize() > 0)
+	{		
+		for (int index = 0; index < vectorQueueSheep.at(lane)->getSize(); index++)
 		{
-			sheep = (Sheep*)vectorQueueSheep.at(lane)->get(vectorQueueSheep.at(lane)->getSize() - 1);
-			
+			sheep = (Sheep*)(vectorQueueSheep.at(lane))->get(index);
+				
 			// replace true value (sheep->getWidth) in the next release after finish function generate random sheep 
-			if (sheep->getPosition().x <= sheep->getWidth())
+			if (sheep->getPosition().x < M_START + sheep->getWidth())
+				return false;
+		}
+			
+		for (int index = 0; index < vectorQueueEnemy.at(lane)->getSize(); index++)
+		{
+			sheep = (Sheep*)(vectorQueueEnemy.at(lane))->get(index);
+
+			// replace true value (sheep->getWidth) in the next release after finish function generate random sheep 
+			if (sheep->getPosition().x < M_START + sheep->getWidth())
 				return false;
 		}
 	}
 	else if (direction == ENEMY_DIRECTION)
 	{
-		if (vectorQueueEnemy.at(lane)->getSize() > 0)
+		for (int index = 0; index < vectorQueueSheep.at(lane)->getSize(); index++)
 		{
-			sheep = (Sheep*)vectorQueueEnemy.at(lane)->get(vectorQueueEnemy.at(lane)->getSize() - 1);
+			sheep = (Sheep*)(vectorQueueSheep.at(lane))->get(index);
 
-			// replace true value (sheep->getWidth) in the next release after finish function generate random sheep
-			if (sheep->getPosition().x + sheep->getWidth() >= 600)
+			// replace true value (sheep->getWidth) in the next release after finish function generate random sheep 
+			if (sheep->getPosition().x + sheep->getWidth() > 750 - sheep->getWidth())
+				return false;
+		}
+
+		for (int index = 0; index < vectorQueueEnemy.at(lane)->getSize(); index++)
+		{
+			sheep = (Sheep*)(vectorQueueEnemy.at(lane))->get(index);
+
+			// replace true value (sheep->getWidth) in the next release after finish function generate random sheep 
+			if (sheep->getPosition().x + sheep->getWidth() > 750 - sheep->getWidth())
 				return false;
 		}
 	}

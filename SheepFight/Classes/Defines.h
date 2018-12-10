@@ -17,32 +17,32 @@
 #define IMG_MENU "Menu.png"
 
 // Image Sheep
-#define IMG_SMALL_SHEEP_1 "whitesheep_1.1.png"
-#define IMG_SMALL_SHEEP_2 "whitesheep_1.2.png"
-#define IMG_SMALL_SHEEP_3 "whitesheep_1.3.png"
-#define IMG_SMALL_SHEEP_4 "whitesheep_1.4.png"
-#define IMG_MEDIUM_SHEEP_1 "whitesheep_2.1.png"
-#define IMG_MEDIUM_SHEEP_2 "whitesheep_2.2.png"
-#define IMG_MEDIUM_SHEEP_3 "whitesheep_2.3.png"
-#define IMG_MEDIUM_SHEEP_4 "whitesheep_2.4.png"
-#define IMG_BIG_SHEEP_1 "whitesheep_3.1.png"
-#define IMG_BIG_SHEEP_2 "whitesheep_3.2.png"
-#define IMG_BIG_SHEEP_3 "whitesheep_3.3.png"
-#define IMG_BIG_SHEEP_4 "whitesheep_3.4.png"
+#define IMG_SMALL_SHEEP_1 "whitesheep_1_1.png"
+#define IMG_SMALL_SHEEP_2 "whitesheep_1_2.png"
+#define IMG_SMALL_SHEEP_3 "whitesheep_1_3.png"
+#define IMG_SMALL_SHEEP_4 "whitesheep_1_4.png"
+#define IMG_MEDIUM_SHEEP_1 "whitesheep_2_1.png"
+#define IMG_MEDIUM_SHEEP_2 "whitesheep_2_2.png"
+#define IMG_MEDIUM_SHEEP_3 "whitesheep_2_3.png"
+#define IMG_MEDIUM_SHEEP_4 "whitesheep_2_4.png"
+#define IMG_BIG_SHEEP_1 "whitesheep_3_1.png"
+#define IMG_BIG_SHEEP_2 "whitesheep_3_2.png"
+#define IMG_BIG_SHEEP_3 "whitesheep_3_3.png"
+#define IMG_BIG_SHEEP_4 "whitesheep_3_4.png"
 
 // Image Enemy
-#define IMG_SMALL_ENEMY_1 "blacksheep_1.1.png"
-#define IMG_SMALL_ENEMY_2 "blacksheep_1.2.png"
-#define IMG_SMALL_ENEMY_3 "blacksheep_1.3.png"
-#define IMG_SMALL_ENEMY_4 "blacksheep_1.4.png"
-#define IMG_MEDIUM_ENEMY_1 "blacksheep_2.1.png"
-#define IMG_MEDIUM_ENEMY_2 "blacksheep_2.2.png"
-#define IMG_MEDIUM_ENEMY_3 "blacksheep_2.3.png"
-#define IMG_MEDIUM_ENEMY_4 "blacksheep_2.4.png"
-#define IMG_BIG_ENEMY_1 "blacksheep_3.1.png"
-#define IMG_BIG_ENEMY_2 "blacksheep_3.2.png"
-#define IMG_BIG_ENEMY_3 "blacksheep_3.3.png"
-#define IMG_BIG_ENEMY_4 "blacksheep_3.4.png"
+#define IMG_SMALL_ENEMY_1 "blacksheep_1_1.png"
+#define IMG_SMALL_ENEMY_2 "blacksheep_1_2.png"
+#define IMG_SMALL_ENEMY_3 "blacksheep_1_3.png"
+#define IMG_SMALL_ENEMY_4 "blacksheep_1_4.png"
+#define IMG_MEDIUM_ENEMY_1 "blacksheep_2_1.png"
+#define IMG_MEDIUM_ENEMY_2 "blacksheep_2_2.png"
+#define IMG_MEDIUM_ENEMY_3 "blacksheep_2_3.png"
+#define IMG_MEDIUM_ENEMY_4 "blacksheep_2_4.png"
+#define IMG_BIG_ENEMY_1 "blacksheep_3_1.png"
+#define IMG_BIG_ENEMY_2 "blacksheep_3_2.png"
+#define IMG_BIG_ENEMY_3 "blacksheep_3_3.png"
+#define IMG_BIG_ENEMY_4 "blacksheep_3_4.png"
 
 // Map
 #define LANE_0 0
@@ -57,7 +57,7 @@
 #define BTN_SHEEP_LANE_3 Vec2(40, 275)
 #define BTN_SHEEP_LANE_4 Vec2(40, 355)
 
-#define SHEEP_LANE_0 Vec2(50, 45)
+#define SHEEP_LANE_0 Vec2(M_START, 45)
 #define SHEEP_LANE_1 Vec2(50, 123)
 #define SHEEP_LANE_2 Vec2(50, 198)
 #define SHEEP_LANE_3 Vec2(50, 275)
@@ -77,9 +77,9 @@
 
 #define M_START 50
 #define M_END 760
-#define mMiddle 400
 
 #define DEFAULT_SCORE 0;
+#define MAX_SCORE 100;
 
 #define MAX_SHEEP 5
 #define MAX_LANES 5
@@ -89,17 +89,17 @@
 
 #define BIG_SHEEP_TYPE 3
 #define BIG_SIZE 3
-#define BIG_SIZE_HEIGHT 50
+#define BIG_SIZE_HEIGHT 49
 #define BIG_SIZE_WIDTH 65
 
 #define MEDIUM_SHEEP_TYPE 2
 #define MEDIUM_SIZE 2
-#define MEDIUM_SIZE_HEIGHT 50
+#define MEDIUM_SIZE_HEIGHT 43
 #define MEDIUM_SIZE_WIDTH 57
 
 #define SMALL_SHEEP_TYPE 1
 #define SMALL_SIZE 1
-#define SMALL_SIZE_HEIGHT 50
+#define SMALL_SIZE_HEIGHT 43
 #define SMALL_SIZE_WIDTH 57
 
 #define SCORE_SHEEP Vec2(330, 435)
