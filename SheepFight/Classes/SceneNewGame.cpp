@@ -235,9 +235,9 @@ cocos2d::Vec2 SceneNewGame::selectLane(int lane, int direction)
 	}
 }
 
-void SceneNewGame::addActionSheep(int lane, int weight, int direction)
+void SceneNewGame::addActionSheep(int lane, int type, int direction)
 {
-	Sheep *sheep = new Sheep(this, weight, direction);
+	Sheep *sheep = new Sheep(this, type, direction);
 	sheep->setId(countElement++);
 	sheep->setPosition(selectLane(lane, direction));
 	sheep->setVelocity(cocos2d::Vec2(2, 0));
@@ -260,9 +260,7 @@ void SceneNewGame::update(float detail)
 	{
 		addActionSheep(random(LANE_0, LANE_4), random(SMALL_SHEEP_TYPE, BIG_SHEEP_TYPE) , ENEMY_DIRECTION);
 	}
-
-	log("---------------------------------");
-
+	
 	for (int lane = 0; lane < MAX_LANES; lane++)
 	{
 		updateForEachLane(lane);
@@ -281,8 +279,8 @@ void SceneNewGame::updateForEachLane(int lane)
 
 	if (!queueEnemy->empty()
 		&& !queueSheep->empty()
-		&& queueEnemy->peek()->getSprite()->getBoundingBox().intersectsRect(
-			queueSheep->peek()->getSprite()->getBoundingBox()))
+		&& ((Sheep*)queueEnemy->peek())
+		->isCollision((Sheep*)queueSheep->peek()))
 	{
 		haveColision = true;
 	}
@@ -309,9 +307,7 @@ void SceneNewGame::updateForEachLane(int lane)
 				break;
 		}
 	}
-
-	log("%d - %d", weightOfSheeps, weightOfEnemies);
-
+	
 	Sheep* currentSheep;
 	Sheep* previousSheep;
 
@@ -428,11 +424,11 @@ void SceneNewGame::moveWhenBalance(Queue *queue)
 				previousSheep->setTail(currentSheep);
 				if (currentSheep->getDirection() == SHEEP_DIRECTION)
 				{
-					currentSheep->getSprite()->setPosition(Vec2(previousSheep->getPosition().x - currentSheep->getWidth(), previousSheep->getPosition().y));
+					currentSheep->setPosition(Vec2(previousSheep->getPosition().x - currentSheep->getWidth(), previousSheep->getPosition().y));
 				}
 				else
 				{
-					currentSheep->getSprite()->setPosition(Vec2(previousSheep->getPosition().x + previousSheep->getWidth(), previousSheep->getPosition().y));
+					currentSheep->setPosition(Vec2(previousSheep->getPosition().x + previousSheep->getWidth(), previousSheep->getPosition().y));
 				}
 				break;
 			}
@@ -477,11 +473,11 @@ void SceneNewGame::moveWhenNoBalance(Queue *queueWin, Queue *queueLost)
 				nextSheep->setHead(currentSheep);
 				if (currentSheep->getDirection() == SHEEP_DIRECTION)
 				{
-					currentSheep->getSprite()->setPosition(Vec2(nextSheep->getPosition().x + nextSheep->getWidth(), nextSheep->getPosition().y));
+					currentSheep->setPosition(Vec2(nextSheep->getPosition().x + nextSheep->getWidth(), nextSheep->getPosition().y));
 				}
 				else
 				{
-					currentSheep->getSprite()->setPosition(Vec2(nextSheep->getPosition().x - currentSheep->getWidth(), nextSheep->getPosition().y));
+					currentSheep->setPosition(Vec2(nextSheep->getPosition().x - currentSheep->getWidth(), nextSheep->getPosition().y));
 				}
 			}
 			else
@@ -508,11 +504,11 @@ void SceneNewGame::moveWhenNoBalance(Queue *queueWin, Queue *queueLost)
 				previousSheep->setTail(currentSheep);
 				if (currentSheep->getDirection() == SHEEP_DIRECTION)
 				{
-					currentSheep->getSprite()->setPosition(Vec2(previousSheep->getPosition().x - currentSheep->getWidth(), previousSheep->getPosition().y));
+					currentSheep->setPosition(Vec2(previousSheep->getPosition().x - currentSheep->getWidth(), previousSheep->getPosition().y));
 				}
 				else
 				{
-					currentSheep->getSprite()->setPosition(Vec2(previousSheep->getPosition().x + previousSheep->getWidth(), previousSheep->getPosition().y));
+					currentSheep->setPosition(Vec2(previousSheep->getPosition().x + previousSheep->getWidth(), previousSheep->getPosition().y));
 				}
 			}
 			else
@@ -545,11 +541,11 @@ void SceneNewGame::moveWhenNoBalance(Queue *queueWin, Queue *queueLost)
 				currentSheep->setHead(nextSheep);
 			if (currentSheep->getDirection() == SHEEP_DIRECTION)
 			{
-				currentSheep->getSprite()->setPosition(Vec2(nextSheep->getPosition().x - currentSheep->getWidth(), nextSheep->getPosition().y));
+				currentSheep->setPosition(Vec2(nextSheep->getPosition().x - currentSheep->getWidth(), nextSheep->getPosition().y));
 			}
 			else
 			{
-				currentSheep->getSprite()->setPosition(Vec2(nextSheep->getPosition().x + nextSheep->getWidth(), nextSheep->getPosition().y));
+				currentSheep->setPosition(Vec2(nextSheep->getPosition().x + nextSheep->getWidth(), nextSheep->getPosition().y));
 			}
 		}
 		else

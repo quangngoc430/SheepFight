@@ -7,6 +7,8 @@ class Sheep : public Model
 private:
 	int id;
 	int weight;
+	int width;
+	int height;
 	cocos2d::Vec2 velocity;
 	int lane;
 	Sheep *head;
@@ -14,10 +16,9 @@ private:
 	int direction;
 	int type;
 	cocos2d::Scene* scene;
-	bool alive;
 
 public:
-	Sheep(cocos2d::Scene* scene, int weight, int direction);
+	Sheep(cocos2d::Scene* scene, int type, int direction);
 	~Sheep();
 
 	void setId(int id);
@@ -40,10 +41,11 @@ public:
 	int getDirection();
 	void setType(int type);
 	int getType();
-	int getHeight();
+	void setWidth(int width);
 	int getWidth();
-	bool isAlive();
-	void setAlive(bool alive);
+	void setHeight(int height);
+	int getHeight();
+	bool isCollision(Sheep * otherSheep);
 
 	void Init();
 	void Update();

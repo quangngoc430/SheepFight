@@ -12,7 +12,7 @@ public:
 	virtual bool init();
 	CREATE_FUNC(SceneNewGame);
 	cocos2d::Vec2 selectLane(int lane, int direction);
-	void addActionSheep(int lane, int weight, int direction);
+	void addActionSheep(int lane, int type, int direction);
 	void createButton();
 	void moveWhenBalance(Queue *queue);
 	void moveWhenNoBalance(Queue *queueWin, Queue *queueLost);
