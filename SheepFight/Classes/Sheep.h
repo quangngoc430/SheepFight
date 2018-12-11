@@ -18,7 +18,7 @@ private:
 	cocos2d::Scene* scene;
 
 public:
-	Sheep(cocos2d::Scene* scene, int type, int direction);
+	Sheep(cocos2d::Scene* scene, int weight, int direction, bool runAni);
 	~Sheep();
 
 	void setId(int id);
@@ -46,6 +46,7 @@ public:
 	void setHeight(int height);
 	int getHeight();
 	bool isCollision(Sheep * otherSheep);
+	void replaceSprite(int type, int direction);
 
 	void Init();
 	void Update();

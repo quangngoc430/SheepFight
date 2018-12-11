@@ -22,6 +22,7 @@ public:
 	void updateScoreOnScreen();
 	static int scoreSheep;
 	static int scoreEnemy;
+	void createPredictSheep(int wSheep, int wEnemy);
 
 	virtual void update(float detail);
 	void updateForEachLane(int lane);

@@ -3,73 +3,113 @@
 
 USING_NS_CC;
 
-Sheep::Sheep(cocos2d::Scene* scene, int type, int direction)
-{	
+Sheep::Sheep(cocos2d::Scene* scene, int type, int direction, bool runAni)
+{
 	this->head = nullptr;
 	this->tail = nullptr;
-	this->scene = scene;	
+	this->scene = scene;
 	this->type = type;
 	this->direction = direction;
 
-	Vector<SpriteFrame*> frames;
-	if (this->direction == SHEEP_DIRECTION)
-	{
-		switch (this->type)
+	if (!runAni)
+	{ 
+		if (direction == SHEEP_DIRECTION)
 		{
-		case SMALL_SHEEP_TYPE:
-			frames.pushBack(SpriteFrame::create(IMG_SMALL_SHEEP_1, Rect(0, 0, SMALL_SIZE_WIDTH, SMALL_SIZE_HEIGHT)));
-			frames.pushBack(SpriteFrame::create(IMG_SMALL_SHEEP_2, Rect(0, 0, SMALL_SIZE_WIDTH, SMALL_SIZE_HEIGHT)));
-			frames.pushBack(SpriteFrame::create(IMG_SMALL_SHEEP_3, Rect(0, 0, SMALL_SIZE_WIDTH, SMALL_SIZE_HEIGHT)));
-			frames.pushBack(SpriteFrame::create(IMG_SMALL_SHEEP_4, Rect(0, 0, SMALL_SIZE_WIDTH, SMALL_SIZE_HEIGHT)));
-			break;
-		case MEDIUM_SHEEP_TYPE:
-			frames.pushBack(SpriteFrame::create(IMG_MEDIUM_SHEEP_1, Rect(0, 0, MEDIUM_SIZE_WIDTH, MEDIUM_SIZE_HEIGHT)));
-			frames.pushBack(SpriteFrame::create(IMG_MEDIUM_SHEEP_2, Rect(0, 0, MEDIUM_SIZE_WIDTH, MEDIUM_SIZE_HEIGHT)));
-			frames.pushBack(SpriteFrame::create(IMG_MEDIUM_SHEEP_3, Rect(0, 0, MEDIUM_SIZE_WIDTH, MEDIUM_SIZE_HEIGHT)));
-			frames.pushBack(SpriteFrame::create(IMG_MEDIUM_SHEEP_4, Rect(0, 0, MEDIUM_SIZE_WIDTH, MEDIUM_SIZE_HEIGHT)));
-			break;
-		case BIG_SHEEP_TYPE:
-			frames.pushBack(SpriteFrame::create(IMG_BIG_SHEEP_1, Rect(0, 0, BIG_SIZE_WIDTH, BIG_SIZE_HEIGHT)));
-			frames.pushBack(SpriteFrame::create(IMG_BIG_SHEEP_2, Rect(0, 0, BIG_SIZE_WIDTH, BIG_SIZE_HEIGHT)));
-			frames.pushBack(SpriteFrame::create(IMG_BIG_SHEEP_3, Rect(0, 0, BIG_SIZE_WIDTH, BIG_SIZE_HEIGHT)));
-			frames.pushBack(SpriteFrame::create(IMG_BIG_SHEEP_4, Rect(0, 0, BIG_SIZE_WIDTH, BIG_SIZE_HEIGHT)));
-			break;
+			switch (type)
+			{
+			case SMALL_SHEEP_TYPE:
+				this->mSprite = Sprite::create(IMG_SMALL_SHEEP_2);
+				break;
+			case MEDIUM_SHEEP_TYPE:
+				this->mSprite = Sprite::create(IMG_MEDIUM_SHEEP_2);
+				break;
+			case BIG_SHEEP_TYPE:
+				this->mSprite = Sprite::create(IMG_BIG_SHEEP_2);
+				break;				
+			}
+		}
+		else
+		{
+			switch (type)
+			{
+			case SMALL_SHEEP_TYPE:
+				this->mSprite = Sprite::create(IMG_SMALL_ENEMY_2);
+				break;
+			case MEDIUM_SHEEP_TYPE:
+				this->mSprite = Sprite::create(IMG_MEDIUM_ENEMY_2);
+				break;
+			case BIG_SHEEP_TYPE:
+				this->mSprite = Sprite::create(IMG_BIG_ENEMY_2);
+				break;
+			}
 		}
 	}
 	else
 	{
-		switch (this->type)
+		Vector<SpriteFrame*> frames;
+		if (direction == SHEEP_DIRECTION)
 		{
-		case SMALL_SHEEP_TYPE:
-			frames.pushBack(SpriteFrame::create(IMG_SMALL_ENEMY_1, Rect(0, 0, SMALL_SIZE_WIDTH, SMALL_SIZE_HEIGHT)));
-			frames.pushBack(SpriteFrame::create(IMG_SMALL_ENEMY_2, Rect(0, 0, SMALL_SIZE_WIDTH, SMALL_SIZE_HEIGHT)));
-			frames.pushBack(SpriteFrame::create(IMG_SMALL_ENEMY_3, Rect(0, 0, SMALL_SIZE_WIDTH, SMALL_SIZE_HEIGHT)));
-			frames.pushBack(SpriteFrame::create(IMG_SMALL_ENEMY_4, Rect(0, 0, SMALL_SIZE_WIDTH, SMALL_SIZE_HEIGHT)));			
-			break;
-		case MEDIUM_SHEEP_TYPE:
-			frames.pushBack(SpriteFrame::create(IMG_MEDIUM_ENEMY_1, Rect(0, 0, MEDIUM_SIZE_WIDTH, MEDIUM_SIZE_HEIGHT)));
-			frames.pushBack(SpriteFrame::create(IMG_MEDIUM_ENEMY_2, Rect(0, 0, MEDIUM_SIZE_WIDTH, MEDIUM_SIZE_HEIGHT)));
-			frames.pushBack(SpriteFrame::create(IMG_MEDIUM_ENEMY_3, Rect(0, 0, MEDIUM_SIZE_WIDTH, MEDIUM_SIZE_HEIGHT)));
-			frames.pushBack(SpriteFrame::create(IMG_MEDIUM_ENEMY_4, Rect(0, 0, MEDIUM_SIZE_WIDTH, MEDIUM_SIZE_HEIGHT)));
-			break;
-		case BIG_SHEEP_TYPE:
-			frames.pushBack(SpriteFrame::create(IMG_BIG_ENEMY_1, Rect(0, 0, BIG_SIZE_WIDTH, BIG_SIZE_HEIGHT)));
-			frames.pushBack(SpriteFrame::create(IMG_BIG_ENEMY_2, Rect(0, 0, BIG_SIZE_WIDTH, BIG_SIZE_HEIGHT)));
-			frames.pushBack(SpriteFrame::create(IMG_BIG_ENEMY_3, Rect(0, 0, BIG_SIZE_WIDTH, BIG_SIZE_HEIGHT)));
-			frames.pushBack(SpriteFrame::create(IMG_BIG_ENEMY_4, Rect(0, 0, BIG_SIZE_WIDTH, BIG_SIZE_HEIGHT)));
-			break;
+			switch (this->type)
+			{
+			case SMALL_SHEEP_TYPE:
+				frames.pushBack(SpriteFrame::create(IMG_SMALL_SHEEP_1, Rect(0, 0, SMALL_SIZE_WIDTH, SMALL_SIZE_HEIGHT)));
+				frames.pushBack(SpriteFrame::create(IMG_SMALL_SHEEP_2, Rect(0, 0, SMALL_SIZE_WIDTH, SMALL_SIZE_HEIGHT)));
+				frames.pushBack(SpriteFrame::create(IMG_SMALL_SHEEP_3, Rect(0, 0, SMALL_SIZE_WIDTH, SMALL_SIZE_HEIGHT)));
+				frames.pushBack(SpriteFrame::create(IMG_SMALL_SHEEP_4, Rect(0, 0, SMALL_SIZE_WIDTH, SMALL_SIZE_HEIGHT)));
+				break;
+			case MEDIUM_SHEEP_TYPE:
+				frames.pushBack(SpriteFrame::create(IMG_MEDIUM_SHEEP_1, Rect(0, 0, MEDIUM_SIZE_WIDTH, MEDIUM_SIZE_HEIGHT)));
+				frames.pushBack(SpriteFrame::create(IMG_MEDIUM_SHEEP_2, Rect(0, 0, MEDIUM_SIZE_WIDTH, MEDIUM_SIZE_HEIGHT)));
+				frames.pushBack(SpriteFrame::create(IMG_MEDIUM_SHEEP_3, Rect(0, 0, MEDIUM_SIZE_WIDTH, MEDIUM_SIZE_HEIGHT)));
+				frames.pushBack(SpriteFrame::create(IMG_MEDIUM_SHEEP_4, Rect(0, 0, MEDIUM_SIZE_WIDTH, MEDIUM_SIZE_HEIGHT)));
+				break;
+			case BIG_SHEEP_TYPE:
+				frames.pushBack(SpriteFrame::create(IMG_BIG_SHEEP_1, Rect(0, 0, BIG_SIZE_WIDTH, BIG_SIZE_HEIGHT)));
+				frames.pushBack(SpriteFrame::create(IMG_BIG_SHEEP_2, Rect(0, 0, BIG_SIZE_WIDTH, BIG_SIZE_HEIGHT)));
+				frames.pushBack(SpriteFrame::create(IMG_BIG_SHEEP_3, Rect(0, 0, BIG_SIZE_WIDTH, BIG_SIZE_HEIGHT)));
+				frames.pushBack(SpriteFrame::create(IMG_BIG_SHEEP_4, Rect(0, 0, BIG_SIZE_WIDTH, BIG_SIZE_HEIGHT)));
+				break;
+			}
 		}
+		else
+		{
+			switch (this->type)
+			{
+			case SMALL_SHEEP_TYPE:
+				frames.pushBack(SpriteFrame::create(IMG_SMALL_ENEMY_1, Rect(0, 0, SMALL_SIZE_WIDTH, SMALL_SIZE_HEIGHT)));
+				frames.pushBack(SpriteFrame::create(IMG_SMALL_ENEMY_2, Rect(0, 0, SMALL_SIZE_WIDTH, SMALL_SIZE_HEIGHT)));
+				frames.pushBack(SpriteFrame::create(IMG_SMALL_ENEMY_3, Rect(0, 0, SMALL_SIZE_WIDTH, SMALL_SIZE_HEIGHT)));
+				frames.pushBack(SpriteFrame::create(IMG_SMALL_ENEMY_4, Rect(0, 0, SMALL_SIZE_WIDTH, SMALL_SIZE_HEIGHT)));
+				break;
+			case MEDIUM_SHEEP_TYPE:
+				frames.pushBack(SpriteFrame::create(IMG_MEDIUM_ENEMY_1, Rect(0, 0, MEDIUM_SIZE_WIDTH, MEDIUM_SIZE_HEIGHT)));
+				frames.pushBack(SpriteFrame::create(IMG_MEDIUM_ENEMY_2, Rect(0, 0, MEDIUM_SIZE_WIDTH, MEDIUM_SIZE_HEIGHT)));
+				frames.pushBack(SpriteFrame::create(IMG_MEDIUM_ENEMY_3, Rect(0, 0, MEDIUM_SIZE_WIDTH, MEDIUM_SIZE_HEIGHT)));
+				frames.pushBack(SpriteFrame::create(IMG_MEDIUM_ENEMY_4, Rect(0, 0, MEDIUM_SIZE_WIDTH, MEDIUM_SIZE_HEIGHT)));
+				break;
+			case BIG_SHEEP_TYPE:
+				frames.pushBack(SpriteFrame::create(IMG_BIG_ENEMY_1, Rect(0, 0, BIG_SIZE_WIDTH, BIG_SIZE_HEIGHT)));
+				frames.pushBack(SpriteFrame::create(IMG_BIG_ENEMY_2, Rect(0, 0, BIG_SIZE_WIDTH, BIG_SIZE_HEIGHT)));
+				frames.pushBack(SpriteFrame::create(IMG_BIG_ENEMY_3, Rect(0, 0, BIG_SIZE_WIDTH, BIG_SIZE_HEIGHT)));
+				frames.pushBack(SpriteFrame::create(IMG_BIG_ENEMY_4, Rect(0, 0, BIG_SIZE_WIDTH, BIG_SIZE_HEIGHT)));
+				break;
+			}
+
+			
+		}
+		auto animation = Animation::createWithSpriteFrames(frames, 0.1f);
+		auto animate = Animate::create(animation);
+		this->mSprite = Sprite::create();
+		this->mSprite->runAction(RepeatForever::create(animate));
 	}
 
-	auto animation = Animation::createWithSpriteFrames(frames, 0.1f);
-	auto animate = Animate::create(animation);
-	this->mSprite = Sprite::create();
-	this->mSprite->runAction(RepeatForever::create(animate));
-
-	this->scene->addChild(mSprite);
 	this->setAlive(true);
 	this->setType(type);
+
+	this->scene->addChild(mSprite);
 }
+
+
 Sheep::~Sheep()
 {
 	this->getSprite()->removeFromParent();
@@ -295,3 +335,37 @@ void Sheep::Update()
 	}
 }
 
+void Sheep::replaceSprite(int type, int direction)
+{
+	if (direction == SHEEP_DIRECTION)
+	{
+		switch (type)
+		{
+			case SMALL_SHEEP_TYPE:
+				mSprite->setTexture(IMG_SMALL_SHEEP_2);
+				break;
+			case MEDIUM_SHEEP_TYPE:
+				mSprite->setTexture(IMG_MEDIUM_SHEEP_2);
+				break;
+			case BIG_SHEEP_TYPE:
+				mSprite->setTexture(IMG_BIG_SHEEP_2);
+				break;
+		}
+	
+	}
+	else
+	{
+		switch (type)
+		{
+		case SMALL_SHEEP_TYPE:
+			mSprite->setTexture(IMG_SMALL_ENEMY_2);
+			break;
+		case MEDIUM_SHEEP_TYPE:
+			mSprite->setTexture(IMG_MEDIUM_ENEMY_2);
+			break;
+		case BIG_SHEEP_TYPE:
+			mSprite->setTexture(IMG_BIG_ENEMY_2);
+			break;
+		}
+	}
+}

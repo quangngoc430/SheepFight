@@ -11,14 +11,16 @@ std::vector<Queue*> vectorQueueSheep;
 std::vector<Queue*> vectorQueueEnemy;
 int countElement;
 int countFPS;
-int typeSheep[2] = { 0, 0 };
-int typeEnemy[2] = { 0, 0 };
+int typeSheep[2] = {0, 0};
+int typeEnemy[2] = {0, 0};
 Sheep *space1;
 int SceneNewGame::scoreSheep = DEFAULT_SCORE;
 int SceneNewGame::scoreEnemy = DEFAULT_SCORE;
 Label* scoreSheepLabel;
 Label* scoreEnemyLabel;
 Label *label;
+Sheep *predictSheep;
+Sheep *predictEnemy;
 
 bool isPausedGame = false;
 
@@ -70,6 +72,11 @@ bool SceneNewGame::init()
 	scheduleUpdate();
 	textOnScreen();
 
+	//// Create predict sheep
+	setTypeSheep(typeSheep);
+	setTypeSheep(typeEnemy);
+	createPredictSheep(typeSheep[0], typeEnemy[0]);
+
 	return true;
 }
 
@@ -77,14 +84,15 @@ void SceneNewGame::setTypeSheep(int typeSheep[])
 {
 	if (typeSheep[0] == 0)
 	{
-		typeSheep[1] = round(random(1, 3));
-		typeSheep[0] = round(random(1, 3));
+		typeSheep[1] = round(random(SMALL_SHEEP_TYPE, BIG_SHEEP_TYPE));
+		typeSheep[0] = round(random(SMALL_SHEEP_TYPE, BIG_SHEEP_TYPE));
 	}
 	else
 	{
 		typeSheep[0] = typeSheep[1];
-		typeSheep[1] = round(random(1, 3));
+		typeSheep[1] = round(random(SMALL_SHEEP_TYPE, BIG_SHEEP_TYPE));
 	}
+	log("sheep1: %d, sheep2: %d", typeSheep[0], typeSheep[1]);
 }
 
 void SceneNewGame::textOnScreen()
@@ -100,6 +108,23 @@ void SceneNewGame::textOnScreen()
 	scoreEnemyLabel->setAlignment(cocos2d::TextHAlignment::CENTER);
 	scoreEnemyLabel->setPosition(SCORE_ENEMY);
 	addChild(scoreEnemyLabel);
+}
+
+void SceneNewGame::createPredictSheep(int wSheep, int wEnemy)
+{
+
+	predictSheep = new Sheep(this, wSheep, SHEEP_DIRECTION, false);
+	predictSheep->setPosition(PREDICT_SHEEP);
+	predictSheep->setAlive(true);
+	predictSheep->setWeight(wSheep);
+	predictSheep->setDirection(SHEEP_DIRECTION);
+	
+	predictEnemy = new Sheep(this, wEnemy, ENEMY_DIRECTION, false);
+	predictEnemy->setPosition(PREDICT_ENEMY);
+	predictEnemy->setAlive(true);
+	predictEnemy->setWeight(wEnemy);
+	predictEnemy->setDirection(ENEMY_DIRECTION);
+
 }
 
 void SceneNewGame::createButton() 
@@ -141,7 +166,8 @@ void SceneNewGame::createButton()
 			if (checkCanCreateSheep(LANE_0, SHEEP_DIRECTION) && !isPausedGame)
 			{
 				setTypeSheep(typeSheep);
-				addActionSheep(LANE_0, random(SMALL_SHEEP_TYPE, BIG_SHEEP_TYPE), SHEEP_DIRECTION);
+				predictSheep->replaceSprite(typeSheep[1], SHEEP_DIRECTION);
+				addActionSheep(LANE_0, typeSheep[0], SHEEP_DIRECTION);
 			}
 			break;
 
@@ -159,7 +185,8 @@ void SceneNewGame::createButton()
 			if (checkCanCreateSheep(LANE_1, SHEEP_DIRECTION) && !isPausedGame)
 			{
 				setTypeSheep(typeSheep);
-				addActionSheep(LANE_1, random(SMALL_SHEEP_TYPE, BIG_SHEEP_TYPE), SHEEP_DIRECTION);
+				predictSheep->replaceSprite(typeSheep[1], SHEEP_DIRECTION);
+				addActionSheep(LANE_1, typeSheep[0], SHEEP_DIRECTION);
 			}
 			break;
 
@@ -177,7 +204,8 @@ void SceneNewGame::createButton()
 			if (checkCanCreateSheep(LANE_2, SHEEP_DIRECTION) && !isPausedGame)
 			{
 				setTypeSheep(typeSheep);
-				addActionSheep(LANE_2, random(SMALL_SHEEP_TYPE, BIG_SHEEP_TYPE), SHEEP_DIRECTION);
+				predictSheep->replaceSprite(typeSheep[1], SHEEP_DIRECTION);
+				addActionSheep(LANE_2, typeSheep[0], SHEEP_DIRECTION);
 			}
 			break;
 
@@ -195,7 +223,8 @@ void SceneNewGame::createButton()
 			if (checkCanCreateSheep(LANE_3, SHEEP_DIRECTION) && !isPausedGame)
 			{
 				setTypeSheep(typeSheep);
-				addActionSheep(LANE_3, random(SMALL_SHEEP_TYPE, BIG_SHEEP_TYPE), SHEEP_DIRECTION);
+				predictSheep->replaceSprite(typeSheep[1], SHEEP_DIRECTION);
+				addActionSheep(LANE_3, typeSheep[0], SHEEP_DIRECTION);
 			}
 			break;
 
@@ -213,7 +242,8 @@ void SceneNewGame::createButton()
 			if (checkCanCreateSheep(LANE_4, SHEEP_DIRECTION) && !isPausedGame)
 			{
 				setTypeSheep(typeSheep);
-				addActionSheep(LANE_4, random(SMALL_SHEEP_TYPE, BIG_SHEEP_TYPE), SHEEP_DIRECTION);
+				predictSheep->replaceSprite(typeSheep[1], SHEEP_DIRECTION);
+				addActionSheep(LANE_4, typeSheep[0], SHEEP_DIRECTION);
 			}
 			break;
 
@@ -256,11 +286,10 @@ cocos2d::Vec2 SceneNewGame::selectLane(int lane, int direction)
 
 void SceneNewGame::addActionSheep(int lane, int type, int direction)
 {
-	Sheep *sheep = new Sheep(this, type, direction);
+	Sheep *sheep = new Sheep(this, type, direction, true);
 	sheep->setId(countElement++);
 	sheep->setPosition(selectLane(lane, direction));
 	sheep->setVelocity(cocos2d::Vec2(2, 0));
-	sheep->setAlive(true);
 	if (direction == SHEEP_DIRECTION)
 	{
 		vectorQueueSheep.at(lane)->push(sheep);
@@ -279,7 +308,9 @@ void SceneNewGame::update(float detail)
 		countFPS++;
 		if (countFPS % 120 == 0)
 		{
-			addActionSheep(random(LANE_0, LANE_4), random(SMALL_SHEEP_TYPE, BIG_SHEEP_TYPE), ENEMY_DIRECTION);
+			setTypeSheep(typeEnemy);
+			predictEnemy->replaceSprite(typeEnemy[1], ENEMY_DIRECTION);
+			addActionSheep(random(LANE_0, LANE_4), typeEnemy[0], ENEMY_DIRECTION);
 		}
 
 		for (int lane = 0; lane < MAX_LANES; lane++)

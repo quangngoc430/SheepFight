@@ -104,3 +104,6 @@
 
 #define SCORE_SHEEP Vec2(330, 435)
 #define SCORE_ENEMY Vec2(470, 435)
+
+#define PREDICT_SHEEP Vec2(150, 435)
+#define PREDICT_ENEMY Vec2(600, 435)
