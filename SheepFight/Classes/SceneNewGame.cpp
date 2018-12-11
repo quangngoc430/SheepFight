@@ -85,7 +85,12 @@ bool SceneNewGame::init()
 	setTypeSheep(typeSheep);
 	setTypeSheep(typeEnemy);
 	createPredictSheep(typeSheep[0], typeEnemy[0]);
-
+	gameOver = Label::createWithTTF("0", "fonts/Marker Felt.ttf ", 100);
+	gameOver->setColor(Color3B::RED);
+	gameOver->setAlignment(cocos2d::TextHAlignment::CENTER);
+	gameOver->setPosition(GAME_OVER);
+	gameOver->setVisible(false);
+	addChild(gameOver);
 	return true;
 }
 
@@ -359,18 +364,6 @@ void SceneNewGame::update(float detail)
 
 		updateScoreOnScreen();
 	}	
-	if (scoreSheep > 1)
-	{
-		gameOver->setVisible(true);
-		gameOver->setString("VICTORY");
-		Director::getInstance()->replaceScene(GameOverScene::create());
-	}
-	if (scoreEnemy >= 1)
-	{
-		gameOver->setVisible(true);
-		gameOver->setString("DEFEAT");
-		Director::getInstance()->replaceScene(GameOverScene::create());
-	}
 }
 
 void SceneNewGame::updateForEachLane(int lane)
@@ -453,6 +446,9 @@ void SceneNewGame::updateForEachLane(int lane)
 
 		if (SceneNewGame::scoreSheep >= MAX_SCORE) {
 			// hiện thắng
+			gameOver->setVisible(true);
+			gameOver->setString("VICTORY");
+			Director::getInstance()->replaceScene(GameOverScene::create());
 		}
 
 		if (!currentSheep->isAlive()) 
@@ -487,7 +483,9 @@ void SceneNewGame::updateForEachLane(int lane)
 		currentSheep->Update();
 		
 		if (SceneNewGame::scoreEnemy >= MAX_SCORE) {
-			// hiện thua
+			gameOver->setVisible(true);
+			gameOver->setString("DEFEAT");
+			Director::getInstance()->replaceScene(GameOverScene::create());
 		}
 
 		if (!currentSheep->isAlive())
