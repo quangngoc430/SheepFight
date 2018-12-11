@@ -2,6 +2,7 @@
 #include "Defines.h"
 #include "SceneMenu.h"
 #include "Sheep.h"
+#include "GameOverScene.h"
 #include <vector>
 
 
@@ -22,6 +23,7 @@ Label* scoreEnemyLabel;
 Label *label;
 Label *delaySheep;
 Label *delayEnemy;
+Label *gameOver;
 Sheep *predictSheep;
 Sheep *predictEnemy;
 
@@ -84,15 +86,6 @@ bool SceneNewGame::init()
 	return true;
 }
 
-void SceneNewGame::delayTime()
-{
-	if (countDelaySheep == 120)
-	{
-		isLockBtn = false;
-		countDelaySheep = 0;
-	}
-}
-
 void SceneNewGame::setTypeSheep(int typeSheep[])
 {
 	if (typeSheep[0] == 0)
@@ -132,6 +125,14 @@ void SceneNewGame::textOnScreen()
 	delayEnemy->setAlignment(cocos2d::TextHAlignment::CENTER);
 	delayEnemy->setPosition(DELAY_ENEMY);
 	addChild(delayEnemy);
+
+	gameOver = Label::createWithTTF("0", "fonts/Marker Felt.ttf ", 100);
+	gameOver->setColor(Color3B::RED);
+	gameOver->setAlignment(cocos2d::TextHAlignment::CENTER);
+	gameOver->setPosition(GAME_OVER);
+	gameOver->setVisible(false);
+	addChild(gameOver);
+
 }
 
 void SceneNewGame::createPredictSheep(int wSheep, int wEnemy)
@@ -361,6 +362,18 @@ void SceneNewGame::update(float detail)
 
 		updateScoreOnScreen();
 	}	
+	if (scoreSheep > 1)
+	{
+		gameOver->setVisible(true);
+		gameOver->setString("VICTORY");
+		Director::getInstance()->replaceScene(GameOverScene::create());
+	}
+	if (scoreEnemy >= 1)
+	{
+		gameOver->setVisible(true);
+		gameOver->setString("DEFEAT");
+		Director::getInstance()->replaceScene(GameOverScene::create());
+	}
 }
 
 void SceneNewGame::updateForEachLane(int lane)
