@@ -18,6 +18,7 @@ public:
 	Model* pop();
 	Model* push(Model* model);
 	Model* get(int index);
+	Model* remove(int index);
 	bool isExist(int index);
 	int getSize();
 };

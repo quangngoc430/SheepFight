@@ -1,11 +1,14 @@
 #pragma once
 #include <Model.h>
+#include "SceneNewGame.h"
 
 class Sheep : public Model
 {
 private:
 	int id;
 	int weight;
+	int width;
+	int height;
 	cocos2d::Vec2 velocity;
 	int lane;
 	Sheep *head;
@@ -15,7 +18,7 @@ private:
 	cocos2d::Scene* scene;
 
 public:
-	Sheep(cocos2d::Scene* scene);
+	Sheep(cocos2d::Scene* scene, int weight, int direction, bool runAni);
 	~Sheep();
 
 	void setId(int id);
@@ -38,8 +41,12 @@ public:
 	int getDirection();
 	void setType(int type);
 	int getType();
-	int getHeight();
+	void setWidth(int width);
 	int getWidth();
+	void setHeight(int height);
+	int getHeight();
+	bool isCollision(Sheep * otherSheep);
+	void replaceSprite(int type, int direction);
 
 	void Init();
 	void Update();

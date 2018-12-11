@@ -22,7 +22,7 @@ bool SceneMenu::init()
 	}
 	auto visibleSize = Director::getInstance()->getVisibleSize();
 	
-	auto sprite = Sprite::create("galaxy4.jpg");
+	auto sprite = Sprite::create(IMG_MENU);
 	
 	sprite->setPosition(visibleSize / 2);
 	this->addChild(sprite, 0);
@@ -39,7 +39,7 @@ bool SceneMenu::init()
 		Director::getInstance()->replaceScene(TransitionFlipX::create(0.5, _ABOUT::createScene()));
 	});
 	auto quit = MenuItemFont::create("Quit", [](Ref *event) {
-		
+		Director::getInstance()->end();
 	});
 
 	newGame->setPosition(visibleSize.width / 2, visibleSize.height - 200);
