@@ -28,28 +28,56 @@ bool SceneMenu::init()
 	this->addChild(sprite, 0);
 	
 	// Menu String
+	auto newGame = ui::Button::create("Play_unclick.png", "Play_clicked.png", "Play_clicked.png");
+	auto about = ui::Button::create("About_unclick.png", "About_clicked.png", "About_clicked.png");
+	auto exit = ui::Button::create("Exit_unclick.png", "Exit_clicked.png", "Exit_clicked.png");
 
-	auto newGame = MenuItemFont::create("New Game", [](Ref *event) {
-		Director::getInstance()->replaceScene(TransitionFlipX::create(0.5, _NEW_GAME::createScene()));
+	newGame->addTouchEventListener([](Ref* sender, ui::Widget::TouchEventType type) {
+		switch (type)
+		{
+		case ui::Widget::TouchEventType::BEGAN:
+			break;
+		case ui::Widget::TouchEventType::ENDED:
+			Director::getInstance()->replaceScene(TransitionFlipX::create(0.5, _NEW_GAME::createScene()));
+
+			break;
+		default:
+			break;
+		}
 	});
-	auto options = MenuItemFont::create("Options", [](Ref *event) {
-		Director::getInstance()->replaceScene(TransitionFlipX::create(0.5, _OPTIONS::createScene()));
+	about->addTouchEventListener([](Ref* sender, ui::Widget::TouchEventType type) {
+		switch (type)
+		{
+		case ui::Widget::TouchEventType::BEGAN:
+			break;
+		case ui::Widget::TouchEventType::ENDED:		
+			Director::getInstance()->replaceScene(TransitionFlipX::create(0.5, _ABOUT::createScene()));
+			break;
+		default:
+			break;
+		}
 	});
-	auto about = MenuItemFont::create("About", [](Ref *event) {
-		Director::getInstance()->replaceScene(TransitionFlipX::create(0.5, _ABOUT::createScene()));
-	});
-	auto quit = MenuItemFont::create("Quit", [](Ref *event) {
-		Director::getInstance()->end();
+	exit->addTouchEventListener([](Ref* sender, ui::Widget::TouchEventType type) {
+		switch (type)
+		{
+		case ui::Widget::TouchEventType::BEGAN:
+			break;
+		case ui::Widget::TouchEventType::ENDED:
+			Director::getInstance()->end();
+			break;
+		default:
+			break;
+		}
 	});
 
-	newGame->setPosition(visibleSize.width / 2, visibleSize.height - 200);
-	options->setPosition(newGame->getPosition() - Vec2(0, 50));
-	about->setPosition(options->getPosition() - Vec2(0, 50));
-	quit->setPosition(about->getPosition() - Vec2(0, 50));
 
-	auto menuString = Menu::create(newGame, options, about, quit, nullptr);
-	menuString->setPosition(Vec2::ZERO);
-	addChild(menuString);
+	newGame->setPosition(Vec2(420, 230));
+	about->setPosition(newGame->getPosition() - Vec2(0, 70));
+	exit->setPosition(about->getPosition() - Vec2(-10, 70));
+
+	addChild(newGame);
+	addChild(about);
+	addChild(exit);
 
 	return true;
 }

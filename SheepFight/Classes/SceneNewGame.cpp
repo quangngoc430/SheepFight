@@ -2,6 +2,7 @@
 #include "Defines.h"
 #include "SceneMenu.h"
 #include "Sheep.h"
+#include "GameOverScene.h"
 #include <vector>
 
 
@@ -20,6 +21,9 @@ int SceneNewGame::scoreEnemy = DEFAULT_SCORE;
 Label* scoreSheepLabel;
 Label* scoreEnemyLabel;
 Label *label;
+Label *delaySheep;
+Label *delayEnemy;
+Label *gameOver;
 Sheep *predictSheep;
 Sheep *predictEnemy;
 Sprite * btnBlockSheep;
@@ -83,15 +87,6 @@ bool SceneNewGame::init()
 	createPredictSheep(typeSheep[0], typeEnemy[0]);
 
 	return true;
-}
-
-void SceneNewGame::delayTime()
-{
-	if (countDelaySheep == 120)
-	{
-		isLockBtn = false;
-		countDelaySheep = 0;
-	}
 }
 
 void SceneNewGame::setTypeSheep(int typeSheep[])
@@ -364,6 +359,18 @@ void SceneNewGame::update(float detail)
 
 		updateScoreOnScreen();
 	}	
+	if (scoreSheep > 1)
+	{
+		gameOver->setVisible(true);
+		gameOver->setString("VICTORY");
+		Director::getInstance()->replaceScene(GameOverScene::create());
+	}
+	if (scoreEnemy >= 1)
+	{
+		gameOver->setVisible(true);
+		gameOver->setString("DEFEAT");
+		Director::getInstance()->replaceScene(GameOverScene::create());
+	}
 }
 
 void SceneNewGame::updateForEachLane(int lane)

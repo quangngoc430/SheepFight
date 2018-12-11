@@ -23,7 +23,6 @@ public:
 	static int scoreSheep;
 	static int scoreEnemy;
 	void createPredictSheep(int wSheep, int wEnemy);
-	void delayTime();
 
 	virtual void update(float detail);
 	void updateForEachLane(int lane);

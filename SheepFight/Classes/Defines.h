@@ -14,7 +14,8 @@
 // Global Image
 #define IMG_GO "GoNormal.png"
 #define IMG_PLAY_BACKGROUND "Play-ground.png"
-#define IMG_MENU "Menu.png"
+#define IMG_MENU "Background_Primary.png"
+
 
 // Image Sheep
 #define IMG_SMALL_SHEEP_1 "whitesheep_1_1.png"
@@ -114,3 +115,5 @@
 
 #define DELAY_SHEEP Vec2(95, 445)
 #define DELAY_ENEMY Vec2(655, 445)
+
+#define GAME_OVER Vec2(400, 240)
