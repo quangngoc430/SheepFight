@@ -10,7 +10,8 @@ USING_NS_CC;
 std::vector<Queue*> vectorQueueSheep;
 std::vector<Queue*> vectorQueueEnemy;
 int countElement;
-int countFPS;
+int countDelayEnemy;
+int countDelaySheep;
 int typeSheep[2] = {0, 0};
 int typeEnemy[2] = {0, 0};
 Sheep *space1;
@@ -19,9 +20,12 @@ int SceneNewGame::scoreEnemy = DEFAULT_SCORE;
 Label* scoreSheepLabel;
 Label* scoreEnemyLabel;
 Label *label;
+Label *delaySheep;
+Label *delayEnemy;
 Sheep *predictSheep;
 Sheep *predictEnemy;
 
+bool isLockBtn = true;
 bool isPausedGame = false;
 
 Scene* SceneNewGame::createScene()
@@ -80,6 +84,15 @@ bool SceneNewGame::init()
 	return true;
 }
 
+void SceneNewGame::delayTime()
+{
+	if (countDelaySheep == 120)
+	{
+		isLockBtn = false;
+		countDelaySheep = 0;
+	}
+}
+
 void SceneNewGame::setTypeSheep(int typeSheep[])
 {
 	if (typeSheep[0] == 0)
@@ -92,7 +105,6 @@ void SceneNewGame::setTypeSheep(int typeSheep[])
 		typeSheep[0] = typeSheep[1];
 		typeSheep[1] = round(random(SMALL_SHEEP_TYPE, BIG_SHEEP_TYPE));
 	}
-	log("sheep1: %d, sheep2: %d", typeSheep[0], typeSheep[1]);
 }
 
 void SceneNewGame::textOnScreen()
@@ -108,11 +120,22 @@ void SceneNewGame::textOnScreen()
 	scoreEnemyLabel->setAlignment(cocos2d::TextHAlignment::CENTER);
 	scoreEnemyLabel->setPosition(SCORE_ENEMY);
 	addChild(scoreEnemyLabel);
+
+	delaySheep = Label::createWithTTF("0", "fonts/Marker Felt.ttf ", 20);
+	delaySheep->setColor(Color3B::GREEN);
+	delaySheep->setAlignment(cocos2d::TextHAlignment::CENTER);
+	delaySheep->setPosition(DELAY_SHEEP);
+	addChild(delaySheep);
+
+	delayEnemy = Label::createWithTTF("0", "fonts/Marker Felt.ttf ", 20);
+	delayEnemy->setColor(Color3B::GREEN);
+	delayEnemy->setAlignment(cocos2d::TextHAlignment::CENTER);
+	delayEnemy->setPosition(DELAY_ENEMY);
+	addChild(delayEnemy);
 }
 
 void SceneNewGame::createPredictSheep(int wSheep, int wEnemy)
 {
-
 	predictSheep = new Sheep(this, wSheep, SHEEP_DIRECTION, false);
 	predictSheep->setPosition(PREDICT_SHEEP);
 	predictSheep->setAlive(true);
@@ -124,7 +147,6 @@ void SceneNewGame::createPredictSheep(int wSheep, int wEnemy)
 	predictEnemy->setAlive(true);
 	predictEnemy->setWeight(wEnemy);
 	predictEnemy->setDirection(ENEMY_DIRECTION);
-
 }
 
 void SceneNewGame::createButton() 
@@ -163,11 +185,12 @@ void SceneNewGame::createButton()
 		case ui::Widget::TouchEventType::BEGAN:
 			break;
 		case ui::Widget::TouchEventType::ENDED:
-			if (checkCanCreateSheep(LANE_0, SHEEP_DIRECTION) && !isPausedGame)
+			if (checkCanCreateSheep(LANE_0, SHEEP_DIRECTION) && !isPausedGame && !isLockBtn)
 			{
 				setTypeSheep(typeSheep);
 				predictSheep->replaceSprite(typeSheep[1], SHEEP_DIRECTION);
 				addActionSheep(LANE_0, typeSheep[0], SHEEP_DIRECTION);
+				isLockBtn = true;
 			}
 			break;
 
@@ -182,11 +205,12 @@ void SceneNewGame::createButton()
 		case ui::Widget::TouchEventType::BEGAN:
 			break;
 		case ui::Widget::TouchEventType::ENDED:
-			if (checkCanCreateSheep(LANE_1, SHEEP_DIRECTION) && !isPausedGame)
+			if (checkCanCreateSheep(LANE_1, SHEEP_DIRECTION) && !isPausedGame && !isLockBtn)
 			{
 				setTypeSheep(typeSheep);
 				predictSheep->replaceSprite(typeSheep[1], SHEEP_DIRECTION);
 				addActionSheep(LANE_1, typeSheep[0], SHEEP_DIRECTION);
+				isLockBtn = true;
 			}
 			break;
 
@@ -201,11 +225,12 @@ void SceneNewGame::createButton()
 		case ui::Widget::TouchEventType::BEGAN:
 			break;
 		case ui::Widget::TouchEventType::ENDED:
-			if (checkCanCreateSheep(LANE_2, SHEEP_DIRECTION) && !isPausedGame)
+			if (checkCanCreateSheep(LANE_2, SHEEP_DIRECTION) && !isPausedGame && !isLockBtn)
 			{
 				setTypeSheep(typeSheep);
 				predictSheep->replaceSprite(typeSheep[1], SHEEP_DIRECTION);
 				addActionSheep(LANE_2, typeSheep[0], SHEEP_DIRECTION);
+				isLockBtn = true;
 			}
 			break;
 
@@ -220,11 +245,12 @@ void SceneNewGame::createButton()
 		case ui::Widget::TouchEventType::BEGAN:
 			break;
 		case ui::Widget::TouchEventType::ENDED:
-			if (checkCanCreateSheep(LANE_3, SHEEP_DIRECTION) && !isPausedGame)
+			if (checkCanCreateSheep(LANE_3, SHEEP_DIRECTION) && !isPausedGame && !isLockBtn)
 			{
 				setTypeSheep(typeSheep);
 				predictSheep->replaceSprite(typeSheep[1], SHEEP_DIRECTION);
 				addActionSheep(LANE_3, typeSheep[0], SHEEP_DIRECTION);
+				isLockBtn = true;
 			}
 			break;
 
@@ -239,11 +265,12 @@ void SceneNewGame::createButton()
 		case ui::Widget::TouchEventType::BEGAN:
 			break;
 		case ui::Widget::TouchEventType::ENDED:
-			if (checkCanCreateSheep(LANE_4, SHEEP_DIRECTION) && !isPausedGame)
+			if (checkCanCreateSheep(LANE_4, SHEEP_DIRECTION) && !isPausedGame && !isLockBtn)
 			{
 				setTypeSheep(typeSheep);
 				predictSheep->replaceSprite(typeSheep[1], SHEEP_DIRECTION);
 				addActionSheep(LANE_4, typeSheep[0], SHEEP_DIRECTION);
+				isLockBtn = true;
 			}
 			break;
 
@@ -302,15 +329,29 @@ void SceneNewGame::addActionSheep(int lane, int type, int direction)
 
 void SceneNewGame::update(float detail)
 {
+	if (countDelaySheep == 120)
+	{
+		isLockBtn = false;
+		countDelaySheep = 0;		
+		delaySheep->setString("GO GO");
+	}
+	if (isLockBtn == true)
+	{
+		delaySheep->setString(std::to_string(countDelaySheep));
+		countDelaySheep++;
+	}
+	
+	log("count %d", countDelaySheep);
 	if (!isPausedGame)
 	{
 		// random enemy
-		countFPS++;
-		if (countFPS % 120 == 0)
+		countDelayEnemy++;
+		if (countDelayEnemy % 120 == 0)
 		{
 			setTypeSheep(typeEnemy);
 			predictEnemy->replaceSprite(typeEnemy[1], ENEMY_DIRECTION);
 			addActionSheep(random(LANE_0, LANE_4), typeEnemy[0], ENEMY_DIRECTION);
+			countDelayEnemy = 0;
 		}
 
 		for (int lane = 0; lane < MAX_LANES; lane++)
@@ -660,4 +701,5 @@ void SceneNewGame::updateScoreOnScreen()
 {
 	scoreEnemyLabel->setString(std::to_string(SceneNewGame::scoreEnemy));
 	scoreSheepLabel->setString(std::to_string(SceneNewGame::scoreSheep));
+	delayEnemy->setString(std::to_string(countDelayEnemy));
 }
