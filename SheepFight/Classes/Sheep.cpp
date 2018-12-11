@@ -3,59 +3,99 @@
 
 USING_NS_CC;
 
-Sheep::Sheep(cocos2d::Scene* scene, int weight, int direction)
+Sheep::Sheep(cocos2d::Scene* scene, int weight, int direction, bool runAni)
 {
 	this->head = nullptr;
 	this->tail = nullptr;
 	this->scene = scene;
 	this->type = -1;
-	// animation
-	Vector<SpriteFrame*> frames;
-	if (direction == SHEEP_DIRECTION)
+
+	if (!runAni)
 	{
-		if (weight == SMALL_SIZE)
+		if (direction == SHEEP_DIRECTION)
 		{
-			frames.pushBack(SpriteFrame::create(IMG_SHEEP_TYPE_1, Rect(0, 0, 70, 56)));
-			frames.pushBack(SpriteFrame::create(IMG_SHEEP_TYPE_1_ANI, Rect(0, 0, 70, 56)));
-		}
-		else if (weight == MEDIUM_SIZE)
-		{
-			frames.pushBack(SpriteFrame::create(IMG_SHEEP_TYPE_2, Rect(0, 0, 70, 56)));
-			frames.pushBack(SpriteFrame::create(IMG_SHEEP_TYPE_2_ANI, Rect(0, 0, 70, 56)));
+			if (weight == SMALL_SIZE)
+			{
+				this->mSprite = Sprite::create(IMG_SHEEP_TYPE_1);
+			}
+			else if (weight == MEDIUM_SIZE)
+			{
+				this->mSprite = Sprite::create(IMG_SHEEP_TYPE_2_ANI);
+			}
+			else
+			{
+				this->mSprite = Sprite::create(IMG_SHEEP_TYPE_3_ANI);
+			}
 		}
 		else
 		{
-			frames.pushBack(SpriteFrame::create(IMG_SHEEP_TYPE_3, Rect(0, 0, 80, 64)));
-			frames.pushBack(SpriteFrame::create(IMG_SHEEP_TYPE_3_ANI, Rect(0, 0, 80, 64)));
+			if (weight == SMALL_SIZE)
+			{
+				this->mSprite = Sprite::create(IMG_ENEMY_TYPE_1_ANI);
+			}
+			else if (weight == MEDIUM_SIZE)
+			{
+				this->mSprite = Sprite::create(IMG_ENEMY_TYPE_2_ANI);
+			}
+			else
+			{
+				this->mSprite = Sprite::create(IMG_ENEMY_TYPE_3_ANI);
+			}
 		}
 	}
 	else
 	{
-		if (weight == SMALL_SIZE)
+		// animation
+		Vector<SpriteFrame*> frames;
+		if (direction == SHEEP_DIRECTION)
 		{
-			frames.pushBack(SpriteFrame::create(IMG_ENEMY_TYPE_1, Rect(0, 0, 70, 56)));
-			frames.pushBack(SpriteFrame::create(IMG_ENEMY_TYPE_1_ANI, Rect(0, 0, 70, 56)));
-		}
-		else if (weight == MEDIUM_SIZE)
-		{
-			frames.pushBack(SpriteFrame::create(IMG_ENEMY_TYPE_2, Rect(0, 0, 70, 56)));
-			frames.pushBack(SpriteFrame::create(IMG_ENEMY_TYPE_2_ANI, Rect(0, 0, 70, 56)));
+			if (weight == SMALL_SIZE)
+			{
+				frames.pushBack(SpriteFrame::create(IMG_SHEEP_TYPE_1, Rect(0, 0, 70, 56)));
+				frames.pushBack(SpriteFrame::create(IMG_SHEEP_TYPE_1_ANI, Rect(0, 0, 70, 56)));
+			}
+			else if (weight == MEDIUM_SIZE)
+			{
+				frames.pushBack(SpriteFrame::create(IMG_SHEEP_TYPE_2, Rect(0, 0, 70, 56)));
+				frames.pushBack(SpriteFrame::create(IMG_SHEEP_TYPE_2_ANI, Rect(0, 0, 70, 56)));
+			}
+			else
+			{
+				frames.pushBack(SpriteFrame::create(IMG_SHEEP_TYPE_3, Rect(0, 0, 80, 64)));
+				frames.pushBack(SpriteFrame::create(IMG_SHEEP_TYPE_3_ANI, Rect(0, 0, 80, 64)));
+			}
 		}
 		else
 		{
-			frames.pushBack(SpriteFrame::create(IMG_ENEMY_TYPE_3, Rect(0, 0, 80, 64)));
-			frames.pushBack(SpriteFrame::create(IMG_ENEMY_TYPE_3_ANI, Rect(0, 0, 80, 64)));
+			if (weight == SMALL_SIZE)
+			{
+				frames.pushBack(SpriteFrame::create(IMG_ENEMY_TYPE_1, Rect(0, 0, 70, 56)));
+				frames.pushBack(SpriteFrame::create(IMG_ENEMY_TYPE_1_ANI, Rect(0, 0, 70, 56)));
+			}
+			else if (weight == MEDIUM_SIZE)
+			{
+				frames.pushBack(SpriteFrame::create(IMG_ENEMY_TYPE_2, Rect(0, 0, 70, 56)));
+				frames.pushBack(SpriteFrame::create(IMG_ENEMY_TYPE_2_ANI, Rect(0, 0, 70, 56)));
+			}
+			else
+			{
+				frames.pushBack(SpriteFrame::create(IMG_ENEMY_TYPE_3, Rect(0, 0, 80, 64)));
+				frames.pushBack(SpriteFrame::create(IMG_ENEMY_TYPE_3_ANI, Rect(0, 0, 80, 64)));
+			}
 		}
+	
+	
+		auto animation = Animation::createWithSpriteFrames(frames, 0.1f);
+		auto animate = Animate::create(animation);
+
+		this->mSprite = Sprite::create();
+		this->mSprite->runAction(RepeatForever::create(animate));
 	}
 	
-	
-	auto animation = Animation::createWithSpriteFrames(frames, 0.1f);
-	auto animate = Animate::create(animation);
-
-	this->mSprite = Sprite::create();
-	this->mSprite->runAction(RepeatForever::create(animate));
 	scene->addChild(mSprite);
 }
+
+
 Sheep::~Sheep()
 {
 	
@@ -255,3 +295,43 @@ void Sheep::Update()
 	}*/
 }
 
+void Sheep::replaceSprite(int weight, int direction)
+{
+	SpriteFrameCache* spriteFrameCache = SpriteFrameCache::getInstance();
+	spriteFrameCache->addSpriteFramesWithFile("SheepNEnemy.plist");
+	SpriteFrame * spriteFrame;
+	if (direction == SHEEP_DIRECTION)
+	{
+		switch (weight)
+		{
+			case SMALL_SIZE:
+					spriteFrame = spriteFrameCache->getSpriteFrameByName(IMG_SHEEP_TYPE_1);
+					break;
+			case MEDIUM_SIZE:
+					spriteFrame = spriteFrameCache->getSpriteFrameByName(IMG_SHEEP_TYPE_2_ANI);
+					break;
+			case BIG_SIZE:
+					spriteFrame = spriteFrameCache->getSpriteFrameByName(IMG_SHEEP_TYPE_3_ANI);
+					break;
+		}
+	
+	}
+	else
+	{
+		switch (weight)
+		{
+		case SMALL_SIZE:
+			spriteFrame = spriteFrameCache->getSpriteFrameByName(IMG_ENEMY_TYPE_1_ANI);
+			break;
+		case MEDIUM_SIZE:
+			spriteFrame = spriteFrameCache->getSpriteFrameByName(IMG_ENEMY_TYPE_2_ANI);
+			break;
+		case BIG_SIZE:
+			spriteFrame = spriteFrameCache->getSpriteFrameByName(IMG_ENEMY_TYPE_3_ANI);
+			break;
+		}
+	}
+
+	mSprite->setDisplayFrame(spriteFrame);
+
+}

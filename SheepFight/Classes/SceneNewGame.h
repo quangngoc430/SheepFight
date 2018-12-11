@@ -16,6 +16,7 @@ public:
 	bool checkCanCreateSheep(int lane, int direction);
 	void setTypeSheep(int typeSheep[]);
 	void textOnScreen();
+	void createPredictSheep(int wSheep, int wEnemy);
 
 	virtual void update(float detail);
 	void updateForEachLane(int lane);

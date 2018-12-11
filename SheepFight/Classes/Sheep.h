@@ -15,7 +15,7 @@ private:
 	cocos2d::Scene* scene;
 
 public:
-	Sheep(cocos2d::Scene* scene, int weight, int direction);
+	Sheep(cocos2d::Scene* scene, int weight, int direction, bool runAni);
 	~Sheep();
 
 	void setId(int id);
@@ -40,6 +40,8 @@ public:
 	int getType();
 	int getHeight();
 	int getWidth();
+	void replaceSprite(int weight, int direction);
+
 
 	void Init();
 	void Update();

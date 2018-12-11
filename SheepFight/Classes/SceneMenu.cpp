@@ -39,7 +39,7 @@ bool SceneMenu::init()
 		Director::getInstance()->replaceScene(TransitionFlipX::create(0.5, _ABOUT::createScene()));
 	});
 	auto quit = MenuItemFont::create("Quit", [](Ref *event) {
-		
+		Director::getInstance()->end();
 	});
 
 	newGame->setPosition(visibleSize.width / 2, visibleSize.height - 200);

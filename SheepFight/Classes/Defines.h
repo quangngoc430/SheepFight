@@ -87,7 +87,9 @@
 #define SMALL_SIZE 1
 #define SMALL_SIZE_HEIGHT 48
 #define SMALL_SIZE_WIDTH 48
-#define SMALL_SIZE 1
 
 #define SCORE_SHEEP Vec2(330, 435)
 #define SCORE_ENEMY Vec2(470, 435)
+
+#define PREDICT_SHEEP Vec2(150, 435)
+#define PREDICT_ENEMY Vec2(600, 435)
