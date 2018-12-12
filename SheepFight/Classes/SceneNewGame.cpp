@@ -127,19 +127,7 @@ void SceneNewGame::textOnScreen()
 	scoreEnemyLabel->setPosition(SCORE_ENEMY);
 	addChild(scoreEnemyLabel);
 
-	delaySheep = Label::createWithTTF("0", "fonts/Marker Felt.ttf ", 20);
-	delaySheep->setColor(Color3B::GREEN);
-	delaySheep->setAlignment(cocos2d::TextHAlignment::CENTER);
-	delaySheep->setPosition(DELAY_SHEEP);
-	addChild(delaySheep);
-
-	delayEnemy = Label::createWithTTF("0", "fonts/Marker Felt.ttf ", 20);
-	delayEnemy->setColor(Color3B::GREEN);
-	delayEnemy->setAlignment(cocos2d::TextHAlignment::CENTER);
-	delayEnemy->setPosition(DELAY_ENEMY);
-	addChild(delayEnemy);
-
-	gameOver = Label::createWithTTF("0", "fonts/Marker Felt.ttf ", 100);
+	gameOver = Label::createWithTTF("0", "fonts/Marker-Felt.ttf ", 100);
 	gameOver->setColor(Color3B::RED);
 	gameOver->setAlignment(cocos2d::TextHAlignment::CENTER);
 	gameOver->setPosition(GAME_OVER);
@@ -359,20 +347,19 @@ void SceneNewGame::addActionSheep(int lane, int type, int direction)
 
 void SceneNewGame::update(float detail)
 {
-	if (countDelaySheep == 120)
-	{
-		isLockBtn = false;
-		countDelaySheep = 0;		
-		delaySheep->setString("GO GO");
-	}
-	if (isLockBtn == true)
-	{
-		delaySheep->setString(std::to_string(countDelaySheep));
-		countDelaySheep++;
-	}
-	
 	if (!isPausedGame)
 	{
+		if (countDelaySheep == 120)
+		{
+			isLockBtn = false;
+			countDelaySheep = 0;
+			btnBlockSheep->setVisible(false);
+		}
+		if (isLockBtn == true)
+		{
+			countDelaySheep++;
+		}
+
 		if (countDelaySheep == 120)
 		{
 			isLockBtn = false;
