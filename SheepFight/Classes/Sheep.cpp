@@ -109,10 +109,9 @@ Sheep::Sheep(cocos2d::Scene* scene, int type, int direction, bool runAni)
 	this->scene->addChild(mSprite);
 }
 
-
 Sheep::~Sheep()
 {
-	this->getSprite()->removeFromParent();
+	//this->getSprite()->removeFromParent();
 }
 
 void Sheep::setId(int id)

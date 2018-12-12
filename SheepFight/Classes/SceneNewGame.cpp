@@ -37,6 +37,42 @@ Scene* SceneNewGame::createScene()
 	return SceneNewGame::create();
 }
 
+void SceneNewGame::clearData()
+{
+	for (int index = vectorQueueSheep.size() - 1; index >= 0; index--)
+	{
+		Queue * queue = vectorQueueSheep.at(index);
+		
+		while (queue->getSize() > 0)
+		{ 
+			Sheep * sheep = (Sheep*)queue->get(0);
+			delete sheep;
+			queue->remove(0);
+		}
+
+		delete queue;
+		vectorQueueSheep.erase(vectorQueueSheep.begin() + index);
+	}
+
+	for (int index = vectorQueueEnemy.size() - 1; index >= 0; index--)
+	{
+		Queue * queue = vectorQueueEnemy.at(index);
+
+		while (queue->getSize() > 0)
+		{
+			Sheep * sheep = (Sheep*)queue->get(0);
+			delete sheep;
+			queue->remove(0);
+		}
+
+		delete queue;
+		vectorQueueEnemy.erase(vectorQueueEnemy.begin() + index);
+	}
+
+	scoreEnemy = DEFAULT_SCORE;
+	scoreSheep = DEFAULT_SCORE;
+}
+
 bool SceneNewGame::init()
 {
 	if (!Scene::init())
@@ -46,6 +82,7 @@ bool SceneNewGame::init()
 
 	countElement = 0;
 
+	clearData();
 	for (int index = 0; index < MAX_LANES; index++)
 	{
 		vectorQueueSheep.push_back(new Queue());
@@ -180,9 +217,15 @@ void SceneNewGame::createButton()
 		case ui::Widget::TouchEventType::ENDED:
 			isPausedGame = !isPausedGame;
 			if (isPausedGame)
+			{
 				btnPauseGame->setTexture("Play.png");
+				CocosDenshion::SimpleAudioEngine::getInstance()->stopBackgroundMusic(false);
+			}
 			else
+			{
 				btnPauseGame->setTexture("Pause.png");
+				CocosDenshion::SimpleAudioEngine::getInstance()->resumeBackgroundMusic();
+			}
 			break;
 
 		default:
@@ -389,13 +432,13 @@ void SceneNewGame::update(float detail)
 		updateScoreOnScreen();
 	}	
 
-	if (scoreSheep > 10)
+	if (scoreSheep >= MAX_SCORE)
 	{
 		gameOver->setVisible(true);
 		gameOver->setString("VICTORY");
 		Director::getInstance()->replaceScene(GameOverScene::create());
 	}
-	if (scoreEnemy >= 10)
+	if (scoreEnemy >= MAX_SHEEP)
 	{
 		gameOver->setVisible(true);
 		gameOver->setString("DEFEAT");
