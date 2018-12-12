@@ -3,6 +3,7 @@
 #include "SceneMenu.h"
 #include "Sheep.h"
 #include "GameOverScene.h"
+#include "SimpleAudioEngine.h"
 #include <vector>
 
 
@@ -57,6 +58,12 @@ bool SceneNewGame::init()
 	
 	sprite->setPosition(visibleSize / 2);
 	this->addChild(sprite, 0);
+
+	// audio
+	auto audio = CocosDenshion::SimpleAudioEngine::getInstance();
+
+	// Thiết lập play background music và được lặp đi lặp lại liên tục.
+	audio->playBackgroundMusic("handclap.mp3", true);
 
 	////---------------------------------
 	//// Add button back
@@ -119,6 +126,26 @@ void SceneNewGame::textOnScreen()
 	scoreEnemyLabel->setAlignment(cocos2d::TextHAlignment::CENTER);
 	scoreEnemyLabel->setPosition(SCORE_ENEMY);
 	addChild(scoreEnemyLabel);
+
+	delaySheep = Label::createWithTTF("0", "fonts/Marker Felt.ttf ", 20);
+	delaySheep->setColor(Color3B::GREEN);
+	delaySheep->setAlignment(cocos2d::TextHAlignment::CENTER);
+	delaySheep->setPosition(DELAY_SHEEP);
+	addChild(delaySheep);
+
+	delayEnemy = Label::createWithTTF("0", "fonts/Marker Felt.ttf ", 20);
+	delayEnemy->setColor(Color3B::GREEN);
+	delayEnemy->setAlignment(cocos2d::TextHAlignment::CENTER);
+	delayEnemy->setPosition(DELAY_ENEMY);
+	addChild(delayEnemy);
+
+	gameOver = Label::createWithTTF("0", "fonts/Marker Felt.ttf ", 100);
+	gameOver->setColor(Color3B::RED);
+	gameOver->setAlignment(cocos2d::TextHAlignment::CENTER);
+	gameOver->setPosition(GAME_OVER);
+	gameOver->setVisible(false);
+	addChild(gameOver);
+
 }
 
 void SceneNewGame::createPredictSheep(int wSheep, int wEnemy)
@@ -332,6 +359,18 @@ void SceneNewGame::addActionSheep(int lane, int type, int direction)
 
 void SceneNewGame::update(float detail)
 {
+	if (countDelaySheep == 120)
+	{
+		isLockBtn = false;
+		countDelaySheep = 0;		
+		delaySheep->setString("GO GO");
+	}
+	if (isLockBtn == true)
+	{
+		delaySheep->setString(std::to_string(countDelaySheep));
+		countDelaySheep++;
+	}
+	
 	if (!isPausedGame)
 	{
 		if (countDelaySheep == 120)
@@ -347,7 +386,7 @@ void SceneNewGame::update(float detail)
 
 		// random enemy
 		countDelayEnemy++;
-		if (countDelayEnemy % 120 == 0)
+		if (countDelayEnemy % 130 == 0)
 		{
 			setTypeSheep(typeEnemy);
 			predictEnemy->replaceSprite(typeEnemy[1], ENEMY_DIRECTION);
@@ -362,6 +401,19 @@ void SceneNewGame::update(float detail)
 
 		updateScoreOnScreen();
 	}	
+
+	if (scoreSheep > 10)
+	{
+		gameOver->setVisible(true);
+		gameOver->setString("VICTORY");
+		Director::getInstance()->replaceScene(GameOverScene::create());
+	}
+	if (scoreEnemy >= 10)
+	{
+		gameOver->setVisible(true);
+		gameOver->setString("DEFEAT");
+		Director::getInstance()->replaceScene(GameOverScene::create());
+	}
 }
 
 void SceneNewGame::updateForEachLane(int lane)
