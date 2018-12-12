@@ -3,6 +3,7 @@
 #include "SceneMenu.h"
 #include "Sheep.h"
 #include "GameOverScene.h"
+#include "SimpleAudioEngine.h"
 #include <vector>
 
 
@@ -56,6 +57,12 @@ bool SceneNewGame::init()
 	
 	sprite->setPosition(visibleSize / 2);
 	this->addChild(sprite, 0);
+
+	// audio
+	auto audio = CocosDenshion::SimpleAudioEngine::getInstance();
+
+	// Thiết lập play background music và được lặp đi lặp lại liên tục.
+	audio->playBackgroundMusic("handclap.mp3", true);
 
 	////---------------------------------
 	//// Add button back
@@ -342,12 +349,11 @@ void SceneNewGame::update(float detail)
 		countDelaySheep++;
 	}
 	
-	log("count %d", countDelaySheep);
 	if (!isPausedGame)
 	{
 		// random enemy
 		countDelayEnemy++;
-		if (countDelayEnemy % 120 == 0)
+		if (countDelayEnemy % 130 == 0)
 		{
 			setTypeSheep(typeEnemy);
 			predictEnemy->replaceSprite(typeEnemy[1], ENEMY_DIRECTION);
@@ -362,13 +368,13 @@ void SceneNewGame::update(float detail)
 
 		updateScoreOnScreen();
 	}	
-	if (scoreSheep > 1)
+	if (scoreSheep > 10)
 	{
 		gameOver->setVisible(true);
 		gameOver->setString("VICTORY");
 		Director::getInstance()->replaceScene(GameOverScene::create());
 	}
-	if (scoreEnemy >= 1)
+	if (scoreEnemy >= 10)
 	{
 		gameOver->setVisible(true);
 		gameOver->setString("DEFEAT");
