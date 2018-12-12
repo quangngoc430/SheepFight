@@ -71,7 +71,7 @@ bool SceneMenu::init()
 	});
 
 
-	newGame->setPosition(Vec2(410, 230));
+	newGame->setPosition(Vec2(420, 230));
 	about->setPosition(newGame->getPosition() - Vec2(0, 70));
 	exit->setPosition(about->getPosition() - Vec2(-10, 70));
 
