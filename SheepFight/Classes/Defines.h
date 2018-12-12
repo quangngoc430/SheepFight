@@ -45,6 +45,8 @@
 #define IMG_BIG_ENEMY_3 "blacksheep_3_3.png"
 #define IMG_BIG_ENEMY_4 "blacksheep_3_4.png"
 
+#define IMG_BLOCK "block.png"
+
 // Map
 #define LANE_0 0
 #define LANE_1 1
@@ -79,7 +81,7 @@
 #define M_START 50
 #define M_END 760
 
-#define DEFAULT_SCORE 0;
+#define DEFAULT_SCORE 0
 #define MAX_SCORE 100
 
 #define MAX_SHEEP 5
@@ -107,7 +109,9 @@
 #define SCORE_ENEMY Vec2(470, 435)
 
 #define PREDICT_SHEEP Vec2(150, 435)
-#define PREDICT_ENEMY Vec2(600, 435)
+#define PREDICT_ENEMY Vec2(650, 435)
+
+#define BTN_BLOCK_SHEEP Vec2(150, 435)
 
 #define DELAY_SHEEP Vec2(95, 445)
 #define DELAY_ENEMY Vec2(655, 445)

@@ -27,6 +27,9 @@ Label *delayEnemy;
 Label *gameOver;
 Sheep *predictSheep;
 Sheep *predictEnemy;
+Sprite * btnBlockSheep;
+
+Sprite * btnPauseGame;
 
 bool isLockBtn = true;
 bool isPausedGame = false;
@@ -120,6 +123,7 @@ void SceneNewGame::textOnScreen()
 	scoreEnemyLabel->setAlignment(cocos2d::TextHAlignment::CENTER);
 	scoreEnemyLabel->setPosition(SCORE_ENEMY);
 	addChild(scoreEnemyLabel);
+<<<<<<< HEAD
 
 	delaySheep = Label::createWithTTF("0", "fonts/Marker Felt.ttf ", 20);
 	delaySheep->setColor(Color3B::GREEN);
@@ -140,6 +144,8 @@ void SceneNewGame::textOnScreen()
 	gameOver->setVisible(false);
 	addChild(gameOver);
 
+=======
+>>>>>>> master
 }
 
 void SceneNewGame::createPredictSheep(int wSheep, int wEnemy)
@@ -165,14 +171,19 @@ void SceneNewGame::createButton()
 	auto buttonCreateSheepLane2 = ui::Button::create(IMG_GO, "GoSelected.png", "GoSelected.png");
 	auto buttonCreateSheepLane3 = ui::Button::create(IMG_GO, "GoSelected.png", "GoSelected.png");
 	auto buttonCreateSheepLane4 = ui::Button::create(IMG_GO, "GoSelected.png", "GoSelected.png");
+	btnBlockSheep = Sprite::create(IMG_BLOCK);
+	btnPauseGame = Sprite::create("Pause.png");
 
 	buttonCreatePauseGame->setPosition(Vec2(400, 438));
+	btnPauseGame->setPosition(Vec2(400, 438));
 	buttonCreateSheepLane0->setPosition(BTN_SHEEP_LANE_0);
 	buttonCreateSheepLane1->setPosition(BTN_SHEEP_LANE_1);
 	buttonCreateSheepLane2->setPosition(BTN_SHEEP_LANE_2);
 	buttonCreateSheepLane3->setPosition(BTN_SHEEP_LANE_3);
 	buttonCreateSheepLane4->setPosition(BTN_SHEEP_LANE_4);
-	
+	btnBlockSheep->setPosition(BTN_BLOCK_SHEEP);
+
+
 	buttonCreatePauseGame->addTouchEventListener([&](Ref* sender, ui::Widget::TouchEventType type) {
 		switch (type)
 		{
@@ -180,6 +191,10 @@ void SceneNewGame::createButton()
 			break;
 		case ui::Widget::TouchEventType::ENDED:
 			isPausedGame = !isPausedGame;
+			if (isPausedGame)
+				btnPauseGame->setTexture("Play.png");
+			else
+				btnPauseGame->setTexture("Pause.png");
 			break;
 
 		default:
@@ -199,6 +214,7 @@ void SceneNewGame::createButton()
 				predictSheep->replaceSprite(typeSheep[1], SHEEP_DIRECTION);
 				addActionSheep(LANE_0, typeSheep[0], SHEEP_DIRECTION);
 				isLockBtn = true;
+				btnBlockSheep->setVisible(true);
 			}
 			break;
 
@@ -219,6 +235,7 @@ void SceneNewGame::createButton()
 				predictSheep->replaceSprite(typeSheep[1], SHEEP_DIRECTION);
 				addActionSheep(LANE_1, typeSheep[0], SHEEP_DIRECTION);
 				isLockBtn = true;
+				btnBlockSheep->setVisible(true);
 			}
 			break;
 
@@ -239,6 +256,7 @@ void SceneNewGame::createButton()
 				predictSheep->replaceSprite(typeSheep[1], SHEEP_DIRECTION);
 				addActionSheep(LANE_2, typeSheep[0], SHEEP_DIRECTION);
 				isLockBtn = true;
+				btnBlockSheep->setVisible(true);
 			}
 			break;
 
@@ -259,6 +277,7 @@ void SceneNewGame::createButton()
 				predictSheep->replaceSprite(typeSheep[1], SHEEP_DIRECTION);
 				addActionSheep(LANE_3, typeSheep[0], SHEEP_DIRECTION);
 				isLockBtn = true;
+				btnBlockSheep->setVisible(true);
 			}
 			break;
 
@@ -279,6 +298,7 @@ void SceneNewGame::createButton()
 				predictSheep->replaceSprite(typeSheep[1], SHEEP_DIRECTION);
 				addActionSheep(LANE_4, typeSheep[0], SHEEP_DIRECTION);
 				isLockBtn = true;
+				btnBlockSheep->setVisible(true);
 			}
 			break;
 
@@ -287,6 +307,8 @@ void SceneNewGame::createButton()
 		}
 	});
 
+	this->addChild(btnBlockSheep, 1);
+	this->addChild(btnPauseGame, 1);
 	this->addChild(buttonCreatePauseGame, 0);
 	this->addChild(buttonCreateSheepLane0, 0);
 	this->addChild(buttonCreateSheepLane1, 0);
@@ -337,6 +359,7 @@ void SceneNewGame::addActionSheep(int lane, int type, int direction)
 
 void SceneNewGame::update(float detail)
 {
+<<<<<<< HEAD
 	if (countDelaySheep == 120)
 	{
 		isLockBtn = false;
@@ -349,8 +372,21 @@ void SceneNewGame::update(float detail)
 		countDelaySheep++;
 	}
 	
+=======
+>>>>>>> master
 	if (!isPausedGame)
 	{
+		if (countDelaySheep == 120)
+		{
+			isLockBtn = false;
+			countDelaySheep = 0;
+			btnBlockSheep->setVisible(false);
+		}
+		if (isLockBtn == true)
+		{
+			countDelaySheep++;
+		}
+
 		// random enemy
 		countDelayEnemy++;
 		if (countDelayEnemy % 130 == 0)
@@ -460,6 +496,10 @@ void SceneNewGame::updateForEachLane(int lane)
 		currentSheep = ((Sheep*)queueSheep->get(index));
 		currentSheep->Update();
 
+		if (SceneNewGame::scoreSheep >= MAX_SCORE) {
+			// hiện thắng
+		}
+
 		if (!currentSheep->isAlive()) 
 		{
 			if (currentSheep->getHead() == nullptr)
@@ -490,6 +530,10 @@ void SceneNewGame::updateForEachLane(int lane)
 	{
 		currentSheep = ((Sheep*)queueEnemy->get(index));
 		currentSheep->Update();
+		
+		if (SceneNewGame::scoreEnemy >= MAX_SCORE) {
+			// hiện thua
+		}
 
 		if (!currentSheep->isAlive())
 		{
@@ -514,8 +558,6 @@ void SceneNewGame::updateForEachLane(int lane)
 			queueEnemy->remove(index);
 			delete currentSheep;
 		}
-
-		
 	}
 }
 
@@ -720,5 +762,4 @@ void SceneNewGame::updateScoreOnScreen()
 {
 	scoreEnemyLabel->setString(std::to_string(SceneNewGame::scoreEnemy));
 	scoreSheepLabel->setString(std::to_string(SceneNewGame::scoreSheep));
-	delayEnemy->setString(std::to_string(countDelayEnemy));
 }
