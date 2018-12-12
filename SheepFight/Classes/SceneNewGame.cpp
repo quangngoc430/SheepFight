@@ -21,8 +21,6 @@ int SceneNewGame::scoreEnemy = DEFAULT_SCORE;
 Label* scoreSheepLabel;
 Label* scoreEnemyLabel;
 Label *label;
-Label *delaySheep;
-Label *delayEnemy;
 Label *gameOver;
 Sheep *predictSheep;
 Sheep *predictEnemy;
@@ -85,7 +83,7 @@ bool SceneNewGame::init()
 	setTypeSheep(typeSheep);
 	setTypeSheep(typeEnemy);
 	createPredictSheep(typeSheep[0], typeEnemy[0]);
-	gameOver = Label::createWithTTF("0", "fonts/Marker Felt.ttf ", 100);
+	gameOver = Label::createWithTTF("0", "fonts/Marker-Felt.ttf", 100);
 	gameOver->setColor(Color3B::RED);
 	gameOver->setAlignment(cocos2d::TextHAlignment::CENTER);
 	gameOver->setPosition(GAME_OVER);
@@ -110,13 +108,13 @@ void SceneNewGame::setTypeSheep(int typeSheep[])
 
 void SceneNewGame::textOnScreen()
 {
-	scoreSheepLabel = Label::createWithTTF("0", "fonts/Marker Felt.ttf ", 30);
+	scoreSheepLabel = Label::createWithTTF("0", "fonts/Marker-Felt.ttf", 30);
 	scoreSheepLabel->setColor(Color3B::RED);
 	scoreSheepLabel->setAlignment(cocos2d::TextHAlignment::CENTER);
 	scoreSheepLabel->setPosition(SCORE_SHEEP);
 	addChild(scoreSheepLabel);
 
-	scoreEnemyLabel = Label::createWithTTF("0", "fonts/Marker Felt.ttf ", 30);
+	scoreEnemyLabel = Label::createWithTTF("0", "fonts/Marker-Felt.ttf", 30);
 	scoreEnemyLabel->setColor(Color3B::WHITE);
 	scoreEnemyLabel->setAlignment(cocos2d::TextHAlignment::CENTER);
 	scoreEnemyLabel->setPosition(SCORE_ENEMY);

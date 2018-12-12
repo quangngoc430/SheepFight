@@ -19,8 +19,8 @@ bool SceneAbout::init()
 	
 	auto sprite = Sprite::create();
 
-	auto design = Label::createWithTTF("Design \n Nguyen Hoang \n Nguyen Phuoc Hong Hai", "fonts/Marker Felt.ttf ", 30);
-	auto coder = Label::createWithTTF("Coder \n Le Van Viet Hung \n Bui Lam Quang Ngoc", "fonts/Marker Felt.ttf ", 30);
+	auto design = Label::createWithTTF("Design \n Nguyen Hoang \n Nguyen Phuoc Hong Hai", "fonts/Marker-Felt.ttf", 30);
+	auto coder = Label::createWithTTF("Coder \n Le Van Viet Hung \n Bui Lam Quang Ngoc", "fonts/Marker-Felt.ttf", 30);
 	
 	design->setAlignment(cocos2d::TextHAlignment::CENTER);
 	coder->setAlignment(cocos2d::TextHAlignment::CENTER);

@@ -82,7 +82,7 @@
 #define M_END 760
 
 #define DEFAULT_SCORE 0
-#define MAX_SCORE 3
+#define MAX_SCORE 100
 
 #define MAX_SHEEP 5
 #define MAX_LANES 5
