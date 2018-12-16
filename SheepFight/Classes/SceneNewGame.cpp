@@ -26,6 +26,9 @@ Label *gameOver;
 Sheep *predictSheep;
 Sheep *predictEnemy;
 Sprite * btnBlockSheep;
+Sprite * backgroudTopup;
+ui::Button * btnHome;
+ui::Button * btnResume;
 
 Sprite * btnPauseGame;
 
@@ -81,6 +84,7 @@ bool SceneNewGame::init()
 	}
 
 	countElement = 0;
+	isPausedGame = false;
 
 	clearData();
 	for (int index = 0; index < MAX_LANES; index++)
@@ -105,16 +109,7 @@ bool SceneNewGame::init()
 	////---------------------------------
 	//// Add button back
 	////---------------------------------
-	auto closeItem1 = MenuItemImage::create("CloseNormal.png", "CloseSelected.png",
-		[](Ref *event) {
-		Director::getInstance()->replaceScene(TransitionFlipX::create(0.5, _MENU::createScene()));
-	});
-	closeItem1->setPosition(visibleSize.width - closeItem1->getContentSize().width / 2, visibleSize.height - closeItem1->getContentSize().height / 2);
-
-	auto menuImage = Menu::create(closeItem1, nullptr);
-	menuImage->setPosition(Vec2::ZERO);
-	addChild(menuImage);
-
+	
 	////---------------------------------
 	//// Add Sheep random
 	////---------------------------------
@@ -190,12 +185,16 @@ void SceneNewGame::createPredictSheep(int wSheep, int wEnemy)
 
 void SceneNewGame::createButton() 
 {
+	btnHome = ui::Button::create("blacksheep_1_1.png", "blacksheep_1_1.png", "blacksheep_1_1.png");
+	btnResume = ui::Button::create("blacksheep_3_1.png", "blacksheep_3_1.png", "blacksheep_3_1.png");
 	auto buttonCreatePauseGame = ui::Button::create("Pause.png", "Pause.png", "Pause.png");
 	auto buttonCreateSheepLane0 = ui::Button::create(IMG_GO, "GoSelected.png", "GoSelected.png");
 	auto buttonCreateSheepLane1 = ui::Button::create(IMG_GO, "GoSelected.png", "GoSelected.png");
 	auto buttonCreateSheepLane2 = ui::Button::create(IMG_GO, "GoSelected.png", "GoSelected.png");
 	auto buttonCreateSheepLane3 = ui::Button::create(IMG_GO, "GoSelected.png", "GoSelected.png");
 	auto buttonCreateSheepLane4 = ui::Button::create(IMG_GO, "GoSelected.png", "GoSelected.png");
+
+	backgroudTopup = Sprite::create("block.png");
 	btnBlockSheep = Sprite::create(IMG_BLOCK);
 	btnPauseGame = Sprite::create("Pause.png");
 
@@ -207,7 +206,44 @@ void SceneNewGame::createButton()
 	buttonCreateSheepLane3->setPosition(BTN_SHEEP_LANE_3);
 	buttonCreateSheepLane4->setPosition(BTN_SHEEP_LANE_4);
 	btnBlockSheep->setPosition(BTN_BLOCK_SHEEP);
+	backgroudTopup->setPosition(Vec2(20, 400));
+	backgroudTopup->setVisible(false);
+	btnHome->setPosition(Vec2(50, 300));
+	btnHome->setVisible(false);
+	btnResume->setPosition(Vec2(250, 300));
+	btnResume->setVisible(false);
 
+	btnHome->addTouchEventListener([&](Ref* sender, ui::Widget::TouchEventType type) {
+		switch (type)
+		{
+		case ui::Widget::TouchEventType::BEGAN:
+			break;
+		case ui::Widget::TouchEventType::ENDED:
+			Director::getInstance()->replaceScene(TransitionFlipX::create(0.5, _MENU::createScene()));
+			break;
+
+		default:
+			break;
+		}
+	});
+
+	btnResume->addTouchEventListener([&](Ref* sender, ui::Widget::TouchEventType type) {
+		switch (type)
+		{
+		case ui::Widget::TouchEventType::BEGAN:
+			break;
+		case ui::Widget::TouchEventType::ENDED:
+			backgroudTopup->setVisible(false);
+			btnHome->setVisible(false);
+			btnResume->setVisible(false);
+			isPausedGame = !isPausedGame;
+			CocosDenshion::SimpleAudioEngine::getInstance()->resumeBackgroundMusic();
+			break;
+
+		default:
+			break;
+		}
+	});
 
 	buttonCreatePauseGame->addTouchEventListener([&](Ref* sender, ui::Widget::TouchEventType type) {
 		switch (type)
@@ -220,6 +256,9 @@ void SceneNewGame::createButton()
 			{
 				btnPauseGame->setTexture("Play.png");
 				CocosDenshion::SimpleAudioEngine::getInstance()->stopBackgroundMusic(false);
+				backgroudTopup->setVisible(true);
+				btnHome->setVisible(true);
+				btnResume->setVisible(true);
 			}
 			else
 			{
@@ -346,6 +385,9 @@ void SceneNewGame::createButton()
 	this->addChild(buttonCreateSheepLane2, 0);
 	this->addChild(buttonCreateSheepLane3, 0);
 	this->addChild(buttonCreateSheepLane4, 0);
+	this->addChild(backgroudTopup, 2);
+	this->addChild(btnHome, 3);
+	this->addChild(btnResume, 3);
 }
 
 cocos2d::Vec2 SceneNewGame::selectLane(int lane, int direction)
