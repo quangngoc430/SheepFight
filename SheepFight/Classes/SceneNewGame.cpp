@@ -26,10 +26,12 @@ Label *gameOver;
 Sheep *predictSheep;
 Sheep *predictEnemy;
 Sprite * btnBlockSheep;
-Sprite * backgroudTopup;
+Sprite * backgroundTopup;
 ui::Button * btnHome;
 ui::Button * btnResume;
-float scaleX, scaleY;
+float vWidth, vHeight;
+float differenceWidth, differenceHeight;
+bool isBlockBtnPause = false;
 
 Sprite * btnPauseGame;
 
@@ -85,10 +87,11 @@ bool SceneNewGame::init()
 	}
 
 	countElement = 0;
+	isBlockBtnPause = false;
+	isLockBtn = true;
 	isPausedGame = false;
 
-	scaleX = Director::getInstance()->getVisibleSize().width / SCREEN_H;
-	scaleY = Director::getInstance()->getVisibleSize().height / SCREEN_W;
+	// w = 800 h = 450	
 
 	clearData();
 	for (int index = 0; index < MAX_LANES; index++)
@@ -96,20 +99,24 @@ bool SceneNewGame::init()
 		vectorQueueSheep.push_back(new Queue());
 		vectorQueueEnemy.push_back(new Queue());
 	}
+	
+	// Screen real dimensions
+	vWidth = Director::getInstance()->getVisibleSize().width;
+	vHeight = Director::getInstance()->getVisibleSize().height;
+	differenceWidth = (SCREEN_W - vWidth) / 2;
+	differenceHeight = (SCREEN_H - vHeight) / 2;
 
-	auto visibleSize = Director::getInstance()->getVisibleSize();
-	
 	auto sprite = Sprite::create(IMG_PLAY_BACKGROUND);
-	sprite->setScale(scaleX, scaleY);
+	sprite->setScale(vWidth / SCREEN_W, vHeight / SCREEN_H);
+	sprite->setPosition(SCREEN_W / 2, SCREEN_H / 2);
 	
-	sprite->setPosition(visibleSize / 2);
 	this->addChild(sprite, 0);
 
 	// audio
 	auto audio = CocosDenshion::SimpleAudioEngine::getInstance();
 
 	// Thiết lập play background music và được lặp đi lặp lại liên tục.
-	audio->playBackgroundMusic("handclap.mp3", true);
+	audio->playBackgroundMusic("audio-background.mp3", true);
 
 	////---------------------------------
 	//// Add button back
@@ -155,13 +162,15 @@ void SceneNewGame::textOnScreen()
 	scoreSheepLabel = Label::createWithTTF("0", "fonts/Marker-Felt.ttf", 30);
 	scoreSheepLabel->setColor(Color3B::RED);
 	scoreSheepLabel->setAlignment(cocos2d::TextHAlignment::CENTER);
-	scoreSheepLabel->setPosition(SCORE_SHEEP);
+	scoreSheepLabel->setPosition(Vec2(SCORE_SHEEP.x, SCORE_SHEEP.y * vHeight / SCREEN_H + differenceHeight));
+	scoreSheepLabel->setScale(vWidth / SCREEN_W, vHeight / SCREEN_H);
 	addChild(scoreSheepLabel);
 
 	scoreEnemyLabel = Label::createWithTTF("0", "fonts/Marker-Felt.ttf", 30);
 	scoreEnemyLabel->setColor(Color3B::WHITE);
 	scoreEnemyLabel->setAlignment(cocos2d::TextHAlignment::CENTER);
-	scoreEnemyLabel->setPosition(SCORE_ENEMY);
+	scoreEnemyLabel->setPosition(Vec2(SCORE_ENEMY.x, SCORE_ENEMY.y * vHeight / SCREEN_H + differenceHeight));
+	scoreEnemyLabel->setScale(vWidth / SCREEN_W, vHeight / SCREEN_H);
 	addChild(scoreEnemyLabel);
 
 	gameOver = Label::createWithTTF("0", "fonts/Marker-Felt.ttf", 100);
@@ -176,13 +185,15 @@ void SceneNewGame::textOnScreen()
 void SceneNewGame::createPredictSheep(int wSheep, int wEnemy)
 {
 	predictSheep = new Sheep(this, wSheep, SHEEP_DIRECTION, false);
-	predictSheep->setPosition(PREDICT_SHEEP);
+	predictSheep->setPosition(Vec2(PREDICT_SHEEP.x, PREDICT_SHEEP.y * vHeight / SCREEN_H + differenceHeight));
+	predictSheep->getSprite()->setScale(vWidth / SCREEN_W, vHeight / SCREEN_H);
 	predictSheep->setAlive(true);
 	predictSheep->setWeight(wSheep);
 	predictSheep->setDirection(SHEEP_DIRECTION);
 	
 	predictEnemy = new Sheep(this, wEnemy, ENEMY_DIRECTION, false);
-	predictEnemy->setPosition(PREDICT_ENEMY);
+	predictEnemy->setPosition(Vec2(PREDICT_ENEMY.x, PREDICT_ENEMY.y * vHeight / SCREEN_H + differenceHeight));
+	predictEnemy->getSprite()->setScale(vWidth / SCREEN_W, vHeight / SCREEN_H);
 	predictEnemy->setAlive(true);
 	predictEnemy->setWeight(wEnemy);
 	predictEnemy->setDirection(ENEMY_DIRECTION);
@@ -190,33 +201,55 @@ void SceneNewGame::createPredictSheep(int wSheep, int wEnemy)
 
 void SceneNewGame::createButton() 
 {
-	btnHome = ui::Button::create("blacksheep_1_1.png", "blacksheep_1_1.png", "blacksheep_1_1.png");
-	btnResume = ui::Button::create("blacksheep_3_1.png", "blacksheep_3_1.png", "blacksheep_3_1.png");
+	backgroundTopup = Sprite::create("Pause_Board.png");
+	btnHome = ui::Button::create("Home_Button.png", "Home_Button_clicked.png", "Home_Button.png");
+	btnResume = ui::Button::create("Play_Button.png", "Play_Button_clicked.png", "Play_Button.png");
+	
 	auto buttonCreatePauseGame = ui::Button::create("Pause.png", "Pause.png", "Pause.png");
 	auto buttonCreateSheepLane0 = ui::Button::create(IMG_GO, "GoSelected.png", "GoSelected.png");
 	auto buttonCreateSheepLane1 = ui::Button::create(IMG_GO, "GoSelected.png", "GoSelected.png");
 	auto buttonCreateSheepLane2 = ui::Button::create(IMG_GO, "GoSelected.png", "GoSelected.png");
 	auto buttonCreateSheepLane3 = ui::Button::create(IMG_GO, "GoSelected.png", "GoSelected.png");
 	auto buttonCreateSheepLane4 = ui::Button::create(IMG_GO, "GoSelected.png", "GoSelected.png");
-
-	backgroudTopup = Sprite::create("Untitled.png");
+	
 	btnBlockSheep = Sprite::create(IMG_BLOCK);
 	btnPauseGame = Sprite::create("Pause.png");
 
-	buttonCreatePauseGame->setPosition(Vec2(400, 438));
-	btnPauseGame->setPosition(Vec2(400, 438));
-	buttonCreateSheepLane0->setPosition(BTN_SHEEP_LANE_0);
-	buttonCreateSheepLane1->setPosition(BTN_SHEEP_LANE_1);
-	buttonCreateSheepLane2->setPosition(BTN_SHEEP_LANE_2);
-	buttonCreateSheepLane3->setPosition(BTN_SHEEP_LANE_3);
-	buttonCreateSheepLane4->setPosition(BTN_SHEEP_LANE_4);
-	btnBlockSheep->setPosition(BTN_BLOCK_SHEEP);
-	backgroudTopup->setPosition(Vec2(20, 400));
-	backgroudTopup->setVisible(false);
-	btnHome->setPosition(Vec2(50, 300));
-	btnHome->setVisible(false);
-	btnResume->setPosition(Vec2(250, 300));
+	buttonCreatePauseGame->setPosition(Vec2(BTN_PAUSE.x, BTN_PAUSE.y * vHeight / SCREEN_H + differenceHeight));
+	buttonCreatePauseGame->setScale(vWidth / SCREEN_W, vHeight / SCREEN_H);
+
+	btnPauseGame->setPosition(Vec2(BTN_PAUSE.x, BTN_PAUSE.y * vHeight / SCREEN_H + differenceHeight));
+	btnPauseGame->setScale(vWidth / SCREEN_W, vHeight / SCREEN_H);
+
+	buttonCreateSheepLane0->setPosition(Vec2(BTN_SHEEP_LANE_0.x, BTN_SHEEP_LANE_0.y * vHeight / SCREEN_H + differenceHeight));
+	buttonCreateSheepLane0->setScale(vWidth / SCREEN_W, vHeight / SCREEN_H);
+
+	buttonCreateSheepLane1->setPosition(Vec2(BTN_SHEEP_LANE_1.x, BTN_SHEEP_LANE_1.y * vHeight / SCREEN_H + differenceHeight));
+	buttonCreateSheepLane1->setScale(vWidth / SCREEN_W, vHeight / SCREEN_H);
+
+	buttonCreateSheepLane2->setPosition(Vec2(BTN_SHEEP_LANE_2.x, BTN_SHEEP_LANE_2.y * vHeight / SCREEN_H + differenceHeight));
+	buttonCreateSheepLane2->setScale(vWidth / SCREEN_W, vHeight / SCREEN_H);
+
+	buttonCreateSheepLane3->setPosition(Vec2(BTN_SHEEP_LANE_3.x, BTN_SHEEP_LANE_3.y * vHeight / SCREEN_H + differenceHeight));
+	buttonCreateSheepLane3->setScale(vWidth / SCREEN_W, vHeight / SCREEN_H);
+
+	buttonCreateSheepLane4->setPosition(Vec2(BTN_SHEEP_LANE_4.x, BTN_SHEEP_LANE_4.y * vHeight / SCREEN_H + differenceHeight));
+	buttonCreateSheepLane4->setScale(vWidth / SCREEN_W, vHeight / SCREEN_H);
+
+	btnBlockSheep->setPosition(Vec2(BTN_BLOCK_SHEEP.x, BTN_BLOCK_SHEEP.y * vHeight / SCREEN_H + differenceHeight));
+	btnBlockSheep->setScale(vWidth / SCREEN_W, vHeight / SCREEN_H);
+
+	backgroundTopup->setPosition(Vec2(vWidth / 2, vHeight / 2 + differenceHeight));
+	backgroundTopup->setScale(vWidth / SCREEN_W, vHeight / SCREEN_H);
+	backgroundTopup->setVisible(false);
+	
+	btnResume->setPosition(Vec2(vWidth / 2 + 80, vHeight / 2 + differenceHeight));
+	btnResume->setScale(vWidth / SCREEN_W, vHeight / SCREEN_H);
 	btnResume->setVisible(false);
+
+	btnHome->setScale(vWidth / SCREEN_W, vHeight / SCREEN_H);
+	btnHome->setPosition(Vec2(vWidth / 2 - 80, vHeight / 2 + differenceHeight));
+	btnHome->setVisible(false);
 
 	btnHome->addTouchEventListener([&](Ref* sender, ui::Widget::TouchEventType type) {
 		switch (type)
@@ -238,11 +271,14 @@ void SceneNewGame::createButton()
 		case ui::Widget::TouchEventType::BEGAN:
 			break;
 		case ui::Widget::TouchEventType::ENDED:
-			backgroudTopup->setVisible(false);
+			btnPauseGame->setTexture("Pause.png");
+			isBlockBtnPause = false;
+			backgroundTopup->setVisible(false);
 			btnHome->setVisible(false);
 			btnResume->setVisible(false);
-			isPausedGame = !isPausedGame;
 			CocosDenshion::SimpleAudioEngine::getInstance()->resumeBackgroundMusic();
+			isPausedGame = !isPausedGame;
+			
 			break;
 
 		default:
@@ -256,19 +292,22 @@ void SceneNewGame::createButton()
 		case ui::Widget::TouchEventType::BEGAN:
 			break;
 		case ui::Widget::TouchEventType::ENDED:
-			isPausedGame = !isPausedGame;
-			if (isPausedGame)
-			{
-				btnPauseGame->setTexture("Play.png");
-				CocosDenshion::SimpleAudioEngine::getInstance()->stopBackgroundMusic(false);
-				backgroudTopup->setVisible(true);
-				btnHome->setVisible(true);
-				btnResume->setVisible(true);
-			}
-			else
-			{
-				btnPauseGame->setTexture("Pause.png");
-				CocosDenshion::SimpleAudioEngine::getInstance()->resumeBackgroundMusic();
+			if (!isBlockBtnPause) {
+				isBlockBtnPause = !isBlockBtnPause;
+				isPausedGame = !isPausedGame;
+				if (isPausedGame)
+				{
+					btnPauseGame->setTexture("Play.png");
+					CocosDenshion::SimpleAudioEngine::getInstance()->pauseBackgroundMusic();
+					backgroundTopup->setVisible(true);
+					btnHome->setVisible(true);
+					btnResume->setVisible(true);
+				}
+				else
+				{
+					btnPauseGame->setTexture("Pause.png");
+					CocosDenshion::SimpleAudioEngine::getInstance()->resumeBackgroundMusic();
+				}
 			}
 			break;
 
@@ -390,7 +429,7 @@ void SceneNewGame::createButton()
 	this->addChild(buttonCreateSheepLane2, 0);
 	this->addChild(buttonCreateSheepLane3, 0);
 	this->addChild(buttonCreateSheepLane4, 0);
-	this->addChild(backgroudTopup, 2);
+	this->addChild(backgroundTopup, 2);
 	this->addChild(btnHome, 3);
 	this->addChild(btnResume, 3);
 }
@@ -423,7 +462,8 @@ void SceneNewGame::addActionSheep(int lane, int type, int direction)
 {
 	Sheep *sheep = new Sheep(this, type, direction, true);
 	sheep->setId(countElement++);
-	sheep->setPosition(selectLane(lane, direction));
+	auto position = selectLane(lane, direction);
+	sheep->setPosition(Vec2(position.x, position.y * vHeight / SCREEN_H + differenceHeight));
 	sheep->setVelocity(cocos2d::Vec2(2, 0));
 	if (direction == SHEEP_DIRECTION)
 	{
@@ -788,7 +828,7 @@ bool SceneNewGame::checkCanCreateSheep(int lane, int direction)
 			sheep = (Sheep*)(vectorQueueSheep.at(lane))->get(index);
 				
 			// replace true value (sheep->getWidth) in the next release after finish function generate random sheep 
-			if (sheep->getPosition().x < M_START + sheep->getWidth())
+			if (sheep->getPosition().x < M_START + predictSheep->getWidth() + 10)
 				return false;
 		}
 			
@@ -797,7 +837,7 @@ bool SceneNewGame::checkCanCreateSheep(int lane, int direction)
 			sheep = (Sheep*)(vectorQueueEnemy.at(lane))->get(index);
 
 			// replace true value (sheep->getWidth) in the next release after finish function generate random sheep 
-			if (sheep->getPosition().x < M_START + sheep->getWidth())
+			if (sheep->getPosition().x < M_START + predictSheep->getWidth() + 10)
 				return false;
 		}
 	}
@@ -808,7 +848,7 @@ bool SceneNewGame::checkCanCreateSheep(int lane, int direction)
 			sheep = (Sheep*)(vectorQueueSheep.at(lane))->get(index);
 
 			// replace true value (sheep->getWidth) in the next release after finish function generate random sheep 
-			if (sheep->getPosition().x + sheep->getWidth() > 750 - sheep->getWidth())
+			if (sheep->getPosition().x + sheep->getWidth() > 750 - predictEnemy->getWidth() - 10)
 				return false;
 		}
 
@@ -817,7 +857,7 @@ bool SceneNewGame::checkCanCreateSheep(int lane, int direction)
 			sheep = (Sheep*)(vectorQueueEnemy.at(lane))->get(index);
 
 			// replace true value (sheep->getWidth) in the next release after finish function generate random sheep 
-			if (sheep->getPosition().x + sheep->getWidth() > 750 - sheep->getWidth())
+			if (sheep->getPosition().x + sheep->getWidth() > 750 - predictEnemy->getWidth() - 10)
 				return false;
 		}
 	}

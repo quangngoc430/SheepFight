@@ -47,6 +47,11 @@
 
 #define IMG_BLOCK "block.png"
 
+#define BTN_PAUSE Vec2(400, 438)
+#define BACKGROUND_TOPUP Vec2(20, 400)
+#define BTN_RETURN_HOME Vec2(50, 300)
+#define BTN_RESUME Vec2(250, 300)
+
 // Map
 #define LANE_0 0
 #define LANE_1 1
