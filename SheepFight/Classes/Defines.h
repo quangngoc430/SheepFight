@@ -13,7 +13,7 @@
 
 // Global Image
 #define IMG_GO "GoNormal.png"
-#define IMG_PLAY_BACKGROUND "Play-ground.png"
+#define IMG_PLAY_BACKGROUND "main-background.png"
 #define IMG_MENU "Background_Primary.png"
 
 

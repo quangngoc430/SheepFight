@@ -29,6 +29,7 @@ Sprite * btnBlockSheep;
 Sprite * backgroudTopup;
 ui::Button * btnHome;
 ui::Button * btnResume;
+float scaleX, scaleY;
 
 Sprite * btnPauseGame;
 
@@ -86,6 +87,9 @@ bool SceneNewGame::init()
 	countElement = 0;
 	isPausedGame = false;
 
+	scaleX = Director::getInstance()->getVisibleSize().width / SCREEN_H;
+	scaleY = Director::getInstance()->getVisibleSize().height / SCREEN_W;
+
 	clearData();
 	for (int index = 0; index < MAX_LANES; index++)
 	{
@@ -96,6 +100,7 @@ bool SceneNewGame::init()
 	auto visibleSize = Director::getInstance()->getVisibleSize();
 	
 	auto sprite = Sprite::create(IMG_PLAY_BACKGROUND);
+	sprite->setScale(scaleX, scaleY);
 	
 	sprite->setPosition(visibleSize / 2);
 	this->addChild(sprite, 0);
@@ -159,7 +164,7 @@ void SceneNewGame::textOnScreen()
 	scoreEnemyLabel->setPosition(SCORE_ENEMY);
 	addChild(scoreEnemyLabel);
 
-	gameOver = Label::createWithTTF("0", "fonts/Marker-Felt.ttf ", 100);
+	gameOver = Label::createWithTTF("0", "fonts/Marker-Felt.ttf", 100);
 	gameOver->setColor(Color3B::RED);
 	gameOver->setAlignment(cocos2d::TextHAlignment::CENTER);
 	gameOver->setPosition(GAME_OVER);
@@ -194,7 +199,7 @@ void SceneNewGame::createButton()
 	auto buttonCreateSheepLane3 = ui::Button::create(IMG_GO, "GoSelected.png", "GoSelected.png");
 	auto buttonCreateSheepLane4 = ui::Button::create(IMG_GO, "GoSelected.png", "GoSelected.png");
 
-	backgroudTopup = Sprite::create("block.png");
+	backgroudTopup = Sprite::create("Untitled.png");
 	btnBlockSheep = Sprite::create(IMG_BLOCK);
 	btnPauseGame = Sprite::create("Pause.png");
 
@@ -472,19 +477,6 @@ void SceneNewGame::update(float detail)
 		}
 
 		updateScoreOnScreen();
-	}	
-
-	if (scoreSheep >= MAX_SCORE)
-	{
-		gameOver->setVisible(true);
-		gameOver->setString("VICTORY");
-		Director::getInstance()->replaceScene(GameOverScene::create());
-	}
-	if (scoreEnemy >= MAX_SHEEP)
-	{
-		gameOver->setVisible(true);
-		gameOver->setString("DEFEAT");
-		Director::getInstance()->replaceScene(GameOverScene::create());
 	}
 }
 
